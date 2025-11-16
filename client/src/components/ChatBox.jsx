@@ -9,64 +9,106 @@ import { FaUserAstronaut } from "react-icons/fa6";
 import "../chatbox.css";
 import { useEffect, useRef, useState } from "react";
 
-const ChatBox = ({
-  orgColor = "#775151ff",
-  orgLink = "https://verafied.tech",
-  orgName = "VERAfied.Tech",
-  orgDirection = "left",
-}) => {
+// GROK
+// import OpenAI from "openai";
+// const XAI_API_KEY = import.meta.env.XAI_API_KEY;
+
+const ChatBox = () => {
   const [chatbox, setChatbox] = useState();
-  // for messages
-  // const [messages, setMessages] = useState([]);
-  // const [input, setInput] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
+  const [company] = useState({
+    ownerId: import.meta.env.VIT_TEMP_ORGID,
+    companyName: "Verafied Tech",
+    companyEmail: "support@verafied.tech",
+    companyWebsite: "VERAfied.Tech", // what shows on copyright section
+    companyLink: "https://verafied.tech",
+    companyDescription: "...",
+    companyFaqs: [
+      "What services do you offer?",
+      "Do you have monthly pricing?",
+      "What technologies do you use?",
+    ],
+    companyColor: "#123456",
+    companyDirection: "right",
+  });
 
-  // const handleSend = async () => {
-  //   if (!input.trim()) return;
+  // ====== GROK =======
 
-  //   // Add user message
-  //   setMessages((prev) => [...prev, { sender: "user", text: input }]);
+  // const client = new OpenAI({
+  //   baseURL: "https://api.x.ai/v1",
+  //   apiKey: XAI_API_KEY,
+  // });
 
-  //   const prompt = input;
-  //   setInput("");
+  // const completion = await client.chat.completions.create({
+  //   model: "grok-3-mini",
+  //   messages: [
+  //     {
+  //       role: "system",
+  //       content: systemPrompt,
+  //     },
+  //     {
+  //       role: "user",
+  //       content: messages,
+  //     },
+  //   ],
+  //   temperature: 0,
+  // });
+  // console.log(completion.choices[0].message);
+  // ====== GROK =======
 
-  //   // Call your API
-  //   const res = await fetch("/api/chat", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ message: prompt }),
-  //   });
+  // ============= For Messages ================ NOT GROK vv
+  const handleSend = async () => {
+    if (!input.trim()) return;
 
-  //   const data = await res.json();
+    // Add user message
+    setMessages((prev) => [...prev, { sender: "user", text: input }]);
 
-  //   // Add bot reply
-  //   setMessages((prev) => [...prev, { sender: "bot", text: data.reply }]);
-  // };
+    const prompt = input;
+    setInput("");
+
+    // Call your API
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: prompt }),
+    });
+
+    const data = await res.json();
+
+    // Add bot reply
+    setMessages((prev) => [...prev, { sender: "system", text: data.reply }]);
+  };
 
   const msgRef = useRef(null);
+
+  // =========== For Message TEST =============== NOT GROK ^^
 
   // ============= Just TO TEST =================== vv
 
   // Need to create support questions using docs and Ai
-  const messages = [
-    { sender: "user", text: "Hey there! I need help with my dashboard." },
-    { sender: "agent", text: "Of course! What seems to be the issue?" },
-    { sender: "user", text: "The charts aren't loading on mobile." },
-    {
-      sender: "agent",
-      text: "Got it! I can guide you through fixing that.",
-    },
-    { sender: "user", text: "dope" },
-    { sender: "agent", text: "cool" },
-  ];
+  // const messages = [
+  //   { sender: "user", text: "Hey there! I need help with my dashboard." },
+  //   { sender: "agent", text: "Of course! What seems to be the issue?" },
+  //   { sender: "user", text: "The charts aren't loading on mobile." },
+  //   {
+  //     sender: "agent",
+  //     text: "Got it! I can guide you through fixing that.",
+  //   },
+  //   { sender: "user", text: "dope" },
+  //   { sender: "agent", text: "cool" },
+  // ];
 
   // questions derived from company docs given to Ai beforehand
-  const questionOptions = [
-    "How do I get started?",
-    "Do you have API docs?",
-    "Can I contact support?",
-  ];
+  // const questionOptions = [
+  //   "How do I get started?",
+  //   "Do you have API docs?",
+  //   "Can I contact support?",
+  // ];
 
   // ============= Just TO TEST =================== ^^
+
+  // Message Board Current to top positioning
   useEffect(() => {
     if (msgRef.current) {
       msgRef.current.scrollTop = msgRef.current.scrollHeight;
@@ -79,7 +121,7 @@ const ChatBox = ({
 
   // Chat Position Left or Right
   const ChatBoxButton = () => {
-    if (orgDirection == "left") {
+    if (company.companyDirection == "left") {
       return (
         <div
           className="chatbox-btn"
@@ -89,7 +131,7 @@ const ChatBox = ({
           style={{ left: "2rem" }}>
           <BiSolidMessageRoundedDots
             className="chatbox-btn-icon"
-            style={{ backgroundColor: orgColor }}
+            style={{ backgroundColor: company.companyColor }}
           />
         </div>
       );
@@ -103,7 +145,7 @@ const ChatBox = ({
           style={{ right: "2rem" }}>
           <BiSolidMessageRoundedDots
             className="chatbox-btn-icon"
-            style={{ backgroundColor: orgColor }}
+            style={{ backgroundColor: company.companyColor }}
           />
         </div>
       );
@@ -111,10 +153,12 @@ const ChatBox = ({
   };
 
   const ChatBoxMessageContainer = () => {
-    if (orgDirection == "left") {
+    if (company.companyDirection == "left") {
       return (
         <div className="chatbox-main" style={{ left: "2rem" }}>
-          <div className="chatbox-header" style={{ backgroundColor: orgColor }}>
+          <div
+            className="chatbox-header"
+            style={{ backgroundColor: company.companyColor }}>
             <div className="chatbox-header-agent">
               <FaUserAstronaut style={{ fontSize: "2.3rem" }} />
               <div>
@@ -143,7 +187,7 @@ const ChatBox = ({
 
             {/* Question choices */}
             <div className="chat-choices">
-              {questionOptions.map((q, i) => (
+              {company.CompanyFaqs.map((q, i) => (
                 <button key={i} className="chat-choice-btn msg-user">
                   {q}
                 </button>
@@ -152,7 +196,7 @@ const ChatBox = ({
           </div>
 
           {/* THIS SECTION IS ONLY FOR ADMIN / DEVELOPMENT */}
-          {/* <div className="chatbox-send" style={{ borderColor: orgColor }}>
+          {/* <div className="chatbox-send" style={{ borderColor: company.companyColor }}>
           <input
             type="text"
             value={input}
@@ -162,17 +206,17 @@ const ChatBox = ({
           <MdSend
             className="chatbox-send-icon"
             onClick={handleSend}
-            style={{ color: orgColor }}
+            style={{ color: company.companyColor }}
           />
         </div> */}
           <div className="chatbox-copyright">
             <p>ChatBox</p>
             <p>
-              <GiTechnoHeart style={{ color: orgColor }} />
+              <GiTechnoHeart style={{ color: company.companyColor }} />
             </p>
 
-            <Link to={orgLink} target="_blank">
-              <b>{orgName}</b>
+            <Link to={company.companyLink} target="_blank">
+              <b>{company.companyName}</b>
             </Link>
           </div>
         </div>
@@ -180,7 +224,9 @@ const ChatBox = ({
     } else {
       return (
         <div className="chatbox-main" style={{ right: "2rem" }}>
-          <div className="chatbox-header" style={{ backgroundColor: orgColor }}>
+          <div
+            className="chatbox-header"
+            style={{ backgroundColor: company.companyColor }}>
             <div className="chatbox-header-agent">
               <FaUserAstronaut style={{ fontSize: "2.3rem" }} />
               <div>
@@ -209,7 +255,7 @@ const ChatBox = ({
 
             {/* Question choices */}
             <div className="chat-choices">
-              {questionOptions.map((q, i) => (
+              {company.companyFaqs.map((q, i) => (
                 <button key={i} className="chat-choice-btn msg-user">
                   {q}
                 </button>
@@ -218,7 +264,7 @@ const ChatBox = ({
           </div>
 
           {/* THIS SECTION IS ONLY FOR ADMIN / DEVELOPMENT */}
-          {/* <div className="chatbox-send" style={{ borderColor: orgColor }}>
+          {/* <div className="chatbox-send" style={{ borderColor: company.companyColor }}>
           <input
             type="text"
             value={input}
@@ -228,17 +274,17 @@ const ChatBox = ({
           <MdSend
             className="chatbox-send-icon"
             onClick={handleSend}
-            style={{ color: orgColor }}
+            style={{ color: company.companyColor }}
           />
         </div> */}
           <div className="chatbox-copyright">
             <p>ChatBox</p>
             <p>
-              <GiTechnoHeart style={{ color: orgColor }} />
+              <GiTechnoHeart style={{ color: company.companyColor }} />
             </p>
 
-            <Link to={orgLink} target="_blank">
-              <b>{orgName}</b>
+            <Link to={company.companyLink} target="_blank">
+              <b>{company.companyWebsite}</b>
             </Link>
           </div>
         </div>
