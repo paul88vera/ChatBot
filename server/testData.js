@@ -1,6 +1,6 @@
 // up to 10 FAQS - Description can describe services and prices
 export const company = {
-  ownerId: "org_35XazIKELpblmzUAy6SKLQRCLqa",
+  ownerId: process.env.VITE_TEMP_ORGID,
   companyName: "Verafied Tech",
   companyEmail: "support@verafied.tech",
   companyWebsite: "VERAfied.Tech", // what shows on copyright section
