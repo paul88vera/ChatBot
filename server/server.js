@@ -1,18 +1,18 @@
 const express = require("express");
-// const cors = require("cors");
+const cors = require("cors");
 const routes = require("./routes/index.js");
 const { clerkMiddleware, getAuth } = require("@clerk/express");
 const app = express();
 require("@dotenvx/dotenvx").config();
 const PORT = process.env.PORT;
 
+app.use(
+  cors({
+    origin: "http://localhost:5173", // frontend domain
+    credentials: true, // if sending cookies
+  })
+);
 app.use(express.json());
-// app.use(
-//   cors({
-//     origin: "https://chat.verafied.tech", // frontend domain
-//     credentials: true, // if sending cookies
-//   })
-// );
 
 // ==== Clerk Auth ====
 app.use(
@@ -23,18 +23,18 @@ app.use(
 );
 
 // === AUTH ===
-function requireAuth(req, res, next) {
-  const { userId, orgId } = getAuth(req);
+// function requireAuth(req, res, next) {
+//   const { userId, orgId } = getAuth(req);
 
-  if (!userId || !orgId) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
+//   if (!userId || !orgId || orgId !== process.env.CLERK_ORG_ID) {
+//     return res.status(401).json({ message: "Unauthorized" });
+//   }
 
-  next();
-}
+//   next();
+// }
 
 // === ROUTES ===
-app.use("/api", requireAuth, routes);
+app.use("/api", routes);
 
 // === START SERVER ===
 app.listen(PORT, "0.0.0.0", () => {
