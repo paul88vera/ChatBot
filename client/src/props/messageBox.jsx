@@ -51,6 +51,12 @@ const MessageBox = ({
           </div>
         )}
 
+        {!messages || messages.length === 0 ? (
+          <div className="msg-agent">
+            Hello, my name is Tron. How can I help you today?
+          </div>
+        ) : null}
+
         {/* Question choices - TODO: NEEDS WORK */}
         {/* <div className="chat-choices">
           {company.companyFaqs.map((q, i) => (
