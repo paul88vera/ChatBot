@@ -1,10 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const routes = require("./routes/index.js");
+require("@dotenvx/dotenvx").config();
 const { clerkMiddleware, getAuth } = require("@clerk/express");
 const app = express();
-require("@dotenvx/dotenvx").config();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5400;
 
 app.use(
   cors({
@@ -23,18 +23,19 @@ app.use(
 );
 
 // === AUTH ===
-// function requireAuth(req, res, next) {
-//   const { userId, orgId } = getAuth(req);
+async function requireAuth(req, res, next) {
+  const { userId, orgId } = await getAuth(req);
 
-//   if (!userId || !orgId || orgId !== process.env.CLERK_ORG_ID) {
-//     return res.status(401).json({ message: "Unauthorized" });
-//   }
+  console.log(orgId, userId);
+  if (!userId || !orgId) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
 
-//   next();
-// }
+  next();
+}
 
 // === ROUTES ===
-app.use("/api", routes);
+app.use("/api", requireAuth, routes);
 
 // === START SERVER ===
 app.listen(PORT, "0.0.0.0", () => {

@@ -1,13 +1,14 @@
 const express = require("express");
 const router = express.Router();
-// const fetch = require("node-fetch");
+const { getAuth } = require("@clerk/express");
 const { buildSystemPrompt } = require("../company/systemPrompt.js");
-const { company } = require("../company/companyDetails.js"); // served from website embedded code
 
 // Basic health check endpoint
 // router.post("/", (req, res) => {
 //   res.json({ ok: true });
 // });
+
+const db = require("../db/connections.js");
 
 router.post("/", async (req, res) => {
   try {
@@ -17,15 +18,27 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ error: "Message is required" });
     }
 
-    // const token = process.env.VITE_TEMP_ORGID;
+    const orgId = getAuth(req).orgId;
 
-    // if (!token) {
-    //   return res.status(500).json({ error: "Company token missing" });
-    // }
+    if (!orgId) {
+      return res.status(500).json({ error: "Company orgId missing" });
+    }
 
-    // if (token !== company.ownerId) {
-    //   return res.status(403).json({ error: "Unauthorized company" });
-    // }
+    if (orgId !== company.ownerId) {
+      return res.status(403).json({ error: "Unauthorized company" });
+    }
+
+    const connection = await db();
+
+    const query = "SELECT * FROM companies WHERE ownerId = ?";
+
+    const company = await connection
+      .query(query, [orgId])
+      .then(([rows]) => rows[0]);
+
+    if (!company) {
+      return res.status(404).json({ error: "Company not found" });
+    }
 
     const systemPrompt = buildSystemPrompt(company);
     console.log("SYSTEM PROMPT SENT TO GROK:\n", systemPrompt);

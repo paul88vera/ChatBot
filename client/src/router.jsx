@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate } from "react-router";
 import RootLayout from "./layouts/RootLayout";
-import Settings from "./pages/Settings";
+import { EditSettingPage } from "./pages/EditSettings";
+import { SettingsLoader } from "./pages/Settings";
 import ErrorMessage from "./pages/ErrorMessage";
 
 import { OrgRedirect } from "./components/OrgRedirect";
@@ -19,9 +20,18 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Navigate to="/settings" />,
+            element: <Navigate to="settings" />,
           },
-          { path: "settings", element: <Settings /> },
+          {
+            path: "home",
+            element: <div>Home Page</div>,
+          },
+
+          {
+            path: "settings",
+            ...SettingsLoader,
+            children: [{ path: "edit", ...EditSettingPage }],
+          },
         ],
       },
     ],
