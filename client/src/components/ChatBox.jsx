@@ -5,12 +5,12 @@ import { getMessage } from "../api/chat";
 import MessageBox from "../props/messageBox";
 import ChatBoxBtn from "../props/chatBoxBtn";
 
-const ChatBox = () => {
-  const { company } = useState(() => {
-    const params = new URLSearchParams(window.location.search);
-    const orgId = params.get("orgId");
-    return { orgId };
-  });
+const ChatBox = ({ company }) => {
+  // const { company } = useState(() => {
+  //   const params = new URLSearchParams(window.location.search);
+  //   const orgId = params.get("orgId");
+  //   return { orgId };
+  // });
   const [chatbox, setChatbox] = useState();
   const [messages, setMessages] = useState([]);
   const [typing, setTyping] = useState(false);

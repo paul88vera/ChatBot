@@ -1,45 +1,41 @@
-import { UserButton, useOrganization } from "@clerk/clerk-react";
-import { Form, Link, useLoaderData } from "react-router";
+import { UserButton } from "@clerk/clerk-react";
+import { Form, redirect, useLoaderData } from "react-router";
 import FormGroup from "../components/FormGroup";
 import "../Settings.css";
-import { getCompanies } from "../api/company";
+import { getCompanies, updateCompany } from "../api/company";
+import ChatBox from "../components/ChatBox";
 
 const EditSettings = () => {
   const { company } = useLoaderData();
 
-  // const filteredCompanies = getCompanies().filter(
-  //   (comp) => comp.ownerId === company.ownerId
-  // );
-
-  // if (!filteredCompanies.length) {
-  //   return <div>Loading...</div>;
-  // }
+  // filter company by id
+  const companyFiltered = company.filter((comp) => comp.id === company[0].id);
+  const companyData = companyFiltered.length
+    ? companyFiltered[0]
+    : {
+        companyId: "",
+        ownerId: "",
+        companyName: "",
+        companyEmail: "",
+        companyWebsite: "",
+        companyLink: "",
+        companyDescription: "",
+        companyFaqs: "",
+        companyColor: "#000000",
+        companyDirection: "left",
+      };
 
   const errors = {}; // Placeholder for error messages
   return (
     <div>
+      <ChatBox company={companyData} />
       <div className="settings-header">
-        <div>
-          <UserButton className="clerk-user" />
-          <h1>ChatBox</h1>
-        </div>
-        <div>
-          <Link
-            to={`/${useOrganization().organization.id}/settings/create/${
-              company.id
-            }`}>
-            New ChatBox
-          </Link>
-          <Link
-            to={`/${useOrganization().organization.id}/settings/edit/${
-              company.id
-            }`}>
-            Edit ChatBox
-          </Link>
-        </div>
+        <UserButton className="clerk-user" />
+        <h1>ChatBox</h1>
       </div>
       <Form method="post" className="settings-form">
-        <input type="hidden" name="ownerId" value={company.ownerId} />
+        <input type="hidden" name="companyId" value={companyData.id} />
+        <input type="hidden" name="ownerId" value={companyData.ownerId} />
         <FormGroup errorMessage={errors.companyName}>
           <label htmlFor="CompanyName">Company Name:</label>
           <input
@@ -47,7 +43,7 @@ const EditSettings = () => {
             id="CompanyName"
             name="CompanyName"
             placeholder="(eg. Verafied Technologies)"
-            defaultValue={company.companyName}
+            defaultValue={companyData.companyName}
           />
         </FormGroup>
         <FormGroup errorMessage={errors.companyEmail}>
@@ -57,7 +53,7 @@ const EditSettings = () => {
             id="CompanyEmail"
             name="CompanyEmail"
             placeholder="(eg. support@verafied.tech)"
-            defaultValue={company.companyEmail}
+            defaultValue={companyData.companyEmail}
           />
         </FormGroup>
         <FormGroup errorMessage={errors.companyWebsite}>
@@ -67,7 +63,7 @@ const EditSettings = () => {
             id="CompanyWebsite"
             name="CompanyWebsite"
             placeholder=" (eg. VERAfied.Tech)"
-            defaultValue={company.companyWebsite}
+            defaultValue={companyData.companyWebsite}
           />
         </FormGroup>
         <FormGroup errorMessage={errors.companyLink}>
@@ -77,7 +73,7 @@ const EditSettings = () => {
             id="CompanyLink"
             name="CompanyLink"
             placeholder="(eg. https://verafied.tech)"
-            defaultValue={company.companyLink}
+            defaultValue={companyData.companyLink}
           />
         </FormGroup>
         <FormGroup errorMessage={errors.companyDescription}>
@@ -86,19 +82,18 @@ const EditSettings = () => {
             id="CompanyDescription"
             name="CompanyDescription"
             placeholder="(Be as descriptive as you can here with as much company information for services.)"
-            defaultValue={company.companyDescription}></textarea>
+            defaultValue={companyData.companyDescription}></textarea>
         </FormGroup>
         <FormGroup errorMessage={errors.companyFaqs}>
           <label htmlFor="CompanyFaqs">
             Company FAQs (up to 10 FAQs - comma separated):{" "}
           </label>
-          <input
+          <textarea
             type="text"
             id="CompanyFaqs"
             name="CompanyFaqs"
             placeholder="(eg. We are the #1 IT service provider in San Antonio, etc.)"
-            defaultValue={company.companyFaqs}
-          />
+            defaultValue={companyData.companyFaqs}></textarea>
         </FormGroup>
         <FormGroup errorMessage={errors.companyColor}>
           <label htmlFor="CompanyColor">
@@ -107,7 +102,7 @@ const EditSettings = () => {
               type="color"
               id="CompanyColor"
               name="CompanyColor"
-              defaultValue={company.companyColor}
+              defaultValue={companyData.companyColor}
             />
           </label>
         </FormGroup>
@@ -117,7 +112,7 @@ const EditSettings = () => {
             <select
               id="CompanyDirection"
               name="CompanyDirection"
-              defaultValue={company.companyDirection}>
+              defaultValue={companyData.companyDirection}>
               <option value="left">Left</option>
               <option value="right">Right</option>
             </select>
@@ -134,7 +129,28 @@ async function loader({ request: { signal } }) {
   return { company };
 }
 
-export const EditSettingPage = {
+async function action({ request }) {
+  const formData = await request.formData();
+  const companyData = {
+    id: formData.get("companyId"),
+    ownerId: formData.get("ownerId"),
+    companyName: formData.get("CompanyName"),
+    companyEmail: formData.get("CompanyEmail"),
+    companyWebsite: formData.get("CompanyWebsite"),
+    companyLink: formData.get("CompanyLink"),
+    companyDescription: formData.get("CompanyDescription"),
+    companyFaqs: formData.get("CompanyFaqs"),
+    companyColor: formData.get("CompanyColor"),
+    companyDirection: formData.get("CompanyDirection"),
+  };
+
+  await updateCompany(companyData.id, companyData);
+
+  return redirect(`/${companyData.ownerId}/settings`);
+}
+
+export const EditSettingsPage = {
+  action,
   loader,
   element: <EditSettings />,
 };

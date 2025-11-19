@@ -41,6 +41,7 @@ const RootLayout = () => {
       <SignedIn>
         <div className="container">
           <Outlet />
+          
         </div>
       </SignedIn>
     </>

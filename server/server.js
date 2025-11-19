@@ -24,9 +24,8 @@ app.use(
 
 // === AUTH ===
 async function requireAuth(req, res, next) {
-  const { userId, orgId } = await getAuth(req);
+  const { userId, orgId } = getAuth(req);
 
-  console.log(orgId, userId);
   if (!userId || !orgId) {
     return res.status(401).json({ message: "Unauthorized" });
   }

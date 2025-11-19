@@ -1,32 +1,44 @@
 import { Link, useLoaderData } from "react-router";
 import "../Settings.css";
-import { getCompanyById } from "../api/company";
+import { getCompanies } from "../api/company";
+import { useOrganization } from "@clerk/clerk-react";
+import ChatBox from "../components/ChatBox";
 
 const Settings = () => {
   const company = useLoaderData();
+  const { organization } = useOrganization();
 
-  console.log(company.companyChatboxActive);
+  // filter company for the current organization
+  const companyFilter = company.find(
+    (comp) => comp.ownerId === organization.id
+  );
+
   return (
     <>
       <h1>Welcome to ChatBox</h1>
 
       <div className="settings-container">
-        {!company.companyChatboxActive ? (
-          <Link to={`/create`}>create your ChatBox</Link>
+        {companyFilter.companyChatboxActive == 0 ? (
+          <Link to={`/${organization.id}/${companyFilter.id}/create`}>
+            create your ChatBox
+          </Link>
         ) : (
-          <Link to={`/edit`}>edit your ChatBox</Link>
+          <Link to={`/${organization.id}/${companyFilter.id}/edit`}>
+            edit your ChatBox
+          </Link>
         )}
       </div>
+      <ChatBox company={companyFilter} />
     </>
   );
 };
 
-async function loader({ request: { signal }, params: { orgId } }) {
-  const company = await getCompanyById(orgId, { signal });
+async function loader({ request: { signal } }) {
+  const company = await getCompanies({ signal });
   return company;
 }
 
-export const SettingsLoader = {
-  loader,
+export const SettingsRoute = {
   element: <Settings />,
+  loader,
 };

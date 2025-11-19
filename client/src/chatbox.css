@@ -142,7 +142,7 @@
     ChatBox Btn 
 ================== */
 .chatbox-btn {
-  position: absolute;
+  position: fixed;
   bottom: 2rem;
   cursor: pointer;
 }

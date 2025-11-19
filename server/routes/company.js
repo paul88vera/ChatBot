@@ -19,6 +19,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const connection = await db();
+    const companyId = req.params.id;
 
     const ownerId = getAuth(req).orgId;
 
@@ -27,8 +28,8 @@ router.get("/:id", async (req, res) => {
     }
 
     const [rows] = await connection.query(
-      "SELECT * FROM companies WHERE ownerId = ?",
-      [ownerId]
+      "SELECT * FROM companies WHERE id = ?",
+      [companyId]
     );
 
     if (rows.length === 0) {
@@ -104,6 +105,13 @@ router.put("/:id", async (req, res) => {
     if (updateData.companyFaqs) {
       updateData.companyFaqs = JSON.stringify(updateData.companyFaqs);
     }
+
+    const ownerId = updateData.ownerId;
+
+    if (!ownerId) {
+      return res.status(500).json({ error: "Company orgId missing" });
+    }
+
     const [result] = await connection.query(
       "UPDATE companies SET ? WHERE id = ?",
       [updateData, companyId]

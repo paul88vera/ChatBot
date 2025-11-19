@@ -1,11 +1,8 @@
+import { redirect } from "react-router";
 import { baseApi } from "./base";
 
 export function getCompanies() {
   return baseApi.get("/company").then((res) => res.data);
-}
-
-export function getCompanyById(id) {
-  return baseApi.get(`/company/${id}`).then((res) => res.data);
 }
 
 export function createCompany(companyData) {
@@ -17,5 +14,11 @@ export function updateCompany(id, companyData) {
 }
 
 export function deleteCompany(id) {
-  return baseApi.delete(`/company/${id}`).then((res) => res.data);
+  return baseApi
+    .delete(`/company/${id}`)
+    .then((res) => res.data)
+    .finally(() => {
+      redirect("/");
+      console.log(`Company with id ${id} deleted`);
+    });
 }

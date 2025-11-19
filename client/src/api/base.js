@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const baseApi = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:5400/api",
+  withCredentials: true,
 });
 
 export function attachClerkInterceptor(getToken) {
