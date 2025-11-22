@@ -3,6 +3,7 @@ import "../Settings.css";
 import { getCompanies } from "../api/company";
 import { useOrganization } from "@clerk/clerk-react";
 import ChatBox from "../components/ChatBox";
+import React from "react";
 
 const Settings = () => {
   const company = useLoaderData();
@@ -21,7 +22,7 @@ const Settings = () => {
 
       <div className="settings-container">
         <div className="settings-para">
-          <p>We are here to provide an easy solution for a intuative ChatBox that can learn and use company knowledge to provide intelligent answers.</p>
+          <p>We are here to provide an easy & customizable solution for an intuative ChatBox that can learn and use company knowledge to provide intelligent answers.</p>
         </div>
 
         {companyFilter.companyChatboxActive == 0 ? (
@@ -30,7 +31,7 @@ const Settings = () => {
             Create Your ChatBox
           </Link>
           <div className="settings-para">
-          <p>Create a new ChatBox and use your branding colors.</p>
+          <p>Customize your new ChatBox using your branding colors.</p>
           </div> 
           </div>
         ) : (
@@ -39,7 +40,7 @@ const Settings = () => {
             Edit Your ChatBox
           </Link>
           <div className="settings-para">
-          <p>We are here to provide an easy solution for a intuative ChatBox that can learn and use company knowledge to provide intelligent answers.</p>
+          <p>Customize your existing ChatBox.</p>
           </div> 
           </div>
         )}
@@ -58,3 +59,5 @@ export const SettingsRoute = {
   element: <Settings />,
   loader,
 };
+
+export default React.memo(Settings);

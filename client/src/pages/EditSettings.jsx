@@ -1,5 +1,5 @@
 import { UserButton } from "@clerk/clerk-react";
-import { Form, redirect, useLoaderData } from "react-router";
+import { Form, Link, redirect, useLoaderData } from "react-router";
 import FormGroup from "../components/FormGroup";
 import "../Settings.css";
 import { getCompanies, updateCompany } from "../api/company";
@@ -31,7 +31,10 @@ const EditSettings = () => {
       <ChatBox company={companyData} />
       <div className="settings-header">
         <UserButton className="clerk-user" />
-        <h1>ChatBox</h1>
+        <h1><Link to={`../`}>
+        ChatBox
+        </Link>
+        </h1>
       </div>
       <Form method="post" className="settings-form">
         <input type="hidden" name="companyId" value={companyData.id} />
