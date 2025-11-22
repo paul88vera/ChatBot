@@ -4,6 +4,7 @@
   color: rgb(246, 246, 231);
   background-color: #2f2f2f;
   --border-color: rgb(166, 174, 184);
+  --accent-color: rgb(100, 149, 237);
 }
 
 * {
@@ -12,7 +13,7 @@
 }
 
 body {
-  max-width: 600px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 0;
 }
@@ -29,6 +30,14 @@ a {
 
 a:hover {
   opacity: 0.7;
+}
+
+.footer-container {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--border-color);
+  margin-top: 2rem;
+  padding: 1rem 0 0 0;
 }
 
 @media screen and (min-width: 768px) {

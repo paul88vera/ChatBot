@@ -15,19 +15,35 @@ const Settings = () => {
 
   return (
     <>
-      <h1>Welcome to ChatBox</h1>
+        <div className="settings-header reg-header">
+          <h1>Welcome to ChatBox</h1>
+        </div>
 
       <div className="settings-container">
+        <div className="settings-para">
+          <p>We are here to provide an easy solution for a intuative ChatBox that can learn and use company knowledge to provide intelligent answers.</p>
+        </div>
+
         {companyFilter.companyChatboxActive == 0 ? (
+          <div className="settings-container-sub">
           <Link to={`/${organization.id}/${companyFilter.id}/create`}>
-            create your ChatBox
+            Create Your ChatBox
           </Link>
+          <div className="settings-para">
+          <p>Create a new ChatBox and use your branding colors.</p>
+          </div> 
+          </div>
         ) : (
+          <div className="settings-container-sub">
           <Link to={`/${organization.id}/${companyFilter.id}/edit`}>
-            edit your ChatBox
+            Edit Your ChatBox
           </Link>
+          <div className="settings-para">
+          <p>We are here to provide an easy solution for a intuative ChatBox that can learn and use company knowledge to provide intelligent answers.</p>
+          </div> 
+          </div>
         )}
-      </div>
+      </div> 
       <ChatBox company={companyFilter} />
     </>
   );

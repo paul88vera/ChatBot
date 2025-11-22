@@ -20,8 +20,9 @@ router.get("/:id", async (req, res) => {
   try {
     const connection = await db();
     const companyId = req.params.id;
+    const company = req.body;
 
-    const ownerId = getAuth(req).orgId;
+    const ownerId = company.ownerId;
 
     if (!ownerId) {
       return res.status(500).json({ error: "Company orgId missing" });
@@ -58,9 +59,9 @@ router.post("/", async (req, res) => {
       companyChatboxActive,
     } = req.body;
 
-    const { orgId } = getAuth(req).orgId;
+    const orgId = ownerId;
 
-    if (!ownerId || !orgId) {
+    if (!orgId) {
       return res.status(400).json({ error: "Organization Id is required" });
     }
 

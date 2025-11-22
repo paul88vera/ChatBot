@@ -4,41 +4,33 @@ import { useEffect, useRef, useState } from "react";
 import { getMessage } from "../api/chat";
 import MessageBox from "../props/messageBox";
 import ChatBoxBtn from "../props/chatBoxBtn";
+import { useAuth } from "@clerk/clerk-react";
 
 const ChatBox = ({ company }) => {
-  // const { company } = useState(() => {
-  //   const params = new URLSearchParams(window.location.search);
-  //   const orgId = params.get("orgId");
-  //   return { orgId };
-  // });
   const [chatbox, setChatbox] = useState();
   const [messages, setMessages] = useState([]);
   const [typing, setTyping] = useState(false);
   const msgRef = useRef(null);
 
-  // Handle Send Message
-  async function handleSend(userMessage) {
-    // 1️⃣ Add user message immediately
-    setMessages((prev) => [...prev, { sender: "user", text: userMessage }]);
+  // const companyId = company.id; // or company.companyId if that's how you stored it
+  const { getToken } = useAuth();
 
-    // 2️⃣ Show AI is typing
+
+  // Handle Send Message
+  async function handleSend(userMessage) {  
+    setMessages(prev => [...prev, { sender: "user", text: userMessage }]);
     setTyping(true);
 
     try {
-      const res = await getMessage(userMessage); // API call
-      // 3️⃣ Append AI message
-      setMessages((prev) => [...prev, { sender: "agent", text: res.reply }]);
+      const token = await getToken(); // ✅ Called inside component
+      const res = await getMessage(userMessage, company.id, token);
+      setMessages(prev => [...prev, { sender: "agent", text: res.reply }]);
     } catch (err) {
-      setMessages((prev) => [
-        ...prev,
-        { sender: "agent", text: "Oops, something went wrong!" },
-      ]);
+      setMessages(prev => [...prev, { sender: "agent", text: `Error: ${err.message}` }]);
     } finally {
-      // 4️⃣ Stop typing animation
       setTyping(false);
     }
   }
-
   // Message Board Current to top positioning
   useEffect(() => {
     if (msgRef.current) {

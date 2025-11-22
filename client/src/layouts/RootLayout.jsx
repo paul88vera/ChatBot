@@ -13,7 +13,7 @@ import {
   useParams,
 } from "react-router";
 import { attachClerkInterceptor } from "../api/base";
-import ChatBox from "../components/ChatBox";
+import Footer from "../components/Footer";
 
 const RootLayout = () => {
   const { getToken } = useAuth();
@@ -41,7 +41,7 @@ const RootLayout = () => {
       <SignedIn>
         <div className="container">
           <Outlet />
-          
+          <Footer />
         </div>
       </SignedIn>
     </>

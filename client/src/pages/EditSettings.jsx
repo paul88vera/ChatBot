@@ -36,6 +36,8 @@ const EditSettings = () => {
       <Form method="post" className="settings-form">
         <input type="hidden" name="companyId" value={companyData.id} />
         <input type="hidden" name="ownerId" value={companyData.ownerId} />
+
+        <div className="settings-form-row-col">
         <FormGroup errorMessage={errors.companyName}>
           <label htmlFor="CompanyName">Company Name:</label>
           <input
@@ -44,7 +46,7 @@ const EditSettings = () => {
             name="CompanyName"
             placeholder="(eg. Verafied Technologies)"
             defaultValue={companyData.companyName}
-          />
+            />
         </FormGroup>
         <FormGroup errorMessage={errors.companyEmail}>
           <label htmlFor="CompanyEmail">Company Email: </label>
@@ -54,7 +56,7 @@ const EditSettings = () => {
             name="CompanyEmail"
             placeholder="(eg. support@verafied.tech)"
             defaultValue={companyData.companyEmail}
-          />
+            />
         </FormGroup>
         <FormGroup errorMessage={errors.companyWebsite}>
           <label htmlFor="CompanyWebsite">Website Title: </label>
@@ -64,7 +66,7 @@ const EditSettings = () => {
             name="CompanyWebsite"
             placeholder=" (eg. VERAfied.Tech)"
             defaultValue={companyData.companyWebsite}
-          />
+            />
         </FormGroup>
         <FormGroup errorMessage={errors.companyLink}>
           <label htmlFor="CompanyLink">Website Link:</label>
@@ -74,8 +76,34 @@ const EditSettings = () => {
             name="CompanyLink"
             placeholder="(eg. https://verafied.tech)"
             defaultValue={companyData.companyLink}
-          />
+            />
         </FormGroup>
+            </div>
+          <div className="settings-form-row">
+        <FormGroup errorMessage={errors.companyColor}>
+          <label htmlFor="CompanyColor">
+            Brand Color:{" "}
+          </label>
+            <input
+              type="color"
+              id="CompanyColor"
+              name="CompanyColor"
+              defaultValue={companyData.companyColor}
+              />
+        </FormGroup>
+        <FormGroup errorMessage={errors.companyDirection}>
+          <label htmlFor="CompanyDirection">
+            ChatBox Direction:{" "}
+          </label>
+            <select
+              id="CompanyDirection"
+              name="CompanyDirection"
+              defaultValue={companyData.companyDirection}>
+              <option value="left">Left</option>
+              <option value="right">Right</option>
+            </select>
+        </FormGroup>
+        </div>
         <FormGroup errorMessage={errors.companyDescription}>
           <label htmlFor="CompanyDescription">Company Description: </label>
           <textarea
@@ -95,29 +123,7 @@ const EditSettings = () => {
             placeholder="(eg. We are the #1 IT service provider in San Antonio, etc.)"
             defaultValue={companyData.companyFaqs}></textarea>
         </FormGroup>
-        <FormGroup errorMessage={errors.companyColor}>
-          <label htmlFor="CompanyColor">
-            Brand Color:{" "}
-            <input
-              type="color"
-              id="CompanyColor"
-              name="CompanyColor"
-              defaultValue={companyData.companyColor}
-            />
-          </label>
-        </FormGroup>
-        <FormGroup errorMessage={errors.companyDirection}>
-          <label htmlFor="CompanyDirection">
-            ChatBox Direction:{" "}
-            <select
-              id="CompanyDirection"
-              name="CompanyDirection"
-              defaultValue={companyData.companyDirection}>
-              <option value="left">Left</option>
-              <option value="right">Right</option>
-            </select>
-          </label>
-        </FormGroup>
+        
         <button type="submit">Save Settings</button>
       </Form>
     </div>

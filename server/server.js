@@ -22,19 +22,19 @@ app.use(
   })
 );
 
-// === AUTH ===
-async function requireAuth(req, res, next) {
-  const { userId, orgId } = getAuth(req);
+// // === AUTH ===
+// async function requireAuth(req, res, next) {
+//   const { userId, orgId } = getAuth(req);
 
-  if (!userId || !orgId) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
+//   if (!userId || !orgId) {
+//     return res.status(401).json({ message: "Unauthorized" });
+//   }
 
-  next();
-}
+//   next();
+// }
 
 // === ROUTES ===
-app.use("/api", requireAuth, routes);
+app.use("/api", routes);
 
 // === START SERVER ===
 app.listen(PORT, "0.0.0.0", () => {

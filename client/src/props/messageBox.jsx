@@ -89,13 +89,13 @@ const MessageBox = ({
         />
       </div>
       <div className="chatbox-copyright">
-        <p>ChatBox</p>
+        <p>ChatBox Inc.</p>
         <p>
-          <GiTechnoHeart style={{ color: company.companyColor }} />
+          <GiTechnoHeart style={{ color: company.companyColor, marginTop:'.4rem' }} />
         </p>
 
-        <Link to={company.companyLink} target="_blank">
-          <b>{company.companyWebsite}</b>
+        <Link to="https://verafied.tech" target="_blank">
+          <b>VERAfied.Tech</b>
         </Link>
       </div>
     </div>

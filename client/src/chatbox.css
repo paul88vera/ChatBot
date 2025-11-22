@@ -1,5 +1,5 @@
 .chatbox-main {
-  position: absolute;
+  position: fixed;
   bottom: 2rem;
   height: auto;
   max-height: 800px;

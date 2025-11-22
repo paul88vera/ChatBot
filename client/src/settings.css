@@ -1,18 +1,59 @@
 :root {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  color: antiquewhite;
+  border-radius: 5px;
+  min-height: 100svh;
+}
+.settings-container a, .settings-container-sub a {
+  color: white;
+  border: 2px solid var(--border-color);
+  background-color: var(--accent-color);
+  text-decoration: none;
+  padding: .5rem;
+  border-radius: 5px;
+  text-align: center;
+}
+.settings-container-sub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 900px;
+}
+
 .settings-header {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2rem;
+  text-align: center;
+  margin-bottom: 1rem;
   gap: 2rem;
+}
+.reg-header {
+  font-size: 2rem;
+}
+.settings-para {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  max-width: 900px;
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--text-color);
 }
 .settings-form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-width: 600px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 1rem;
   border: solid 1px var(--border-color);
@@ -30,7 +71,7 @@
   transition: background-color ease-in-out;
 }
 .settings-form button[type="submit"]:hover {
-  background-color: rgb(100, 149, 237);
+  background-color: var(--accent-color);
 }
 .form-group {
   display: flex;
@@ -54,7 +95,7 @@ textarea {
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
-  border-color: rgb(100, 149, 237);
+  border-color: var(--accent-color);
 }
 .form-group .error-message {
   color: rgb(255, 99, 71);
@@ -77,6 +118,17 @@ textarea {
   outline: none;
   border: solid 2px rgb(100, 149, 237);
 }
+
+.settings-form-row-col{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.settings-form-row {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
 @media screen and (min-width: 768px) {
   .settings-header {
     justify-content: flex-start;
@@ -85,4 +137,12 @@ textarea {
   .settings-form {
     padding: 2rem;
   }
+  .reg-header {
+    justify-content: center;
+    text-align: center;
+  }
+  .settings-form-row-col {
+    flex-direction: row;
+  }
 }
+
