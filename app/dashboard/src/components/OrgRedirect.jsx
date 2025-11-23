@@ -9,5 +9,5 @@ export function OrgRedirect() {
     return <div>Loading...</div>;
   }
 
-  return <Navigate to={`/${organization.id}/settings`} replace />;
+  return <Navigate to={`/${organization.id}/dashboard`} replace />;
 }

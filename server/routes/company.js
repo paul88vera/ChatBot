@@ -20,13 +20,13 @@ router.get("/:id", async (req, res) => {
   try {
     const connection = await db();
     const companyId = req.params.id;
-    const company = req.body;
+    // const company = req.body;
 
-    const ownerId = company.ownerId;
+    // const ownerId = company.ownerId;
 
-    if (!ownerId) {
-      return res.status(500).json({ error: "Company orgId missing" });
-    }
+    // if (!ownerId) {
+    //   return res.status(500).json({ error: "Company orgId missing" });
+    // }
 
     const [rows] = await connection.query(
       "SELECT * FROM companies WHERE id = ?",

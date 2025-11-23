@@ -5,7 +5,7 @@ import {
   useAuth,
   useOrganization,
 } from "@clerk/clerk-react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   Outlet,
   ScrollRestoration,
@@ -29,7 +29,7 @@ const RootLayout = () => {
   useEffect(() => {
     if (organization && organization.id && !orgId) {
       // Redirect to URL with orgId
-      navigate(`/${organization.id}/settings`, { replace: true });
+      navigate(`/${organization.id}/dashboard`, { replace: true });
     }
   }, [organization, orgId, navigate]);
   return (
@@ -47,4 +47,4 @@ const RootLayout = () => {
     </>
   );
 };
-export default RootLayout;
+export default React.memo(RootLayout);

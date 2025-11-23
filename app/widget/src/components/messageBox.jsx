@@ -3,8 +3,6 @@ import { FaChevronDown, FaUserAstronaut } from "react-icons/fa6";
 import { GiTechnoHeart } from "react-icons/gi";
 import { MdSend } from "react-icons/md";
 
-import { Link } from "react-router";
-
 const MessageBox = ({
   positionStyle,
   messages,
@@ -94,9 +92,9 @@ const MessageBox = ({
           <GiTechnoHeart style={{ color: company.companyColor, marginTop:'.4rem' }} />
         </p>
 
-        <Link to="https://verafied.tech" target="_blank">
+        <a href="https://verafied.tech" target="_blank">
           <b>VERAfied.Tech</b>
-        </Link>
+        </a>
       </div>
     </div>
   );

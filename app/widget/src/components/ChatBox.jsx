@@ -2,9 +2,8 @@ import "../chatbox.css";
 import { useEffect, useRef, useState } from "react";
 
 import { getMessage } from "../api/chat";
-import MessageBox from "../props/messageBox";
-import ChatBoxBtn from "../props/chatBoxBtn";
-import { useAuth } from "@clerk/clerk-react";
+import MessageBox from "./messageBox";
+import ChatBoxBtn from "./chatBoxBtn";
 
 const ChatBox = ({ company }) => {
   const [chatbox, setChatbox] = useState();
@@ -12,18 +11,14 @@ const ChatBox = ({ company }) => {
   const [typing, setTyping] = useState(false);
   const msgRef = useRef(null);
 
-  // const companyId = company.id; // or company.companyId if that's how you stored it
-  const { getToken } = useAuth();
-
 
   // Handle Send Message
   async function handleSend(userMessage) {  
     setMessages(prev => [...prev, { sender: "user", text: userMessage }]);
     setTyping(true);
 
-    try {
-      const token = await getToken(); // ✅ Called inside component
-      const res = await getMessage(userMessage, company.id, token);
+    try { 
+      const res = await getMessage(userMessage, company.id);
       setMessages(prev => [...prev, { sender: "agent", text: res.reply }]);
     } catch (err) {
       setMessages(prev => [...prev, { sender: "agent", text: `Error: ${err.message}` }]);

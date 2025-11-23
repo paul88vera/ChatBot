@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate } from "react-router";
 import RootLayout from "./layouts/RootLayout";
 import { EditSettingsPage } from "./pages/EditSettings";
-import { SettingsRoute } from "./pages/Settings";
+import { SettingsRoute } from "./pages/Dashboard";
 import ErrorMessage from "./pages/ErrorMessage";
 
 import { OrgRedirect } from "./components/OrgRedirect";
@@ -20,18 +20,13 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Navigate to="settings" />,
+            element: <Navigate to="dashboard" />,
           },
           {
-            path: "home",
-            element: <div>Home Page</div>,
-          },
-
-          {
-            path: "settings",
+            path: "dashboard",
             ...SettingsRoute,
           },
-          { path: ":id/edit", ...EditSettingsPage },
+          { path: ":id/settings", ...EditSettingsPage },
         ],
       },
     ],

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Prevent styling conflicts inside iframe -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Widget title (not visible in iframe unless opened in tab) -->
+    <title>Chat Widget</title>
+
+    <!-- Add any favicon if needed -->
+    <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
+
+    <!-- SECURITY: Prevent embedding if not inside iframe -->
+    <script>
+      // If someone opens widget URL directly in browser,
+      // you can redirect or show a warning (optional)
+      if (window.self === window.top) {
+        console.log("Widget loaded in top window (not iframe)");
+      }
+    </script>
+
+    
+  </head>
+
+  <body>
+    <!-- Vite injects your React app here -->
+    <div id="root"></div>
+
+    <!-- Your bundled JS entry file from /src/main.jsx -->
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+

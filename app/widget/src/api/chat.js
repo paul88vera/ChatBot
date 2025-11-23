@@ -1,9 +1,8 @@
-export async function getMessage(message, companyId, token) {
+export async function getMessage(message, companyId) {
 
   const res = await fetch("http://localhost:5400/api/chat", {
     method: "POST",
-    headers: { "Content-Type": "application/json" ,
-    Authorization: `Bearer ${token}`,},
+    headers: { "Content-Type": "application/json"},
     body: JSON.stringify({
       message,
       companyId

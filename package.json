@@ -1,10 +1,14 @@
 {
+  "workspaces": [
+    "apps/dashboard",
+    "apps/widget"
+  ],
   "devDependencies": {
     "concurrently": "^9.2.1"
   },
-  "name": "chatbot",
+  "name": "chatbox",
   "version": "1.0.0",
-  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "description": "An intelligent Ai chatbot that leverages GROK Ai that will answer client questions with professional company based answers.",
   "main": "index.js",
   "dependencies": {
     "ansi-regex": "^5.0.1",
@@ -32,20 +36,20 @@
     "yargs-parser": "^21.1.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "server": "cd server/ && node server.js",
-    "client": "cd client/ && npm run dev",
-    "dev": "concurrently \"npm run client\" \"npm run server\""
+    "widget": "cd app/widget/ && npm run dev",
+    "dashboard": "cd app/dashboard/ && npm run dev",
+    "dev": "concurrently \"npm run dashboard\" \"npm run server\""
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/paul88vera/ChatBot.git"
+    "url": "git+https://github.com/paul88vera/ChatBox.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Paul Vera",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/paul88vera/ChatBot/issues"
+    "url": "https://github.com/paul88vera/ChatBox/issues"
   },
-  "homepage": "https://github.com/paul88vera/ChatBot#readme"
+  "homepage": "https://github.com/paul88vera/ChatBox#readme"
 }

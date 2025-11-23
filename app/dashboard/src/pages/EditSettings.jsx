@@ -1,9 +1,8 @@
 import { UserButton } from "@clerk/clerk-react";
 import { Form, Link, redirect, useLoaderData } from "react-router";
 import FormGroup from "../components/FormGroup";
-import "../Settings.css";
+import "../Dashboard.css";
 import { getCompanies, updateCompany } from "../api/company";
-import ChatBox from "../components/ChatBox";
 
 const EditSettings = () => {
   const { company } = useLoaderData();
@@ -28,7 +27,6 @@ const EditSettings = () => {
   const errors = {}; // Placeholder for error messages
   return (
     <div>
-      <ChatBox company={companyData} />
       <div className="settings-header">
         <UserButton className="clerk-user" />
         <h1><Link to={`../`}>
@@ -155,7 +153,7 @@ async function action({ request }) {
 
   await updateCompany(companyData.id, companyData);
 
-  return redirect(`/${companyData.ownerId}/settings`);
+  return redirect(`/${companyData.ownerId}/dashboard`);
 }
 
 export const EditSettingsPage = {

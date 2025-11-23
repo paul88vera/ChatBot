@@ -1,11 +1,10 @@
+import React from "react";
 import { Link, useLoaderData } from "react-router";
-import "../Settings.css";
+import "../dashboard.css";
 import { getCompanies } from "../api/company";
 import { useOrganization } from "@clerk/clerk-react";
-import ChatBox from "../components/ChatBox";
-import React from "react";
 
-const Settings = () => {
+const Dashboard = () => {
   const company = useLoaderData();
   const { organization } = useOrganization();
 
@@ -36,7 +35,7 @@ const Settings = () => {
           </div>
         ) : (
           <div className="settings-container-sub">
-          <Link to={`/${organization.id}/${companyFilter.id}/edit`}>
+          <Link to={`/${organization.id}/${companyFilter.id}/settings`}>
             Edit Your ChatBox
           </Link>
           <div className="settings-para">
@@ -45,7 +44,6 @@ const Settings = () => {
           </div>
         )}
       </div> 
-      <ChatBox company={companyFilter} />
     </>
   );
 };
@@ -56,8 +54,8 @@ async function loader({ request: { signal } }) {
 }
 
 export const SettingsRoute = {
-  element: <Settings />,
+  element: <Dashboard />,
   loader,
 };
 
-export default React.memo(Settings);
+export default React.memo(Dashboard);
