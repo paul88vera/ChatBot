@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { getAuth } = require("@clerk/express");
+// const { getAuth } = require("@clerk/express");
+const crypto =  require("crypto");
 
 const db = require("../db/connections.js");
+
+
 
 router.get("/", async (req, res) => {
   try {
@@ -29,7 +32,7 @@ router.get("/:id", async (req, res) => {
     // }
 
     const [rows] = await connection.query(
-      "SELECT * FROM companies WHERE id = ?",
+      "SELECT * FROM companies WHERE publicId = ?",
       [companyId]
     );
 
@@ -46,6 +49,7 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const connection = await db();
+    
     const {
       ownerId,
       companyName,
@@ -65,10 +69,14 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ error: "Organization Id is required" });
     }
 
+    // Generate public ID
+    const publicId = "cmp_" + crypto.randomBytes(4).toString("hex");
+
     const [result] = await connection.query(
-      "INSERT INTO companies (ownerId, companyName, companyEmail, companyWebsite, companyLink, companyDescription, companyFaqs, companyColor, companyDirection, companyChatboxActive) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO companies (ownerId, publicId, companyName, companyEmail, companyWebsite, companyLink, companyDescription, companyFaqs, companyColor, companyDirection, companyChatboxActive) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         orgId,
+        publicId,
         companyName,
         companyEmail,
         companyWebsite,
@@ -82,6 +90,7 @@ router.post("/", async (req, res) => {
     );
     res.status(201).json({
       id: result.insertId,
+      publicId,
       ownerId,
       companyName,
       companyEmail,

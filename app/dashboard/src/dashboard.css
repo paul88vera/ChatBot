@@ -34,9 +34,9 @@ h1, h2 {
 }
 .header-icon-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding: 0;
 }
 .header-icon {
@@ -157,7 +157,7 @@ textarea {
   padding: 4rem 2rem;
   margin-top: 2rem;
   text-align: center;
-  background-color: black;
+  background-color: rgb(31, 31, 31);
   border-radius: 5px;
   border: 1px solid var(--border-color);
   position: relative;

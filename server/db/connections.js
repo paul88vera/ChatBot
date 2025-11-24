@@ -9,6 +9,9 @@ async function connectDB() {
       password: process.env.VITE_SQL_PASSWD || "WebDev88!!",
       database: process.env.VITE_SQL_DB || "chatbot_db",
       port: process.env.VITE_DB_PORT || 3306,
+      waitForConnections: true,
+      connectionLimit: 10, // prevent too many connections
+      queueLimit: 0,
     });
 
     console.log("Database connected successfully!");

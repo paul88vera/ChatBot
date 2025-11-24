@@ -3,8 +3,8 @@ import RootLayout from "./layouts/RootLayout";
 import { EditSettingsPage } from "./pages/EditSettings";
 import { SettingsRoute } from "./pages/Dashboard";
 import ErrorMessage from "./pages/ErrorMessage";
-
 import { OrgRedirect } from "./components/OrgRedirect";
+import { CreateSettingsPage } from "./pages/CreateChatBox";
 
 const router = createBrowserRouter([
   {
@@ -26,11 +26,13 @@ const router = createBrowserRouter([
             path: "dashboard",
             ...SettingsRoute,
           },
-          { path: ":id/settings", ...EditSettingsPage },
+          { path: ":id/edit_settings", ...EditSettingsPage },
+          { path: "create_settings", ...CreateSettingsPage },
         ],
       },
     ],
   },
+  {path: "*", element: <Navigate to="dashboard" />,}
 ]);
 
 export default router;
