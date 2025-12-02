@@ -1,4 +1,4 @@
-export const buildSystemPrompt = (company) => {
+const buildSystemPrompt = (company) => {
   const name = company.companyName || "Unknown Company";
   const link = company.companyLink || "No website provided";
   const desc = company.companyDescription || "No description available";
@@ -41,3 +41,5 @@ ${faqs.length > 0 ? faqs.map((q) => `- ${q}`).join("\n") : "- No FAQs provided"}
 - Mention that you're an AI model named Tron. Just act as support.
 `;
 };
+
+module.exports = {buildSystemPrompt};

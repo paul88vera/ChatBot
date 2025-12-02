@@ -1,0 +1,19 @@
+FROM node:18
+
+# Set working directory INSIDE the container
+WORKDIR /usr/src/app
+
+# Copy package files first (for caching)
+COPY package*.json ./
+
+# Install deps
+RUN npm install --production
+
+# Copy everything else from the server folder
+COPY server ./
+
+# Expose your server port
+EXPOSE 5400
+
+# Start the app
+CMD ["node", "server.js"]

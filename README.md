@@ -20,6 +20,11 @@ Back-End:
 - Cors
 - Dotenvx
 
+Widget:
+
+- React.js
+- Amazon S3
+
 ## Features
 
 - Enter Company information to use with Ai frequent questions

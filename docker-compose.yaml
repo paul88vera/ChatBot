@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile.server
+    container_name: chatbot_server
+    ports:
+      - "5400:5400" # API exposed on LAN
+    environment:
+      - VITE_SERVER_PORT=5400
+      - VITE_CLERK_PUBLISHABLE_KEY=${VITE_CLERK_PUBLISHABLE_KEY}
+      - VITE_CLERK_SECRET=${VITE_CLERK_SECRET}
+      - VITE_SQL_USER=${VITE_SQL_USER}
+      - VITE_SQL_PASSWD=${VITE_SQL_PASSWD}
+      - VITE_SQL_DB=${VITE_SQL_DB}
+      - VITE_DB_HOST=${VITE_DB_HOST}
+      - VITE_DB_PORT=${VITE_DB_PORT}
+      # volumes:
+      #   - ./server:/app # mount local server code → container
+      #   - /app/node_modules # container keeps its own node_modules
+    restart: always
+    command: >
+      sh -c "node server.js"
