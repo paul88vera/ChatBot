@@ -122,7 +122,7 @@ const Dashboard = () => {
             <input
               type="text"
               id="company-script"
-              defaultValue={`<script src='http://chat.verafied.tech/embed.js' data-company='${companyFilter.publicId}'></script>`}></input>
+              defaultValue={`<script src='http://chat.verafied.tech.s3-website-us-east-1.amazonaws.com' data-company='${companyFilter.publicId}'></script>`}></input>
           </div>
         </div>
       </div>

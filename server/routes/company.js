@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-// const { getAuth } = require("@clerk/express");
 const crypto =  require("crypto");
 
 const db = require("../db/connections.js");
@@ -23,13 +22,6 @@ router.get("/:id", async (req, res) => {
   try {
     const connection = await db();
     const companyId = req.params.id;
-    // const company = req.body;
-
-    // const ownerId = company.ownerId;
-
-    // if (!ownerId) {
-    //   return res.status(500).json({ error: "Company orgId missing" });
-    // }
 
     const [rows] = await connection.query(
       "SELECT * FROM companies WHERE publicId = ?",
