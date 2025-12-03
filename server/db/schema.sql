@@ -11,7 +11,7 @@ CREATE TABLE companies (
   companyFaqs JSON,
   companyColor VARCHAR(9),
   companyDirection ENUM('left','right') NOT NULL DEFAULT 'right',
-  companyChatboxActive BOOLEAN DEFAULT TRUE,
+  companyChatboxActive TINYINT(1) NOT NULL DEFAULT 1,
   createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

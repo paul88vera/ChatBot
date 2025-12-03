@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLoaderData } from "react-router";
+import { Link, redirect, useLoaderData } from "react-router";
 import "../dashboard.css";
 import { FaCopy } from "react-icons/fa";
 import { getCompanies } from "../api/company";
@@ -7,7 +7,7 @@ import { BiSolidMessageRoundedDots } from "react-icons/bi";
 import { PiSignOutBold } from "react-icons/pi";
 
 
-import { SignOutButton, useClerk, useOrganization } from "@clerk/clerk-react";
+import { SignOutButton, useClerk, useOrganization, SignIn } from "@clerk/clerk-react";
 
 const Dashboard = () => {
   const { signOut } = useClerk();
@@ -15,6 +15,7 @@ const Dashboard = () => {
   const handleChange = (checked) => {
     if (checked) signOut();
   };
+
   const company = useLoaderData();
   const { organization } = useOrganization();
 
@@ -46,7 +47,7 @@ const Dashboard = () => {
     <>
       <div className="header-icon-container">
         <div className="header-signout">
-          <SignOutButton>
+          <SignOutButton redirectUrl="/sign-in">
             <PiSignOutBold style={{fontSize: '2rem', marginBottom: '1rem', cursor: 'pointer'}} title="SignOut" />
           </SignOutButton>
         </div>

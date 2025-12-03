@@ -1,27 +1,19 @@
 import { UserButton } from "@clerk/clerk-react";
-import { Form, Link, redirect } from "react-router";
+import { Form, Link, redirect, useActionData } from "react-router";
 import FormGroup from "../components/FormGroup";
 import "../Dashboard.css";
 import { createCompany } from "../api/company";
 import { useOrganization } from "@clerk/clerk-react";
-import React, { useState } from "react";
+import React from "react";
 
 const CreateSettings = () => {
   const { organization } = useOrganization();
-
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [websiteTitle, setWebsiteTitle] = useState("");
-  const [websiteLink, setWebsiteLink] = useState("");
-  const [companyColor, setCompanyColor] = useState("");
-  const [companyDirection, setCompanyDirection] = useState("");
-  const [companyDescription, setCompanyDescription] = useState("");
-  const [companyFaqs, setCompanyFaqs] = useState("");
+  const actionData = useActionData();
+  const errors = actionData?.errors || {};
+  const values = actionData?.values || {};
 
   const orgId = organization.id;
 
-  const errors = {}; // Placeholder for error messages
-  const companyData = {};
   return (
     <div>
       <div className="settings-header">
@@ -30,7 +22,23 @@ const CreateSettings = () => {
           <Link to={`../`}>ChatBox</Link>
         </h1>
       </div>
-      <Form method="post" className="settings-form">
+      <Form
+        method="post"
+        className="settings-form"
+        onSubmit={(e) => {
+          const formData = new FormData(e.target);
+
+          const name = formData.get("CompanyName");
+          const desc = formData.get("CompanyDescription");
+          const color = formData.get("CompanyColor");
+
+          // Validation
+          if (!name || !desc || !color) {
+            e.preventDefault(); // <-- STOP THE SUBMIT
+            alert("Fill all required fields!");
+            return;
+          }
+        }}>
         <input type="hidden" name="ownerId" value={orgId} />
 
         <div className="settings-form-row-col">
@@ -41,11 +49,8 @@ const CreateSettings = () => {
               id="CompanyName"
               name="CompanyName"
               placeholder="(eg. Verafied Technologies)"
-              value={name}
-              defaultValue={companyData.companyName}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
+              defaultValue={values.companyName || ""}
+              
             />
           </FormGroup>
           <FormGroup errorMessage={errors.companyEmail}>
@@ -55,11 +60,8 @@ const CreateSettings = () => {
               id="CompanyEmail"
               name="CompanyEmail"
               placeholder="(eg. support@verafied.tech)"
-              value={email}
-              defaultValue={companyData.companyEmail}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
+              defaultValue={values.companyEmail || ""}
+              
             />
           </FormGroup>
           <FormGroup errorMessage={errors.companyWebsite}>
@@ -69,11 +71,8 @@ const CreateSettings = () => {
               id="CompanyWebsite"
               name="CompanyWebsite"
               placeholder=" (eg. VERAfied.Tech)"
-              value={websiteTitle}
-              defaultValue={companyData.companyWebsite}
-              onChange={(e) => {
-                setWebsiteTitle(e.target.value);
-              }}
+              defaultValue={values.companyWebsite || ""}
+              
             />
           </FormGroup>
           <FormGroup errorMessage={errors.companyLink}>
@@ -83,11 +82,8 @@ const CreateSettings = () => {
               id="CompanyLink"
               name="CompanyLink"
               placeholder="(eg. https://verafied.tech)"
-              value={websiteLink}
-              defaultValue={companyData.companyLink}
-              onChange={(e) => {
-                setWebsiteLink(e.target.value);
-              }}
+              defaultValue={values.companyLink || ""}
+              
             />
           </FormGroup>
         </div>
@@ -98,11 +94,7 @@ const CreateSettings = () => {
               type="color"
               id="CompanyColor"
               name="CompanyColor"
-              value={companyColor}
-              defaultValue={companyData.companyColor}
-              onChange={(e) => {
-                setCompanyColor(e.target.value);
-              }}
+              defaultValue={values.companyColor}
             />
           </FormGroup>
           <FormGroup errorMessage={errors.companyDirection}>
@@ -110,11 +102,7 @@ const CreateSettings = () => {
             <select
               id="CompanyDirection"
               name="CompanyDirection"
-              value={companyDirection}
-              defaultValue={companyData.companyDirection}
-              onChange={(e) => {
-                setCompanyDirection(e.target.value);
-              }}>
+              defaultValue={values.companyDirection}>
               <option value="left">Left</option>
               <option value="right">Right</option>
             </select>
@@ -126,11 +114,7 @@ const CreateSettings = () => {
             id="CompanyDescription"
             name="CompanyDescription"
             placeholder="(Be as descriptive as you can here with as much company information for services.)"
-            value={companyDescription}
-            defaultValue={companyData.companyDescription}
-            onChange={(e) => {
-              setCompanyDescription(e.target.value);
-            }}></textarea>
+            defaultValue={values.companyDescription || ""}></textarea>
         </FormGroup>
         <FormGroup errorMessage={errors.companyFaqs}>
           <label htmlFor="CompanyFaqs">
@@ -141,18 +125,33 @@ const CreateSettings = () => {
             id="CompanyFaqs"
             name="CompanyFaqs"
             placeholder="(eg. We are the #1 IT service provider in San Antonio, etc.)"
-            value={companyFaqs}
-            defaultValue={companyData.companyFaqs}
-            onChange={(e) => {
-              setCompanyFaqs(e.target.value);
-            }}></textarea>
+            defaultValue={values.companyFaqs || ""}
+            ></textarea>
         </FormGroup>
 
-        <button type="submit">Save Settings</button>
+        <button type="submit">
+          Save Settings
+        </button>
       </Form>
     </div>
   );
 };
+
+function postFormValidator({
+  companyName,
+  companyEmail,
+  companyDescription,
+  companyFaqs,
+}) {
+  const errors = {};
+
+  if (!companyName?.trim()) errors.companyName = "Required";
+  if (!companyEmail?.trim()) errors.companyEmail = "Required";
+  if (!companyDescription?.trim()) errors.companyDescription = "Required";
+  if (!companyFaqs?.trim()) errors.companyFaqs = "Required";
+
+  return errors;
+}
 
 async function action({ request }) {
   const formData = await request.formData();
@@ -169,9 +168,15 @@ async function action({ request }) {
     companyDirection: formData.get("CompanyDirection"),
   };
 
+  const errors = postFormValidator(companyData);
+
+  if (Object.keys(errors).length > 0) {
+    return { errors, values: companyData };
+  }
+
   await createCompany(companyData);
 
-  return redirect(`/${companyData.ownerId}/dashboard`);
+  return redirect(`/dashboard`);
 }
 
 export const CreateSettingsPage = {

@@ -23,6 +23,7 @@ router.get("/:id", async (req, res) => {
     const connection = await db();
     const companyId = req.params.id;
 
+
     const [rows] = await connection.query(
       "SELECT * FROM companies WHERE publicId = ?",
       [companyId]
@@ -38,11 +39,100 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// router.post("/", async (req, res) => {
+//   try {
+//     const connection = await db();
+    
+//     const {
+//       ownerId,
+//       companyName,
+//       companyEmail,
+//       companyWebsite,
+//       companyLink,
+//       companyDescription,
+//       companyFaqs,
+//       companyColor,
+//       companyDirection,
+//       companyChatboxActive,
+//     } = req.body;
+
+//     const orgId = ownerId;
+
+//     if (!orgId) {
+//       return res.status(400).json({ error: "Organization Id is required" });
+//     }
+
+//     // Generate public ID
+//     const publicId = "cmp_" + crypto.randomBytes(4).toString("hex");
+
+//     const [result] = await connection.query(
+//       "INSERT INTO companies (ownerId, publicId, companyName, companyEmail, companyWebsite, companyLink, companyDescription, companyFaqs, companyColor, companyDirection, companyChatboxActive) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+//       [
+//         orgId,
+//         publicId,
+//         companyName,
+//         companyEmail,
+//         companyWebsite,
+//         companyLink,
+//         companyDescription,
+//         JSON.stringify(companyFaqs),
+//         companyColor,
+//         companyDirection,
+//         companyChatboxActive,
+//       ]
+//     );
+//     res.status(201).json({
+//       id: result.insertId,
+//       publicId,
+//       ownerId,
+//       companyName,
+//       companyEmail,
+//       companyWebsite,
+//       companyLink,
+//       companyDescription,
+//       companyFaqs,
+//       companyColor,
+//       companyDirection,
+//       companyChatboxActive,
+//     });
+//   } catch (error) {
+//     res.status(500).json({ error: "Failed to create company" });
+//   }
+// });
+
+// router.put("/:id", async (req, res) => {
+//   try {
+//     const connection = await db();
+//     const companyId = req.params.id;
+//     const updateData = { ...req.body };
+//     if (updateData.companyFaqs) {
+//       updateData.companyFaqs = JSON.stringify(updateData.companyFaqs);
+//     }
+
+//     const ownerId = updateData.ownerId;
+
+//     if (!ownerId) {
+//       return res.status(500).json({ error: "Company orgId missing" });
+//     }
+
+//     const [result] = await connection.query(
+//       "UPDATE companies SET ? WHERE id = ?",
+//       [updateData, companyId]
+//     );
+//     if (result.affectedRows === 0) {
+//       return res.status(404).json({ error: "Company not found" });
+//     }
+//     res.json({ id: companyId, ...updateData });
+//   } catch (error) {
+//     res.status(500).json({ error: "Failed to update company" });
+//   }
+// });
+
 router.post("/", async (req, res) => {
   try {
     const connection = await db();
-    
-    const {
+
+    let {
       ownerId,
       companyName,
       companyEmail,
@@ -55,19 +145,27 @@ router.post("/", async (req, res) => {
       companyChatboxActive,
     } = req.body;
 
-    const orgId = ownerId;
-
-    if (!orgId) {
+    if (!ownerId) {
       return res.status(400).json({ error: "Organization Id is required" });
     }
+
+    // Normalize companyChatboxActive: default to true (1)
+    companyChatboxActive =
+      companyChatboxActive === undefined
+        ? 1
+        : companyChatboxActive
+        ? 1
+        : 0;
 
     // Generate public ID
     const publicId = "cmp_" + crypto.randomBytes(4).toString("hex");
 
     const [result] = await connection.query(
-      "INSERT INTO companies (ownerId, publicId, companyName, companyEmail, companyWebsite, companyLink, companyDescription, companyFaqs, companyColor, companyDirection, companyChatboxActive) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      `INSERT INTO companies 
+      (ownerId, publicId, companyName, companyEmail, companyWebsite, companyLink, companyDescription, companyFaqs, companyColor, companyDirection, companyChatboxActive)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
-        orgId,
+        ownerId,
         publicId,
         companyName,
         companyEmail,
@@ -80,6 +178,7 @@ router.post("/", async (req, res) => {
         companyChatboxActive,
       ]
     );
+
     res.status(201).json({
       id: result.insertId,
       publicId,
@@ -92,9 +191,10 @@ router.post("/", async (req, res) => {
       companyFaqs,
       companyColor,
       companyDirection,
-      companyChatboxActive,
+      companyChatboxActive: Boolean(companyChatboxActive),
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Failed to create company" });
   }
 });
@@ -104,28 +204,44 @@ router.put("/:id", async (req, res) => {
     const connection = await db();
     const companyId = req.params.id;
     const updateData = { ...req.body };
+
     if (updateData.companyFaqs) {
       updateData.companyFaqs = JSON.stringify(updateData.companyFaqs);
     }
 
-    const ownerId = updateData.ownerId;
+    // Normalize companyChatboxActive if present
+    if (updateData.companyChatboxActive !== undefined) {
+      updateData.companyChatboxActive = updateData.companyChatboxActive
+        ? 1
+        : 0;
+    }
 
+    const ownerId = updateData.ownerId;
     if (!ownerId) {
-      return res.status(500).json({ error: "Company orgId missing" });
+      return res.status(400).json({ error: "Company orgId missing" });
     }
 
     const [result] = await connection.query(
-      "UPDATE companies SET ? WHERE id = ?",
-      [updateData, companyId]
+      "UPDATE companies SET ? WHERE publicId = ?",
+      [updateData, updateData.publicId]
     );
+
     if (result.affectedRows === 0) {
       return res.status(404).json({ error: "Company not found" });
     }
+
+    // Return boolean for frontend
+    if (updateData.companyChatboxActive !== undefined) {
+      updateData.companyChatboxActive = Boolean(updateData.companyChatboxActive);
+    }
+
     res.json({ id: companyId, ...updateData });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Failed to update company" });
   }
 });
+
 
 router.delete("/:id", async (req, res) => {
   try {
