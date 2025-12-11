@@ -12,7 +12,7 @@ import {
 import { attachClerkInterceptor } from "../api/base";
 import Footer from "../components/Footer";
 
-const RootLayout = () => {
+const DashboardLayout = () => {
   const { getToken } = useAuth();
 
   useEffect(() => {
@@ -35,4 +35,4 @@ const RootLayout = () => {
     </>
   );
 };
-export default React.memo(RootLayout);
+export default React.memo(DashboardLayout);

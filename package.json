@@ -38,6 +38,7 @@
   "scripts": {
     "server": "cd server/ && node server.js",
     "widget": "cd app/widget/ && npm run dev",
+    "landing": "cd app/landing/ && npm run dev",
     "dashboard": "cd app/dashboard/ && npm run dev",
     "dev": "concurrently \"npm run dashboard\" \"npm run server\""
   },

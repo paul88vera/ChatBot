@@ -97,9 +97,9 @@ const Dashboard = () => {
         <div className="script-section-container">
           <h2>How to Use ChatBox:</h2>
           <p>
-            Place this script in the body of your website. That's it! Any edits
+            Place this script at the end of your sites HTML. That's it! Any edits
             you make to your settings will be automatically implemented in your
-            ChatBox.
+            ChatBox and will be live on your site.
           </p>
           <div className="script-section">
             <FaCopy
