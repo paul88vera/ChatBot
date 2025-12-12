@@ -2,6 +2,8 @@ import { createBrowserRouter, Navigate } from "react-router";
 import RootLayout from "./layouts/RootLayout";
 import ErrorMessage from "./pages/ErrorMessage";
 import Home from "./pages/Home";
+import Product from "./pages/Product";
+import Pricing from "./pages/Pricing";
 
 const router = createBrowserRouter([
   {
@@ -13,17 +15,22 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Navigate to="/home" />,
-          },
-          {
-            path: "home",
             element: <Home />,
           },
+          // {
+          //   path: "product",
+          //   element: <Product />,
+          // },
+          // {
+          //   path: "pricing",
+          //   element: <Pricing />,
+          // },
+          
         ],
       },
     ],
   },
-  {path: "*", element: <Navigate to="/home" />,}
+  {path: "*", element: <Navigate to="/" />,}
 ]);
 
 export default router;

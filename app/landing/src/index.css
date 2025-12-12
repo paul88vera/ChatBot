@@ -17,22 +17,39 @@ body {
   margin: 0;
   padding: 0;
   font-size: .8125rem;
+  background-image: linear-gradient(120deg, #000, #000,#242424, #000, #000, #202020);
+  overflow-x: hidden;
 }
 
 a {
   text-decoration: none;
   color: inherit;
   transition: opacity ease-in-out;
+  text-wrap: pretty;
+  text-align: center;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.desktop {
+  width: 80%;
+}
+
+.mobile {
+  width: 20% !important;
+}
 
 /* FOOTER */
 .footer-container {
   text-align: center;
   font-size: 0.875rem;
-  color: var(--border-color);
-  margin-top: 2rem;
-  padding: 1rem 0 0 0;
+  color: white;
+  padding: 0 0 2rem 0;
+
 }
 
 /* HEADER */
@@ -45,26 +62,29 @@ a {
 .header-banner {
   text-align: center;
   padding: .5rem;
-  background-image: linear-gradient(180deg, black, black, rgb(33, 33, 33));
   color: #fff;
+  width: 100%;
 }
 
-.header-nav {
+.header-nav, .header-nav_mobile {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  background-color: rgba(255, 255, 255, 0.656);
+  width: auto;
+  background-color: #ffffff;
   color: #2f2f2f;
   font-weight: 500;
   padding: 1.2rem;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(100px);
   border-bottom: solid 1px #ddd;
-  
+}
+
+.header-nav_mobile {
+  justify-content: space-between;
 }
 
 .header-nav-logo {
-  width: 10%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -72,6 +92,11 @@ a {
   align-items: center;
   font-weight: 600;
   font-size: 1rem;
+}
+
+.header-nav-links_mobile {
+  width: 20% !important;
+  padding-left: 2rem;
 }
 
 .header-nav-links {
@@ -102,8 +127,18 @@ a {
   flex-wrap: nowrap;
   gap: 1rem;
 }
+.header-nav-login_mobile {
+  width: 60% !important;
+  justify-content: end !important;
+  gap: 1rem;
+}
 
-.header-nav-link_item_fancy {
+.header-nav-link_item_fancy, .header-nav-link_item_fancy_mobile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
   padding: .4rem 1rem;
   color: #ffffff;
   background-image: linear-gradient(180deg, #161616, #161616, #000);;
@@ -114,12 +149,149 @@ a {
   background-image: linear-gradient(180deg, #161616, #161616, #202020);
 }
 
+.header-nav-link_item_fancy_mobile {
+  width: 35% !important;
+}
+
 .header-nav-login {
   width: 20%;
 }
 
 /* HOME */
 .homepage {
-  background-color: #fff;
-  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center;
+  align-content: center;
+  padding: 0;
+  margin: 0;
+}
+.homepage .hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 70svh;
+  background-color: #000000ba; /* change later */
+  background-image: url("./components/pexels-steve-9789212.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-blend-mode:overlay;
+  padding-bottom: 2rem;
+  margin-bottom: -2rem;
+}
+.homepage .hero-content {
+  max-width: 900px;
+  padding: 1rem;
+
+}
+
+.homepage .hero-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.homepage .hero-content p {
+  /* color: #2f2f2f; */
+  color: #c0c0c0;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+}
+
+/* WHY YOU NEED AI */
+.why-you-need-ai {
+  padding: 2rem 1.5rem;
+  border-radius: 50px;
+  background-color: white;
+  
+}
+.why-you-need-ai-content {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  max-width: 900px;
+}
+
+.two-column-para {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  line-height: 1.5rem;
+}
+
+.why-you-need-ai h2 {
+  font-size: 2.5rem;
+}
+
+/* REVIEWS */
+.reviews .reviews-content {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 1.7rem;
+}
+
+.reviews .card {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-between;
+  align-items: start;
+  gap: 2rem;
+  padding: 1.5rem;
+  border-radius: 20px;
+  width: 100%;
+
+  background-color: white; /* change later */
+}
+
+.reviews .card-content {
+  width: 100%;
+  padding: 0;
+  line-height: 1.5rem;
+  text-align: left;
+}
+
+.reviews .card-title {
+  text-align: left;
+}
+
+.reviews .card-title h4 {
+  font-weight: 400;
+  font-style: italic;
+  opacity: .5;
+}
+
+@media screen and (min-width: 947px) {
+  .homepage .hero-content h1 {
+    font-size: 3.5rem;
+  }
+  .why-you-need-ai {
+    padding: 2rem;
+  }
+.why-you-need-ai-content {
+  text-align: left !important;
+  padding: 2rem;
+}
+  .two-column-para {
+    flex-direction: row;
+  }
+  .reviews .reviews-content {
+    padding: 4rem .5rem;
+  }
+  .reviews .card {
+    max-width: 350px;
+  }
 }
