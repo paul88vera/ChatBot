@@ -167,7 +167,7 @@ a {
   padding: 0;
   margin: 0;
 }
-.homepage .hero {
+.hero {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -184,19 +184,25 @@ a {
   padding-bottom: 2rem;
   margin-bottom: -2rem;
 }
-.homepage .hero-content {
+
+.hero-2 {
+  height: 60svh;
+  background-image: url("./pages/pexels-merlin-11167645.jpg");
+}
+
+.hero-content {
   max-width: 900px;
   padding: 1rem;
 
 }
 
-.homepage .hero-content h1 {
+.hero-content h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
   color: white;
 }
 
-.homepage .hero-content p {
+.hero-content p {
   /* color: #2f2f2f; */
   color: #c0c0c0;
   font-size: 1.2rem;
@@ -275,7 +281,7 @@ a {
 }
 
 @media screen and (min-width: 947px) {
-  .homepage .hero-content h1 {
+  .hero-content h1 {
     font-size: 3.5rem;
   }
   .why-you-need-ai {

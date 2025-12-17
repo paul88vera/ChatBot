@@ -39,51 +39,13 @@ const Product = () => {
           the ChatBox setup form with details about your company, services, and
           preferred responses. Customize your ChatBox's design, colors, and
           behavior to match your brand. Once everything looks right, just copy
-          the generated script and paste it into your website's{" body "}
+          the generated script and paste it into your website's{" <body> "}
           tag. In minutes, your AI chatbot will be live, ready to assist
           customers 24/7.
         </p>
       </div>
           
-          {/* Starter $29 - $49 / month Best for: Small businesses starting with
-            AI support. Includes:
-            = Embedded chatbot widget
-            = 1k - 3k messages/month
-            = Basic customization (colors, welcome text)
-            = ChatBox branding stays
-            = Email Support
-
-            Pro $99 - $149 / month Best for: Businesses looking to reduce
-            support workload. Includes:
-            = Everything in Starter
-            = 10k - 20k messages/month 
-            = API connections (products, FAQs, CRM basics)
-            = Custom behavior flows
-            = Remove ChatBox branding
-            = Chat logs + analytics dashboard
-            = Priority support
-       
-        
-            Business $299 - $499 / month Best for: Companies needing full
-            branding + deep customization.
-            Includes: 
-            = Full white label + custom domain 
-            = Unlimited customization
-            = 50k+ messages/month
-            = Shopify, WordPress, Zoho, Stripe integrations
-            = Multi-agent workflows
-            = Personal onboarding + training call
-
-      Enterprise $1,000 - $5,000+ / month Best for: Large organizations with advanced or regulated needs. Includes:
-            = Dedicated infrastructure
-            = SLA guarantee 
-            = Custom features + integrations 
-            = Multi-location support 
-            = Multi-agent reasoning 
-            = Model fine-tuning + private embeddings 
-            = Compliance options (HIPAA, SOC2, etc.)
-
-      Add-Ons One-Time Setup Fees = Basic setup: $99 - $199 = Pro-level
+          {/* Add-Ons One-Time Setup Fees = Basic setup: $99 - $199 = Pro-level
       integrations: $299 - $499 = Full white-label deployment: $1,000 - $2,500
       Overage Pricing = $5 - $15 per extra 1k conversations = $1 - $3 per 100k -
       500k tokens */}
