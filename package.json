@@ -40,7 +40,7 @@
     "widget": "cd app/widget/ && npm run dev",
     "landing": "cd app/landing/ && npm run dev",
     "dashboard": "cd app/dashboard/ && npm run dev",
-    "dev": "concurrently \"npm run dashboard\" \"npm run server\""
+    "dev": "concurrently \"npm run dashboard\" \"npm run landing\" \"npm run server\""
   },
   "repository": {
     "type": "git",

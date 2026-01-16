@@ -47,7 +47,7 @@ const price =[
   {
     id: 3,
     name: "Enterprise",
-    color: "yellow",
+    color: "lime",
     range: "$1,000 - $5,000+",
     who: "Large organizations with advanced or regulated needs.",
     list: [
