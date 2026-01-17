@@ -1,11 +1,10 @@
-import PriceCard from "../components/PriceCard";
-
 const Product = () => {
   return (
-    <div style={{ color: "white" }}>
-      <div>
-        <h2>Unlock Powerful Customer Engagement with ChatBox Inc.</h2>
-        <p>
+    <div style={{ color: "white", marginBottom: '2rem' }}>
+      <div className="hero hero-2" style={{padding: "2rem"}}>
+        <div className="hero-content" style={{color: "white", maxWidth: '1240px', height: "auto"}}>
+        <h1>Unlock Powerful Customer Engagement with ChatBox Inc.</h1>
+        <p style={{maxWidth: '1000px', margin: '1rem auto'}}>
           ChatBox Inc. gives businesses a smart, customizable AI chatbot that
           instantly improves customer communication. Whether you need automated
           FAQs, lead capture, or personalized support responses, ChatBox adapts
@@ -15,9 +14,11 @@ const Product = () => {
           customization options, each client gets a chatbot tailored to their
           tone, services, and goals—no coding required.
         </p>
+        </div>
       </div>
-      <div>
-        <h2>Boost Conversions and Support Efficiency with Real Insights</h2>
+      <div style={{display: "flex", flexDirection: "row", gap: "1rem", alignContent: "center", justifyContent: "center", margin: "0rem auto 0 auto", flexWrap: "nowrap", filter: "drop-shadow(0 0 0.75rem #1f1f1fc0)", backgroundColor: 'white', borderRadius: '50px',padding: '4rem 8rem'}}>
+        <div style={{maxWidth: '1000px', color: 'black'}}>
+        <h2 style={{fontSize: '2rem'}}>Boost Conversions and Support Efficiency with Real Insights</h2>
         <p>
           Businesses using AI chatbots consistently see higher engagement,
           longer site interactions, and more captured leads. ChatBox amplifies
@@ -29,9 +30,9 @@ const Product = () => {
           customers engaged, ChatBox becomes a measurable asset that improves
           both performance and user satisfaction.
         </p>
-      </div>
-      <div>
-        <h2>Get Started in Minutes — No Technical Expertise Needed</h2>
+        </div>
+      <div style={{color: "black"}}>
+        <h2 style={{fontSize: '2rem'}}>Get Started in Minutes — No Technical Expertise Needed</h2>
         <p>
           Launching your chatbot with ChatBox Inc. is simple and
           straightforward. Start by creating your account, then choose a
@@ -43,6 +44,7 @@ const Product = () => {
           tag. In minutes, your AI chatbot will be live, ready to assist
           customers 24/7.
         </p>
+      </div>
       </div>
           
           {/* Add-Ons One-Time Setup Fees = Basic setup: $99 - $199 = Pro-level

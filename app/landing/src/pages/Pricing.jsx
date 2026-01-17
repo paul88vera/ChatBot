@@ -1,6 +1,5 @@
 import PriceCard from '../components/PriceCard';
 import price from '../salesCardPrices';
-import img1 from '/Users/paulvera/Desktop/ChatBot/app/landing/src/pages/pexels-merlin-11167645.jpg'
 import img2 from '/Users/paulvera/Desktop/ChatBot/app/landing/src/pages/pexels-fauxels-3182786.jpg'
 
 const Pricing = () => {
