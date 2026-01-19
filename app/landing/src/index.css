@@ -173,7 +173,7 @@ a {
   justify-content: center;
   align-items: center;
   text-align: center;
-  height: 70svh;
+  min-height: 70svh;
   background-color: #000000ba; /* change later */
   background-image: url("./components/pexels-steve-9789212.jpg");
   background-position: center;
@@ -186,14 +186,12 @@ a {
 }
 
 .hero-2 {
-  height: 60svh;
   background-image: url("./pages/pexels-merlin-11167645.jpg");
 }
 
 .hero-content {
   max-width: 900px;
   padding: 1rem;
-
 }
 
 .hero-content h1 {
@@ -280,17 +278,54 @@ a {
   opacity: .5;
 }
 
+
+/* Product */
+.product {
+  margin-bottom: 2rem;
+}
+
+.hero-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: 2rem;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 50px;
+  text-align: center;
+}
+
+
+.hero-content-2 {
+  max-width: 1000px;
+}
+
+.hero-3 h2 {
+  font-size: 2rem;
+  padding-bottom: 1rem;
+}
+
+.hero-3 div {
+  max-width: 1000px;
+}
+
+/* Pricing */
+
+
+
 @media screen and (min-width: 947px) {
+  /* Home */
   .hero-content h1 {
     font-size: 3.5rem;
   }
+
   .why-you-need-ai {
     padding: 2rem;
   }
-.why-you-need-ai-content {
-  text-align: left !important;
-  padding: 2rem;
-}
+  .why-you-need-ai-content {
+    text-align: left !important;
+    padding: 2rem;
+  }
   .two-column-para {
     flex-direction: row;
   }
@@ -300,4 +335,13 @@ a {
   .reviews .card {
     max-width: 350px;
   }
+
+  /* Product */
+  .hero-3 {
+    grid-template-columns: 1fr 1fr;
+    padding: 4rem;
+    text-align: left;
+  }
+
+  /* Pricing */
 }
