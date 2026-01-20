@@ -156,6 +156,32 @@ a {
 .header-nav-login {
   width: 20%;
 }
+/* MOBILE NAVIGATION */
+.mobile-navigation {
+  position: absolute;
+  top: 70px;
+  right: 10px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.mobile-navigation a {
+  padding: .2rem .4rem;
+}
+
+.mobile-navigation a:hover {
+  background-color: #d9d9de7e;
+  color: black;
+  border-radius: 5px; 
+  padding: .2rem .4rem;
+}
 
 /* HOME */
 .homepage {
@@ -187,6 +213,19 @@ a {
 
 .hero-2 {
   background-image: url("./pages/pexels-merlin-11167645.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-blend-mode:overlay;
+}
+.hero-pricing {
+  background-image: url("./pages/pexels-merlin-11167645.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-blend-mode:overlay;
   margin-bottom: -8rem;
 }
 

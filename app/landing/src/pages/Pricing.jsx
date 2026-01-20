@@ -5,12 +5,12 @@ import img2 from '/Users/paulvera/Desktop/ChatBot/app/landing/src/pages/pexels-f
 const Pricing = () => {
   return (
     <div className='pricing-container'>
-      <div className="hero hero-2">
+      <div className="hero hero-2 hero-pricing">
         <div className="hero-content">
           <h1>
           Pricing List
           </h1>
-          <p>It's a list of prices...</p>
+          <p>Powerful AI chat solutions, priced for every stage.</p>
           </div>
       </div>
       <div className='pricing-cards'>

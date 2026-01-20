@@ -5,9 +5,14 @@ import FancyButton from "./FancyButton";
 import Banner from "./Banner";
 
 const Header = () => {
-  // const banner = "Clerk raises $50m Series C";
+  const banner = "GRAND OPENING SALE - 20% OFF!";
   const [isMobile, setIsMobile] = useState();
   const [openMobile, setOpenMobile] = useState(false);
+
+  const toggleMobileNav = () => {
+    setOpenMobile(current => !current);
+    return <MobileNav />;
+  }
 
   // mobile function to check if screen size is less than 568px
   const MobileNav = () => {
@@ -28,7 +33,7 @@ const Header = () => {
     <>
       {isMobile ? (
         <div className="header">
-          <Banner link={"/contact"}>ChatBox Christmas Sale - 20% OFF!</Banner>
+          <Banner link={"/contact"}>{banner}</Banner>
           <nav className="header-nav header-nav_mobile">
             <div className="header-nav-links header-nav-links_mobile">
               <Link to="/" className="header-nav-logo mobile">
@@ -39,7 +44,7 @@ const Header = () => {
               <Link to="  /sign-in" className="header-nav-link_item">
                 Sign in
               </Link>
-              <FancyButton link={"  /dashboard"} isMobile={isMobile}>
+              <FancyButton link={"/dashboard"} isMobile={isMobile}>
                 Get started
               </FancyButton>
               <div>
@@ -50,14 +55,16 @@ const Header = () => {
                     fontWeight: "400s",
                     cursor: "pointer",
                   }}
+                  onClick={() => toggleMobileNav()}
                 />
               </div>
             </div>
+            {openMobile && <MobileNavi />}
           </nav>
         </div>
       ) : (
         <div className="header">
-          <Banner link={"/contact"}>ChatBox Christmas Sale - 20% OFF!</Banner>
+          <Banner link={"/contact"}>{banner}</Banner>
 
           <nav className="header-nav">
             <div className="header-nav-links">
@@ -83,6 +90,19 @@ const Header = () => {
         </div>
       )}
     </>
+  );
+};
+
+const MobileNavi = () => {
+  return (
+    <div className="mobile-navigation" style={{zIndex: '999'}}>
+      <Link to="/product" className="mobile-nav-link_item">
+        Product
+      </Link>
+      <Link to="/pricing" className="mobile-nav-link_item">
+        Pricing
+      </Link>
+    </div>
   );
 };
 
