@@ -17,8 +17,8 @@ const Product = () => {
         </div>
       </div>
       <div className="hero-3">
-        <div style={{maxWidth: '1000px', color: 'black'}}>
-        <h2 style={{fontSize: '2rem'}}>Boost Conversions and Support Efficiency with Real Insights</h2>
+        <div>
+        <h2>Boost Conversions and Support Efficiency with Real Insights</h2>
         <p>
           Businesses using AI chatbots consistently see higher engagement,
           longer site interactions, and more captured leads. ChatBox amplifies

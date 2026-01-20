@@ -12,7 +12,7 @@ const PriceCard = ({
 
 
   return (
-    <div key={id} style={{display: "flex", flexDirection: "column", gap: "1rem", justifyContent: "space-between", alignContent: "center", textAlign: "center", padding: "2rem", width: "100%", maxWidth: `${mwidth}`, border: `2px solid #3b3b3bff`, borderRadius: "10px", backgroundFilter: "blur(20px)", backgroundColor: "#000000"}}>
+    <div className="enterprise-card" key={id} style={{display: "flex", flexDirection: "column", gap: "1rem", justifyContent: "space-between", alignContent: "center", textAlign: "center", padding: "2rem", width: "100%", maxWidth: `${mwidth}`, border: `2px solid #3b3b3bff`, borderRadius: "10px", backgroundFilter: "blur(20px)", backgroundColor: "#000000"}}>
 
           <div>
           <h2 style={{padding: ".5rem", borderRadius: "100px", fontWeight: "400", width: "100%", maxWidth: "200px", border: `2px solid ${color}`, color: `${color}`, margin: "0 auto"}}>{name}</h2>
