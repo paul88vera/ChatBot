@@ -10,7 +10,7 @@ const Pricing = () => {
           <h1>
           Pricing List
           </h1>
-          <p>Powerful AI chat solutions, priced for every stage.</p>
+          <p>Powerful AI chat solutions, priced for every stage. Choose the plan that fits your business today—and scales tomorrow.</p>
           </div>
       </div>
       <div className='pricing-cards'>

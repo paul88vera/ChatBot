@@ -4,30 +4,34 @@ import { HiMenuAlt4 } from "react-icons/hi";
 import FancyButton from "./FancyButton";
 import Banner from "./Banner";
 
+const MOBILE_BREAKPOINT = 947;
+
 const Header = () => {
   const banner = "GRAND OPENING SALE - 20% OFF!";
-  const [isMobile, setIsMobile] = useState();
+
+  const [isMobile, setIsMobile] = useState(
+    window.innerWidth <= MOBILE_BREAKPOINT
+  );
   const [openMobile, setOpenMobile] = useState(false);
 
-  const toggleMobileNav = () => {
-    setOpenMobile(current => !current);
-    return <MobileNav />;
-  }
+  // Handle resize properly
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth <= MOBILE_BREAKPOINT;
+      setIsMobile(mobile);
 
-  // mobile function to check if screen size is less than 568px
-  const MobileNav = () => {
-    if (window.innerWidth <= 947) {
-      setIsMobile(true);
-    } else {
-      setIsMobile(false);
-      setOpenMobile(false);
-    }
+      // Auto-close mobile menu when switching to desktop
+      if (!mobile) setOpenMobile(false);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const toggleMobileNav = () => {
+    setOpenMobile(prev => !prev);
   };
 
-  // checks the size of the screen to active the mobile navigation
-  useEffect(() => {
-    window.addEventListener("resize", MobileNav);
-  });
 
   return (
     <>
@@ -96,10 +100,13 @@ const Header = () => {
 const MobileNavi = () => {
   return (
     <div className="mobile-navigation" style={{zIndex: '999'}}>
-      <Link to="/product" className="mobile-nav-link_item">
+      <Link to="/" className="mobile-nav-link_item" onClick={() => toggleMobileNav()}>
+        Home
+      </Link>
+      <Link to="/product" className="mobile-nav-link_item" onClick={() => toggleMobileNav()}>
         Product
       </Link>
-      <Link to="/pricing" className="mobile-nav-link_item">
+      <Link to="/pricing" className="mobile-nav-link_item" onClick={() => toggleMobileNav()}>
         Pricing
       </Link>
     </div>

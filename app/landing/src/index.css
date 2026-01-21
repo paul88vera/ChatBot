@@ -63,7 +63,6 @@ a {
   text-align: center;
   padding: .5rem;
   color: #fff;
-  width: 100%;
 }
 
 .header-nav, .header-nav_mobile {
@@ -379,7 +378,7 @@ a {
   justify-content: center;
   color: white;
   margin: 4rem auto 0 auto;
-  width: fit-content;
+  width: auto;
   background-color: #ffffffff;
   padding: 2rem;
   border-radius: 50px;
@@ -392,7 +391,6 @@ a {
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  max-width: 1440px;
   gap: 2rem;
 }
 
