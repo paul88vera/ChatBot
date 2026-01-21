@@ -1,3 +1,5 @@
+import Card from "../components/Card";
+
 const Home = () => {
   return (
     <div className="homepage">
@@ -46,50 +48,27 @@ const Home = () => {
 
       <div className="reviews">
         <div className="reviews-content">
-          <div className="card">
-            <div className="card-title">
-              <h3>Paul</h3>
-              <h4>Lead Systems Engineer</h4>
-            </div>
-            <div className="card-content">
-              <p>
-                "We embedded the ChatBox widget into our website in under five
+          <Card name="Paul"
+            role="Lead Systems Engineer"
+            review="We embedded the ChatBox widget into our website in under five
                 minutes, and it immediately started answering common questions
                 for our customers. The ability to customize responses and
-                behavior for our organization is a huge win. Highly recommend!"
-              </p>
-            </div>
-          </div>
-
-          <div className="card">
-            <div className="card-title">
-              <h3>Lori</h3>
-              <h4>Senior Web Developer</h4>
-            </div>
-            <div className="card-content">
-              <p>
-                "We love how lightweight and flexible the ChatBox chatbot is.
+                behavior for our organization is a huge win. Highly recommend!" />
+          
+          <Card name="Lori"
+            role="Senior Web Developer"
+            review="We love how lightweight and flexible the ChatBox chatbot is.
                 Since it runs on GROK AI, the responses are fast and accurate.
                 The React-based design makes it smooth, clean, and perfect for
-                modern sites. Great tool for any business!"
-              </p>
-            </div>
-          </div>
-
-          <div className="card">
-            <div className="card-title">
-              <h3>Crystal</h3>
-              <h4>Freelance WordPress Developer</h4>
-            </div>
-            <div className="card-content">
-              <p>
-                "ChatBox Inc. created a scalable chatbot solution we could
+                modern sites. Great tool for any business!" />
+          
+          <Card name="Crystal"
+            role="Freelance WordPress Developer"
+            review="ChatBox Inc. created a scalable chatbot solution we could
                 customize with our branding and tone. It integrates directly
                 into our HTML with no hassle. Our team has seen a reduction in
-                support load and customers enjoy quick, friendly help."
-              </p>
-            </div>
-          </div>
+                support load and customers enjoy quick, friendly help." />
+          
         </div>
       </div>
     </div>

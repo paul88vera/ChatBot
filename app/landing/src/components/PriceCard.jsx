@@ -31,7 +31,7 @@ const PriceCard = ({
           </ul>
           </div>
 
-          <button style={{backgroundColor: `${color}`, padding: "0.5rem 1rem", borderRadius: "100px", border: `2px solid ${color}`, cursor: "pointer"}}>Get Started</button>
+          <button style={{backgroundColor: `${color}`, padding: "0.5rem 1rem", borderRadius: "100px", border: `2px solid ${color}`, cursor: "pointer", color: "black", fontWeight: "bold", fontSize: "1.125rem"}}>Get Started</button>
         </div>
   )
 }

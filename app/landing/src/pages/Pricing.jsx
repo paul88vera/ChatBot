@@ -25,7 +25,7 @@ const Pricing = () => {
         <div className='pricing-feature-inner'>
           <div className='pricing-feature-title'>
             <h2>If your business wants to purchase the application for resale/whitelabel then this plan is for you.</h2>
-            <div>
+            <div className='pricing-feature-img-container'>
               <img src={img2} />
             </div>
           </div>
