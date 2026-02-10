@@ -4,8 +4,6 @@ const crypto =  require("crypto");
 
 const db = require("../db/connections.js");
 
-
-
 router.get("/", async (req, res) => {
   try {
     const connection = await db();
@@ -39,95 +37,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// router.post("/", async (req, res) => {
-//   try {
-//     const connection = await db();
-    
-//     const {
-//       ownerId,
-//       companyName,
-//       companyEmail,
-//       companyWebsite,
-//       companyLink,
-//       companyDescription,
-//       companyFaqs,
-//       companyColor,
-//       companyDirection,
-//       companyChatboxActive,
-//     } = req.body;
-
-//     const orgId = ownerId;
-
-//     if (!orgId) {
-//       return res.status(400).json({ error: "Organization Id is required" });
-//     }
-
-//     // Generate public ID
-//     const publicId = "cmp_" + crypto.randomBytes(4).toString("hex");
-
-//     const [result] = await connection.query(
-//       "INSERT INTO companies (ownerId, publicId, companyName, companyEmail, companyWebsite, companyLink, companyDescription, companyFaqs, companyColor, companyDirection, companyChatboxActive) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-//       [
-//         orgId,
-//         publicId,
-//         companyName,
-//         companyEmail,
-//         companyWebsite,
-//         companyLink,
-//         companyDescription,
-//         JSON.stringify(companyFaqs),
-//         companyColor,
-//         companyDirection,
-//         companyChatboxActive,
-//       ]
-//     );
-//     res.status(201).json({
-//       id: result.insertId,
-//       publicId,
-//       ownerId,
-//       companyName,
-//       companyEmail,
-//       companyWebsite,
-//       companyLink,
-//       companyDescription,
-//       companyFaqs,
-//       companyColor,
-//       companyDirection,
-//       companyChatboxActive,
-//     });
-//   } catch (error) {
-//     res.status(500).json({ error: "Failed to create company" });
-//   }
-// });
-
-// router.put("/:id", async (req, res) => {
-//   try {
-//     const connection = await db();
-//     const companyId = req.params.id;
-//     const updateData = { ...req.body };
-//     if (updateData.companyFaqs) {
-//       updateData.companyFaqs = JSON.stringify(updateData.companyFaqs);
-//     }
-
-//     const ownerId = updateData.ownerId;
-
-//     if (!ownerId) {
-//       return res.status(500).json({ error: "Company orgId missing" });
-//     }
-
-//     const [result] = await connection.query(
-//       "UPDATE companies SET ? WHERE id = ?",
-//       [updateData, companyId]
-//     );
-//     if (result.affectedRows === 0) {
-//       return res.status(404).json({ error: "Company not found" });
-//     }
-//     res.json({ id: companyId, ...updateData });
-//   } catch (error) {
-//     res.status(500).json({ error: "Failed to update company" });
-//   }
-// });
-
 router.post("/", async (req, res) => {
   try {
     const connection = await db();
@@ -143,6 +52,7 @@ router.post("/", async (req, res) => {
       agentSubtitle,
       brandName,
       brandLink,
+      welcomeMessage,
       companyFaqs,
       companyColor,
       companyDirection,
@@ -166,7 +76,7 @@ router.post("/", async (req, res) => {
 
     const [result] = await connection.query(
       `INSERT INTO companies 
-      (ownerId, publicId, companyName, companyEmail, companyWebsite, companyLink, companyDescription, agentName, agentSubtitle, brandName, brandLink, companyFaqs, companyColor, companyDirection, companyChatboxActive)
+      (ownerId, publicId, companyName, companyEmail, companyWebsite, companyLink, companyDescription, agentName, agentSubtitle, brandName, brandLink, welcomeMessage, companyFaqs, companyColor, companyDirection, companyChatboxActive)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         ownerId,
@@ -180,6 +90,7 @@ router.post("/", async (req, res) => {
         agentSubtitle,
         brandName,
         brandLink,
+        welcomeMessage,
         JSON.stringify(companyFaqs),
         companyColor,
         companyDirection,
@@ -200,6 +111,7 @@ router.post("/", async (req, res) => {
       agentSubtitle,
       brandName,
       brandLink,
+      welcomeMessage,
       companyFaqs,
       companyColor,
       companyDirection,

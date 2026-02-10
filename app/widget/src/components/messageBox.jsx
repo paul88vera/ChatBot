@@ -13,13 +13,18 @@ const MessageBox = ({
   typing,
 }) => {
   const [input, setInput] = useState("");
+
   return (
     <div className="chatbox-main" style={positionStyle}>
       <div
         className="chatbox-header"
         style={{ backgroundColor: company.companyColor }}>
         <div className="chatbox-header-agent">
+        {company.avatarUrl ? (
+          <img src={company.avatarUrl} alt="Agent Avatar" className="agent-avatar" />
+        ) : (
           <FaUserAstronaut style={{ fontSize: "2.3rem" }} />
+        )}
           <div>
             <div>
               <b>{company.agentName || 'Tron'}</b>
@@ -92,8 +97,8 @@ const MessageBox = ({
           <GiTechnoHeart style={{ color: company.companyColor, marginTop:'.4rem' }} />
         </p>
 
-        <a href={company.brandLink || 'https://verafied.tech'} target="_blank">
-          <b>{company.brandName || 'VERAfied Technologies'}</b>
+        <a href={company.brandLink || 'https://chatbox.verafied.tech'} target="_blank">
+          <b>{company.brandName || 'VERAfied.Tech'}</b>
         </a>
       </div>
     </div>
