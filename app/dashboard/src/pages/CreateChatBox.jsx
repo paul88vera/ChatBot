@@ -5,6 +5,7 @@ import "../Dashboard.css";
 import { createCompany } from "../api/company";
 import { useOrganization } from "@clerk/clerk-react";
 import React from "react";
+// import AvatarUploader from "../components/AvatarUploader";
 
 const CreateSettings = () => {
   const { organization } = useOrganization();
@@ -131,6 +132,17 @@ const CreateSettings = () => {
               
             />
             </FormGroup>
+            <FormGroup errorMessage={errors.welcomeMessage}>
+            <label htmlFor="WelcomeMessage">Welcome Message: </label>
+            <input
+              type="text"
+              id="WelcomeMessage"
+              name="WelcomeMessage"
+              placeholder=" (eg. Hello! How can I assist you today?)"
+              defaultValue={values.welcomeMessage || "Hello! How can I assist you today?"}
+              
+            />
+            </FormGroup>
         </div>
         <div>
           <FormGroup errorMessage={errors.brandName}>
@@ -150,11 +162,17 @@ const CreateSettings = () => {
               type="text"
               id="BrandLink"
               name="BrandLink"
-              placeholder=" (eg. https://verafied.tech)"
+              placeholder=" (eg. https://chatbox.verafied.tech)"
               defaultValue={values.brandLink || "https://chatbox.verafied.tech"}
               
             />
             </FormGroup>
+          {/* TODO: Need to fix the image uploader */}
+            {/* <FormGroup>
+              
+                <AvatarUploader company={values.companyData} />
+              
+            </FormGroup> */}
         </div>
         <FormGroup errorMessage={errors.companyDescription}>
           <label htmlFor="CompanyDescription">Company Description: </label>
@@ -194,6 +212,7 @@ function postFormValidator({
   brandLink,
   agentName,
   agentSubtitle,
+  welcomeMessage
 }) {
   const errors = {};
 
@@ -205,6 +224,7 @@ function postFormValidator({
   if (!brandLink?.trim()) errors.brandLink = "Required";
   if (!agentName?.trim()) errors.agentName = "Required";
   if (!agentSubtitle?.trim()) errors.agentSubtitle = "Required";
+  if (!welcomeMessage?.trim()) errors.welcomeMessage = "Required";
 
   return errors;
 }
@@ -223,6 +243,7 @@ async function action({ request }) {
     agentSubtitle: formData.get("AgentSubtitle"),
     brandName: formData.get("BrandName"),
     brandLink: formData.get("BrandLink"),
+    welcomeMessage: formData.get("WelcomeMessage"),
     companyFaqs: formData.get("CompanyFaqs"),
     companyColor: formData.get("CompanyColor"),
     companyDirection: formData.get("CompanyDirection"),

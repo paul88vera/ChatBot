@@ -4,6 +4,7 @@ import FormGroup from "../components/FormGroup";
 import "../Dashboard.css";
 import { getCompanies, updateCompany } from "../api/company";
 import { useState } from "react";
+// import AvatarUploader from "../components/AvatarUploader";
 
 const EditSettings = () => {
   const { company } = useLoaderData();
@@ -18,6 +19,11 @@ const EditSettings = () => {
   const [companyDirection, setCompanyDirection] = useState("");
   const [companyDescription, setCompanyDescription] = useState("");
   const [companyFaqs, setCompanyFaqs] = useState("");
+  const [agentName, setAgentName] = useState("");
+  const [agentSubtitle, setAgentSubtitle] = useState("");
+  const [welcomeMessage, setWelcomeMessage] = useState("");
+  const [brandName, setBrandName] = useState("");
+  const [brandLink, setBrandLink] = useState("");
 
   // filter company by id
   const companyData = company.filter((comp) => comp.ownerId === organization.id);
@@ -130,7 +136,7 @@ const EditSettings = () => {
               type="text"
               id="AgentName"
               name="AgentName"
-              placeholder=" (eg. VERAfied.Tech)"
+              placeholder=" (eg. Tron, Jeeves, etc.)"
               defaultValue={companyData[0]?.agentName || ""}
               onChange={(e) => {
                 setAgentName(e.target.value);
@@ -146,6 +152,18 @@ const EditSettings = () => {
               defaultValue={companyData[0]?.agentSubtitle || ""}
               onChange={(e) => {
                 setAgentSubtitle(e.target.value);
+              }} />
+              </FormGroup>
+              <FormGroup errorMessage={errors.welcomeMessage}>
+            <label htmlFor="WelcomeMessage">Welcome Message: </label>
+            <input
+              type="text"
+              id="WelcomeMessage"
+              name="WelcomeMessage"
+              placeholder=" (eg. Hi there! How can I assist you today?)"
+              defaultValue={companyData[0]?.welcomeMessage || ""}
+              onChange={(e) => {
+                setWelcomeMessage(e.target.value);
               }} />
               </FormGroup> 
         </div>
@@ -174,6 +192,10 @@ const EditSettings = () => {
                 setBrandLink(e.target.value);
               }} /> 
               </FormGroup>
+              {/* TODO: Need to file image uploader */}
+              {/* <FormGroup>
+                <AvatarUploader company={companyData[0]} />
+              </FormGroup> */}
         </div>
         <FormGroup errorMessage={errors.companyDescription}>
           <label htmlFor="CompanyDescription">Company Description: </label>
@@ -229,6 +251,7 @@ async function action({ request }) {
     agentSubtitle: formData.get("AgentSubtitle"),
     brandName: formData.get("BrandName"),
     brandLink: formData.get("BrandLink"),
+    welcomeMessage: formData.get("WelcomeMessage"),
     companyFaqs: formData.get("CompanyFaqs"),
     companyColor: formData.get("CompanyColor"),
     companyDirection: formData.get("CompanyDirection"),

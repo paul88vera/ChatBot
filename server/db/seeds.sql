@@ -17,7 +17,7 @@ INSERT INTO companies (
 ) VALUES (
   'org_35XazIKELpblmzUAy6SKLQRCLqa',
   'cmp_b7aae9ca',
-  'Verafied Tech',
+  'Verafied.Tech',
   'support@verafied.tech',
   'VERAfied.Tech',
   'https://verafied.tech',
