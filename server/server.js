@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 5400;
 // List of allowed origins
 const allowedOrigins = [
   "http://localhost:5173",
+  "http://localhost:5174",
   "https://chatbox.verafied.tech"
 ];
 
@@ -30,8 +31,10 @@ app.use(express.json());
 // === ROUTES ===
 app.use("/api", routes);
 
-app.use(express.static("public"));
-app.use(express.static("dist"));
+
+// DEVELOPMENT ONLY - SERVE FRONTEND
+// app.use(express.static("public"));
+// app.use(express.static("dist"));
 
 app.set("trust proxy", true); 
 

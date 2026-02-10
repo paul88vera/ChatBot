@@ -121,6 +121,59 @@ const EditSettings = () => {
               <option value="right">Right</option>
             </select>
         </FormGroup>
+         
+        </div>
+        <div>
+          <FormGroup errorMessage={errors.agentName}>
+            <label htmlFor="AgentName">Agent Name: </label>
+            <input
+              type="text"
+              id="AgentName"
+              name="AgentName"
+              placeholder=" (eg. VERAfied.Tech)"
+              defaultValue={companyData[0]?.agentName || ""}
+              onChange={(e) => {
+                setAgentName(e.target.value);
+              }} />
+            </FormGroup>
+            <FormGroup errorMessage={errors.agentSubtitle}>
+            <label htmlFor="AgentSubtitle">Agent Subtitle: </label>
+            <input
+              type="text"
+              id="AgentSubtitle"
+              name="AgentSubtitle"
+              placeholder=" (eg. Your AI assistant for IT and SaaS services.)"
+              defaultValue={companyData[0]?.agentSubtitle || ""}
+              onChange={(e) => {
+                setAgentSubtitle(e.target.value);
+              }} />
+              </FormGroup> 
+        </div>
+        <div className="settings-form-row">
+          <FormGroup errorMessage={errors.brandName}>
+            <label htmlFor="BrandName">Brand Name: </label>
+            <input
+              type="text"
+              id="BrandName"
+              name="BrandName"
+              placeholder=" (eg. VERAfied Tech)"
+              defaultValue={companyData[0]?.brandName || ""}
+              onChange={(e) => {
+                setBrandName(e.target.value);
+              }} />
+            </FormGroup> 
+          <FormGroup errorMessage={errors.brandLink}>
+            <label htmlFor="BrandLink">Brand Link: </label>
+            <input
+              type="text"
+              id="BrandLink"
+              name="BrandLink"
+              placeholder=" (eg. https://chatbox.verafied.tech)"
+              defaultValue={companyData[0]?.brandLink || ""}
+              onChange={(e) => {
+                setBrandLink(e.target.value);
+              }} /> 
+              </FormGroup>
         </div>
         <FormGroup errorMessage={errors.companyDescription}>
           <label htmlFor="CompanyDescription">Company Description: </label>
@@ -172,6 +225,10 @@ async function action({ request }) {
     companyWebsite: formData.get("CompanyWebsite"),
     companyLink: formData.get("CompanyLink"),
     companyDescription: formData.get("CompanyDescription"),
+    agentName: formData.get("AgentName"),
+    agentSubtitle: formData.get("AgentSubtitle"),
+    brandName: formData.get("BrandName"),
+    brandLink: formData.get("BrandLink"),
     companyFaqs: formData.get("CompanyFaqs"),
     companyColor: formData.get("CompanyColor"),
     companyDirection: formData.get("CompanyDirection"),

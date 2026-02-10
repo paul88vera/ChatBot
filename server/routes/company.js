@@ -139,6 +139,10 @@ router.post("/", async (req, res) => {
       companyWebsite,
       companyLink,
       companyDescription,
+      agentName,
+      agentSubtitle,
+      brandName,
+      brandLink,
       companyFaqs,
       companyColor,
       companyDirection,
@@ -162,8 +166,8 @@ router.post("/", async (req, res) => {
 
     const [result] = await connection.query(
       `INSERT INTO companies 
-      (ownerId, publicId, companyName, companyEmail, companyWebsite, companyLink, companyDescription, companyFaqs, companyColor, companyDirection, companyChatboxActive)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      (ownerId, publicId, companyName, companyEmail, companyWebsite, companyLink, companyDescription, agentName, agentSubtitle, brandName, brandLink, companyFaqs, companyColor, companyDirection, companyChatboxActive)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         ownerId,
         publicId,
@@ -172,6 +176,10 @@ router.post("/", async (req, res) => {
         companyWebsite,
         companyLink,
         companyDescription,
+        agentName,
+        agentSubtitle,
+        brandName,
+        brandLink,
         JSON.stringify(companyFaqs),
         companyColor,
         companyDirection,
@@ -188,6 +196,10 @@ router.post("/", async (req, res) => {
       companyWebsite,
       companyLink,
       companyDescription,
+      agentName,
+      agentSubtitle,
+      brandName,
+      brandLink,
       companyFaqs,
       companyColor,
       companyDirection,
