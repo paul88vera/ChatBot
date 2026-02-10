@@ -94,7 +94,7 @@ const CreateSettings = () => {
               type="color"
               id="CompanyColor"
               name="CompanyColor"
-              defaultValue={values.companyColor}
+              defaultValue={values.companyColor || "#000000"}
             />
           </FormGroup>
           <FormGroup errorMessage={errors.companyDirection}>
@@ -102,11 +102,59 @@ const CreateSettings = () => {
             <select
               id="CompanyDirection"
               name="CompanyDirection"
-              defaultValue={values.companyDirection}>
+              defaultValue={values.companyDirection || "right"}>
               <option value="left">Left</option>
               <option value="right">Right</option>
             </select>
           </FormGroup>
+
+          <FormGroup errorMessage={errors.agentName}>
+            <label htmlFor="AgentName">Agent Name: </label>
+            <input
+              type="text"
+              id="AgentName"
+              name="AgentName"
+              placeholder=" (eg. VERAfied.Tech)"
+              defaultValue={values.agentName || "Tron"}
+              
+            />
+            </FormGroup>
+
+            <FormGroup errorMessage={errors.agentSubtitle}>
+            <label htmlFor="AgentSubtitle">Agent Subtitle: </label>
+            <input
+              type="text"
+              id="AgentSubtitle"
+              name="AgentSubtitle"
+              placeholder=" (eg. Your AI assistant for IT and SaaS services.)"
+              defaultValue={values.agentSubtitle || "AI Agent for IT and SaaS services."}
+              
+            />
+            </FormGroup>
+        </div>
+        <div>
+          <FormGroup errorMessage={errors.brandName}>
+            <label htmlFor="BrandName">Brand Name: </label>
+            <input
+              type="text"
+              id="BrandName"
+              name="BrandName"
+              placeholder=" (eg. VERAfied Tech)"
+              defaultValue={values.brandName || "VERAfied.Tech"}
+              
+            />
+            </FormGroup>
+            <FormGroup errorMessage={errors.brandLink}>
+            <label htmlFor="BrandLink">Brand Link: </label>
+            <input
+              type="text"
+              id="BrandLink"
+              name="BrandLink"
+              placeholder=" (eg. https://verafied.tech)"
+              defaultValue={values.brandLink || "https://chatbox.verafied.tech"}
+              
+            />
+            </FormGroup>
         </div>
         <FormGroup errorMessage={errors.companyDescription}>
           <label htmlFor="CompanyDescription">Company Description: </label>
@@ -142,6 +190,10 @@ function postFormValidator({
   companyEmail,
   companyDescription,
   companyFaqs,
+  brandName,
+  brandLink,
+  agentName,
+  agentSubtitle,
 }) {
   const errors = {};
 
@@ -149,6 +201,10 @@ function postFormValidator({
   if (!companyEmail?.trim()) errors.companyEmail = "Required";
   if (!companyDescription?.trim()) errors.companyDescription = "Required";
   if (!companyFaqs?.trim()) errors.companyFaqs = "Required";
+  if (!brandName?.trim()) errors.brandName = "Required";
+  if (!brandLink?.trim()) errors.brandLink = "Required";
+  if (!agentName?.trim()) errors.agentName = "Required";
+  if (!agentSubtitle?.trim()) errors.agentSubtitle = "Required";
 
   return errors;
 }
@@ -163,6 +219,10 @@ async function action({ request }) {
     companyWebsite: formData.get("CompanyWebsite"),
     companyLink: formData.get("CompanyLink"),
     companyDescription: formData.get("CompanyDescription"),
+    agentName: formData.get("AgentName"),
+    agentSubtitle: formData.get("AgentSubtitle"),
+    brandName: formData.get("BrandName"),
+    brandLink: formData.get("BrandLink"),
     companyFaqs: formData.get("CompanyFaqs"),
     companyColor: formData.get("CompanyColor"),
     companyDirection: formData.get("CompanyDirection"),

@@ -22,9 +22,9 @@ const MessageBox = ({
           <FaUserAstronaut style={{ fontSize: "2.3rem" }} />
           <div>
             <div>
-              <b>Tron</b>
+              <b>{company.agentName || 'Tron'}</b>
             </div>
-            <div>Ai Agent</div>
+            <div>{company.agentSubtitle || 'AI Agent'}</div>
           </div>
         </div>
         <div className="chatbox-header-exit" onClick={toggleChatBox}>
@@ -51,7 +51,7 @@ const MessageBox = ({
 
         {!messages || messages.length === 0 ? (
           <div className="msg-agent">
-            Hello, my name is Tron. How can I help you today?
+            {company.welcomeMessage || "Hello! How can I assist you today?"}
           </div>
         ) : null}
 
@@ -92,8 +92,8 @@ const MessageBox = ({
           <GiTechnoHeart style={{ color: company.companyColor, marginTop:'.4rem' }} />
         </p>
 
-        <a href="https://verafied.tech" target="_blank">
-          <b>VERAfied.Tech</b>
+        <a href={company.brandLink || 'https://verafied.tech'} target="_blank">
+          <b>{company.brandName || 'VERAfied Technologies'}</b>
         </a>
       </div>
     </div>

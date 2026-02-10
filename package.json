@@ -1,6 +1,7 @@
 {
   "workspaces": [
     "apps/dashboard",
+    "apps/landing",
     "apps/widget"
   ],
   "devDependencies": {
