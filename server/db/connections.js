@@ -6,8 +6,8 @@ async function connectDB() {
     const db = mysql.createPool({
       host: process.env.VITE_DB_HOST || "localhost",
       user: process.env.VITE_SQL_USER || "root",
-      password: process.env.VITE_SQL_PASSWD || "WebDev88!!",
-      database: process.env.VITE_SQL_DB || "chatbot_db",
+      password: process.env.VITE_SQL_PASSWD,
+      database: process.env.VITE_SQL_DB,
       port: process.env.VITE_DB_PORT || 3306,
       waitForConnections: true,
       connectionLimit: 10, // prevent too many connections
