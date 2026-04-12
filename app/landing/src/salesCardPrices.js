@@ -1,22 +1,38 @@
 const price =[
   {
     id: 0,
+    name: "Free",
+    color: "yellow",
+    range: "$0",
+    who: "Small businesses starting with AI support.",
+    list : [
+      "Embedded chatbot widget",
+      "500 - 1k messages/month",
+      "Limited customization",
+      "No Email Support"
+    ],
+    link: 'https://chatbox.verafied.tech',
+    featured: false,
+  },
+  {
+    id: 1,
     name: "Starter",
     color: "violet",
     range: "$39",
-    who: "Small businesses starting with AI support.",
+    who: "Small businesses starting with AI support that need branding.",
     list : [
       "Embedded chatbot widget",
       "1k - 3k messages/month",
       "Basic customization",
       "Email Support"
     ],
+    link: 'https://chatbox.verafied.tech',
     featured: false,
   },
   {
-    id: 1,
+    id: 2,
     name: "Pro",
-    color: "yellow",
+    color: "lightgreen",
     range: "$149",
     who: "Businesses looking to reduce support workload.",
     list : [
@@ -27,11 +43,12 @@ const price =[
       "Remove ChatBox branding",
       "Priority support",
     ],
+    link: 'https://chatbox.verafied.tech',
     featured: true,
   },
   {
-    id: 2,
-    name: "Business",
+    id: 4,
+    name: "Enterprise",
     color: "cyan",
     range: "$499",
     who: "Companies needing full branding + deep customization.",
@@ -42,25 +59,27 @@ const price =[
       "Multi-agent workflows",
       "Personal onboarding + training call",
     ],
+    link: 'https://chatbox.verafied.tech',
     featured: false,
   },
-  {
-    id: 3,
-    name: "Enterprise",
-    color: "lime",
-    range: "$1,000 - $5,000+",
-    who: "Large organizations with advanced or regulated needs.",
-    list: [
-      "Dedicated infrastructure",
-      "SLA guarantee",
-      "Custom features + integrations",
-      "Multi-location support",
-      "Multi-agent reasoning",
-      "Model fine-tuning + private embeddings",
-      "Compliance options (HIPAA, SOC2, etc.)",
-    ],
-    featured: false,
-  },
+  // {
+  //   id: 3,
+  //   name: "Enterprise",
+  //   color: "lime",
+  //   range: "$1,000 - $5,000+",
+  //   who: "Large organizations with advanced or regulated needs.",
+  //   list: [
+  //     "Dedicated infrastructure",
+  //     "SLA guarantee",
+  //     "Custom features + integrations",
+  //     "Multi-location support",
+  //     "Multi-agent reasoning",
+  //     "Model fine-tuning + private embeddings",
+  //     "Compliance options (HIPAA, SOC2, etc.)",
+  //   ],
+  // link: 'https://chatbox.verafied.tech',
+  //   featured: false,
+  // },
 ]
 
 export default price;
