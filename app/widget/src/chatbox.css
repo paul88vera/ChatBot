@@ -221,3 +221,24 @@ a:hover {
     transform: scale(1);
   }
 }
+
+.chatbox-active {
+  animation: open 1s ease-in-out;
+  transition: scale 1s ease-in-out;
+}
+
+.chatbox-deactivated {
+  animation: open 1s ease-in-out reverse;
+  transition: scale 1s ease-in-out;
+}
+
+@keyframes open {
+  from {
+    scale: 0%;
+    opacity: 0;
+  }
+  to {
+    scale: 100%;
+    opacity: 1;
+  }
+}

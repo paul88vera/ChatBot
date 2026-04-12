@@ -9,7 +9,8 @@ const PORT = process.env.PORT || 5400;
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
-  "https://chatbox.verafied.tech"
+  "https://chatbox.verafied.tech",
+  "https://app.verafied.tech",
 ];
 
 app.use(cors({
