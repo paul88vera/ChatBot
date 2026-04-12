@@ -5,6 +5,7 @@ import { SettingsRoute } from "./pages/Dashboard";
 import ErrorMessage from "./pages/ErrorMessage";
 import { OrgRedirect } from "./components/OrgRedirect";
 import { CreateSettingsPage } from "./pages/CreateChatBox";
+import PricingScreen from './pages/PricingTable';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
           },
           { path: ":id/edit_settings", ...EditSettingsPage },
           { path: "create_settings", ...CreateSettingsPage },
+          {path: "pricing", element: <PricingScreen />},
         ],
       },
     ],

@@ -1,6 +1,16 @@
 import PriceCard from '../components/PriceCard';
 import price from '../salesCardPrices';
-import img2 from '/Users/paulvera/Desktop/ChatBot/app/landing/src/pages/pexels-fauxels-3182786.jpg'
+import img2 from '/Users/paulvera/Desktop/ChatBot/app/landing/src/pages/pexels-fauxels-3182786-CscstPyH.webp';
+
+import { PricingTable } from '@clerk/clerk-react';
+
+function PricingScreen() {
+  return (
+    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 1rem' }}>
+      <PricingTable for="organization" />
+    </div>
+  )
+}
 
 const Pricing = () => {
   return (

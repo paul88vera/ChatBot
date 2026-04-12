@@ -1,4 +1,5 @@
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 const PriceCard = ({
     id,
@@ -7,7 +8,8 @@ const PriceCard = ({
     who,
     range,
     list,
-    mwidth
+    mwidth,
+    link
 }) => {
 
 
@@ -31,7 +33,7 @@ const PriceCard = ({
           </ul>
           </div>
 
-          <button style={{backgroundColor: `${color}`, padding: "0.5rem 1rem", borderRadius: "100px", border: `2px solid ${color}`, cursor: "pointer", color: "black", fontWeight: "bold", fontSize: "1.125rem"}}>Get Started</button>
+          <Link to={link} style={{backgroundColor: `${color}`, padding: "0.5rem 1rem", borderRadius: "100px", border: `2px solid ${color}`, cursor: "pointer", color: "black", fontWeight: "bold", fontSize: "1.125rem"}}>Get Started</Link>
         </div>
   )
 }
