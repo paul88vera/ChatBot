@@ -1,11 +1,7 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const chatApi = require("./chat");
-const companyApi = require("./company");
-const uploadApi = require("./uploads");
+import chatApi from "./chat.js";
 
 router.use("/chat", chatApi);
-router.use("/company", companyApi);
-router.use("/uploads", uploadApi);
 
-module.exports = router;
+export default router;

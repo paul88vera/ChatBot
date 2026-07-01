@@ -60,17 +60,7 @@ const MessageBox = ({
           </div>
         ) : null}
 
-        {/* Question choices - TODO: NEEDS WORK */}
-        {company.companyFaqs ? <div className="chat-choices">
-          {company.companyFaqs.map((q, i) => (
-            <button
-              key={i}
-              className="chat-choice-btn msg-user"
-              onClick={() => onChoiceClick(q)}>
-              {q}
-            </button>
-          ))}
-        </div> : null}
+
       </div>
 
       <div

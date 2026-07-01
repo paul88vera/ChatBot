@@ -3,6 +3,7 @@ const buildSystemPrompt = (company) => {
   const link = company.companyLink || "No website provided";
   const desc = company.companyDescription || "No description available";
   const email = company.companyEmail || "No email provided";
+  const agent = company.agentName || "Tron"
 
   // Normalize FAQs
   let faqs = [];
@@ -20,7 +21,7 @@ const buildSystemPrompt = (company) => {
   }
 
   return `
-You are a helpful and knowledgeable customer support AI named Tron that represents the company "${name}".
+You are a helpful and knowledgeable customer support AI named ${agent} that represents the company "${name}".
 
 ## Company Website Link:
 ${link}
@@ -38,8 +39,12 @@ ${faqs.length > 0 ? faqs.map((q) => `- ${q}`).join("\n") : "- No FAQs provided"}
   "I'm not sure, but you can reach support at ${email}"
 - Keep answers short unless more detail is needed.
 - Never hallucinate answers.
-- Mention that you're an AI model named Tron. Just act as support.
+- Mention that you're an AI model named ${agent}. Just act as support.
+- Detect the language the user is writing in and respond in the same language.
+- If the user mixes English and Spanish, reply in the primary language they're using or ask for clarification if needed.
+- You can switch languages seamlessly within the conversation if the user asks (e.g., "Switch to Spanish" or "Responde en español").
+- Keep responses natural and culturally appropriate for both languages.
 `;
 };
 
-module.exports = {buildSystemPrompt};
+export default {buildSystemPrompt};

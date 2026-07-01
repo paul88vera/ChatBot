@@ -2,6 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
@@ -22,6 +23,7 @@
     "mysql2": "^3.15.3",
     "node-fetch": "^3.3.2",
     "nodemon": "^3.1.11",
-    "uuid": "^13.0.0"
+    "stripe": "^22.2.3",
+    "uuid": "^9.0.1"
   }
 }

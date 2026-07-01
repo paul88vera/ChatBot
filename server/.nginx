@@ -1,15 +1,15 @@
-# Existing app
-server {
-    listen 80;
-    server_name app.verafied.tech;
+# # Existing app
+# server {
+#     listen 80;
+#     server_name app.verafied.tech;
 
-    location / {
-        proxy_pass http://localhost:5400/;
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-For $remote_addr;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
+#     location / {
+#         proxy_pass http://localhost:5400/;
+#         proxy_set_header Host $host;
+#         proxy_set_header X-Forwarded-For $remote_addr;
+#         proxy_set_header X-Forwarded-Proto $scheme;
+#     }
+# }
 
 # Chatbox app
 server {

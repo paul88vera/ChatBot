@@ -1,5 +1,7 @@
-const mysql = require("mysql2/promise");
-require("@dotenvx/dotenvx").config();
+import mysql from "mysql2/promise";
+import dotenv from "@dotenvx/dotenvx";
+
+dotenv.config();
 
 const isDev = process.env.NODE_ENV !== "production";
 
@@ -36,4 +38,4 @@ async function connectDB() {
   }
 }
 
-module.exports = connectDB;
+export default connectDB;

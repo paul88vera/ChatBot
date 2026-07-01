@@ -9,6 +9,7 @@ const PriceCard = ({
     range,
     list,
     mwidth,
+    planId,
     link
 }) => {
 
@@ -33,7 +34,7 @@ const PriceCard = ({
           </ul>
           </div>
 
-          <Link to={link} style={{backgroundColor: `${color}`, padding: "0.5rem 1rem", borderRadius: "100px", border: `2px solid ${color}`, cursor: "pointer", color: "black", fontWeight: "bold", fontSize: "1.125rem"}}>Get Started</Link>
+          <Link to={`${link}`} style={{backgroundColor: `${color}`, padding: "0.5rem 1rem", borderRadius: "100px", border: `2px solid ${color}`, cursor: "pointer", color: "black", fontWeight: "bold", fontSize: "1.125rem"}} target='_blank'>Get Started</Link>
         </div>
   )
 }

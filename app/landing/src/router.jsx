@@ -4,6 +4,7 @@ import ErrorMessage from "./pages/ErrorMessage";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
 import Pricing from "./pages/Pricing";
+import Checkout from "./pages/Checkout";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +26,10 @@ const router = createBrowserRouter([
             path: "pricing",
             element: <Pricing />,
           },
-          
+          {
+            path: "checkout/:productId",
+            element: <Checkout />,
+          }
         ],
       },
     ],

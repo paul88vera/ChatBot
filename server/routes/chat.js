@@ -1,7 +1,7 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const { buildSystemPrompt } = require("../company/systemPrompt.js");
-const db = require("../db/connections.js");
+import buildSystemPrompt from "../company/systemPrompt.js";
+import db from "../db/connections.js";
 
 router.post("/", async (req, res) => {
   try {
@@ -56,4 +56,4 @@ router.post("/", async (req, res) => {
 });
 
 
-module.exports = router;
+export default router;

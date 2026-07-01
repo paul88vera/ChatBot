@@ -1,9 +1,9 @@
-const express = require("express");
-const { Upload } = require("@aws-sdk/lib-storage");
-const { v4: uuidv4 } = require("uuid");
-const s3 = require("../lib/s3");
-const upload = require("../lib/upload");
-const db = require("../db/connections");
+import express from "express";
+import { Upload } from "@aws-sdk/lib-storage";
+import { v4 as uuidv4 } from "uuid";
+import s3 from "../lib/s3";
+import upload from "../lib/upload.js";
+import db from "../db/connections.js";
 
 const router = express.Router();
 
