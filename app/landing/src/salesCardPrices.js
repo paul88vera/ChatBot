@@ -1,9 +1,9 @@
 const price =[
   {
     id: 0,
-    name: "Free",
+    name: "Free Trial",
     color: "yellow",
-    range: "$0",
+    range: "$5",
     who: "Small businesses starting with AI support.",
     list : [
       "Embedded chatbot widget",
@@ -11,7 +11,8 @@ const price =[
       "Limited customization",
       "No Email Support"
     ],
-    link: 'https://chatbox.verafied.tech',
+    planId: 'prod_UJsA0f44k50mMB',
+    link: 'https://buy.stripe.com/dRm8wIdEc6HJePA1XGeUU03',
     featured: false,
   },
   {
@@ -26,7 +27,8 @@ const price =[
       "Basic customization",
       "Email Support"
     ],
-    link: 'https://chatbox.verafied.tech',
+    planId: 'prod_UJsBkwtGwSWhnp',
+    link: 'https://buy.stripe.com/14AeV6eIgaXZ7n80TCeUU00',
     featured: false,
   },
   {
@@ -43,7 +45,8 @@ const price =[
       "Remove ChatBox branding",
       "Priority support",
     ],
-    link: 'https://chatbox.verafied.tech',
+    planId: 'prod_UJsCYgZAWMN0nW',
+    link: 'https://buy.stripe.com/7sY14g7fO1npbDo59SeUU01',
     featured: true,
   },
   {
@@ -59,7 +62,8 @@ const price =[
       "Multi-agent workflows",
       "Personal onboarding + training call",
     ],
-    link: 'https://chatbox.verafied.tech',
+    planId: 'prod_UJsDya9uBQgTYZ',
+    link: 'https://buy.stripe.com/3cI9AM8jSc230YK8m4eUU02',
     featured: false,
   },
   // {
@@ -77,7 +81,7 @@ const price =[
   //     "Model fine-tuning + private embeddings",
   //     "Compliance options (HIPAA, SOC2, etc.)",
   //   ],
-  // link: 'https://chatbox.verafied.tech',
+  // link: '/checkout',
   //   featured: false,
   // },
 ]

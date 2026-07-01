@@ -1,7 +1,13 @@
-const express = require("express");
-const cors = require("cors");
-const routes = require("./routes/index.js");
-require("@dotenvx/dotenvx").config();
+import express from "express";
+import cors from "cors";
+import otherRoutes from "./routes/chat.js";
+import companyRoute from './routes/company.js';
+import stripeRoute from './routes/payment.js';
+import dotenv from "@dotenvx/dotenvx";
+import  { clerkMiddleware, getAuth } from "@clerk/express";
+
+dotenv.config();
+
 const app = express();
 const PORT = process.env.PORT || 5400;
 
@@ -10,7 +16,7 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
   "https://chatbox.verafied.tech",
-  "https://app.verafied.tech",
+  "https://manager.verafied.tech",
 ];
 
 app.use(cors({
@@ -27,10 +33,33 @@ app.use(cors({
   methods: ["GET","POST","PUT","DELETE","OPTIONS"]
 }));
 
+// Stripe route
+app.use("api/stripe", stripeRoute); //public
+
 app.use(express.json());
 
+// === Clerk Auth ===
+app.use(
+  clerkMiddleware({
+    publishableKey: process.env.VITE_CLERK_PUBLISHABLE_KEY,
+    secretKey: process.env.VITE_CLERK_SECRET,
+  })
+);
+
+// === AUTH ===
+function requireAuth(req, res, next) {
+  const { userId, orgId } = getAuth(req);
+
+  if (!userId || !orgId) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  next();
+}
+
 // === ROUTES ===
-app.use("/api", routes);
+app.use("/api/company", companyRoute); // public
+app.use("/api", requireAuth, otherRoutes); // private
 
 
 // DEVELOPMENT ONLY - SERVE FRONTEND

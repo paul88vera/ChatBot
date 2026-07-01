@@ -45,7 +45,7 @@ const Header = () => {
               </Link>
             </div>
             <div className="header-nav-login header-nav-login_mobile mobile">
-              <Link to="  /sign-in" className="header-nav-link_item">
+              <Link to="/sign-in" className="header-nav-link_item">
                 Sign in
               </Link>
               <FancyButton link={"/dashboard"} isMobile={isMobile}>
@@ -83,10 +83,10 @@ const Header = () => {
               </Link>
             </div>
             <div className="header-nav-login">
-              <Link to="/sign-in" className="header-nav-link_item">
+              <Link to="https://manager.verafied.tech" className="header-nav-link_item">
                 Sign in
               </Link>
-              <FancyButton link={"/dashboard"} isMobile={isMobile}>
+              <FancyButton link={"https://accounts.verafied.tech/create-organization"} isMobile={isMobile}>
                 Get started
               </FancyButton>
             </div>
