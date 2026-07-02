@@ -61,7 +61,7 @@ const MessageBox = ({
         ) : null}
 
         {/* Question choices - TODO: NEEDS WORK */}
-        {/* <div className="chat-choices">
+        {company.companyFaqs ? <div className="chat-choices">
           {company.companyFaqs.map((q, i) => (
             <button
               key={i}
@@ -70,7 +70,7 @@ const MessageBox = ({
               {q}
             </button>
           ))}
-        </div> */}
+        </div> : null}
       </div>
 
       <div

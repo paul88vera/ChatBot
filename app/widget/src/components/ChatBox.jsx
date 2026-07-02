@@ -92,8 +92,9 @@ const ChatBox = ({ company }) => {
     }
   };
 
+
   return (
-    <div className="chatbox-container">
+    <div className={`chatbox-container ${chatbox ? "chatbox-active" : "chatbox-deactivated"}`}>
       {chatbox ? ChatBoxMessageContainer() : ChatBoxButton()}
     </div>
   );
