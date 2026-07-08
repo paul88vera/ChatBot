@@ -16,7 +16,6 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
   "https://chatbox.verafied.tech",
-  "https://manager.verafied.tech",
 ];
 
 app.use(cors({

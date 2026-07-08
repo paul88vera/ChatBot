@@ -1,5 +1,5 @@
 import express from "express";
-import { webhook } from "../controllers/stripe.controller.js";
+import stripeEvent from "../controllers/stripe.controller.js";
 
 const router = express.Router();
 
@@ -7,7 +7,7 @@ const router = express.Router();
 router.post(
   "/webhook",
   express.raw({ type: "application/json" }),
-  webhook
+  stripeEvent
 );
 
 export default router;

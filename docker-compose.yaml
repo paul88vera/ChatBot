@@ -5,7 +5,7 @@ services:
       dockerfile: server/Dockerfile.server
     container_name: chatbot_server
     ports:
-      - "5400:5400"
+      - "5500:5400"
     environment:
       - VITE_SERVER_PORT=5400
       - VITE_CLERK_PUBLISHABLE_KEY=${VITE_CLERK_PUBLISHABLE_KEY}

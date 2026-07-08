@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, redirect, useLoaderData } from "react-router";
 import "../dashboard.css";
 import { FaCopy } from "react-icons/fa";
@@ -18,6 +18,7 @@ const Dashboard = () => {
 
   const company = useLoaderData();
   const { organization } = useOrganization();
+
 
   // filter company for the current organization
   const companyFilter = company.find(
@@ -49,7 +50,7 @@ const Dashboard = () => {
       };
 
   return (
-    <>
+    <div className="dashboard-container">
       <div className="header-icon-container">
         <div className="header-signout">
           <SignOutButton redirectUrl="/sign-in">
@@ -132,7 +133,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

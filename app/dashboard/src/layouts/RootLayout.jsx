@@ -1,38 +1,24 @@
-import {
-  SignedIn,
-  SignedOut,
-  RedirectToSignIn,
-  useAuth,
-} from "@clerk/clerk-react";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Outlet,
   ScrollRestoration,
 } from "react-router";
-import { attachClerkInterceptor } from "../api/base";
-import Footer from "../components/Footer";
+import Footer from "../components/Footer1";
+import Header from "../components/Header";
+import '../landing.css'
 
 const DashboardLayout = () => {
-  const { getToken } = useAuth();
-
-  useEffect(() => {
-    attachClerkInterceptor(getToken);
-  }, [getToken]);
-
 
   return (
     <>
       <ScrollRestoration />
-      <SignedOut>
-        <RedirectToSignIn />
-      </SignedOut>
-      <SignedIn>
         <div className="container">
+          <Header />
           <Outlet />
           <Footer />
         </div>
-      </SignedIn>
     </>
   );
 };
+
 export default React.memo(DashboardLayout);

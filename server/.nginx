@@ -1,4 +1,4 @@
-# # Existing app
+# Existing app
 # server {
 #     listen 80;
 #     server_name app.verafied.tech;
@@ -11,23 +11,23 @@
 #     }
 # }
 
-# Chatbox app
-server {
-    listen 80;
-    server_name chatbox.verafied.tech;
+# # Chatbox app
+# server {
+#     listen 80;
+#     server_name server.verafied.tech; # changed to server from chatbox to allow for both apps
 
-    location / {
-        proxy_pass http://localhost:5400/;
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-For $remote_addr;
-        proxy_set_header X-Forwarded-Proto $scheme;
+#     location / {
+#         proxy_pass http://localhost:5400/;
+#         proxy_set_header Host $host;
+#         proxy_set_header X-Forwarded-For $remote_addr;
+#         proxy_set_header X-Forwarded-Proto $scheme;
 
-        # Optional: handle preflight in Nginx
-        if ($request_method = 'OPTIONS') {
-          add_header 'Access-Control-Allow-Origin' "$http_origin";
-          add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE';
-          add_header 'Access-Control-Allow-Headers' 'Origin, Content-Type, Authorization';
-          return 204;
-        }
-    }
+#         # Optional: handle preflight in Nginx
+#         if ($request_method = 'OPTIONS') {
+#           add_header 'Access-Control-Allow-Origin' "$http_origin";
+#           add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE';
+#           add_header 'Access-Control-Allow-Headers' 'Origin, Content-Type, Authorization';
+#           return 204;
+#         }
+#     }
 }

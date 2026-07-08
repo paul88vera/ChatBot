@@ -1,6 +1,6 @@
 import PriceCard from "../components/PriceCard";
 import price from "../salesCardPrices";
-import img2 from "/Users/paulvera/Desktop/ChatBot/app/landing/src/pages/pexels-fauxels-3182786-CscstPyH.webp";
+import img2 from "./pexels-fauxels-3182786-CscstPyH.webp";
 
 import { PricingTable } from "@clerk/clerk-react";
 

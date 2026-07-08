@@ -20,8 +20,8 @@
     document.head.appendChild(link);
 
     // Fetch company data
-    const res = await fetch(`http://chatbox.verafied.tech/api/company/${publicId}`); // company publicId
-    // const res = await fetch(`http://localhost:5400/api/company/${publicId}`); // dev only 
+    // const res = await fetch(`http://server.verafied.tech/api/company/${publicId}`); // company publicId
+    const res = await fetch(`http://localhost:5400/api/company/${publicId}`); // dev only 
     const result = await res.json();
     const company = result.data || result;
 

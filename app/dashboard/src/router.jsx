@@ -1,19 +1,18 @@
 import { createBrowserRouter, Navigate } from "react-router";
 import RootLayout from "./layouts/RootLayout";
+import DashboardLayout from "./layouts/DashboardLayout";
 import { EditSettingsPage } from "./pages/EditSettings";
-import { SettingsRoute } from "./pages/Dashboard";
+import Dashboard, { SettingsRoute } from "./pages/Dashboard";
 import ErrorMessage from "./pages/ErrorMessage";
-import { OrgRedirect } from "./components/OrgRedirect";
+// import { OrgRedirect } from "./components/OrgRedirect"; // only for dashboard
 import { CreateSettingsPage } from "./pages/CreateChatBox";
-import PricingScreen from './pages/PricingTable';
+import Home from "./pages/Home.jsx";
+import Product from "./pages/Product.jsx";
+import Pricing from "./pages/Pricing.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <OrgRedirect />,
-  },
-  {
-    path: ":id",
     element: <RootLayout />,
     children: [
       {
@@ -21,20 +20,44 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Navigate to="dashboard" />,
+            element: <Home />,
           },
           {
-            path: "dashboard",
-            ...SettingsRoute,
+            path: "product",
+            element: <Product />,
           },
-          { path: ":id/edit_settings", ...EditSettingsPage },
-          { path: "create_settings", ...CreateSettingsPage },
-          {path: "pricing", element: <PricingScreen />},
+          {
+            path: "pricing",
+            element: <Pricing />,
+          },
+          // {
+          //   path: "dashboard",
+          //   ...SettingsRoute,
+          // },
+          // { path: ":id/edit_settings", ...EditSettingsPage },
+          // { path: "create_settings", ...CreateSettingsPage },
         ],
       },
     ],
   },
-  {path: "*", element: <Navigate to="dashboard" />,}
+  { path: "*", element: <Navigate to="dashboard" /> },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    children: [
+      {
+        errorElement: <ErrorMessage />,
+        children: [
+          {
+            index: true,
+            ...SettingsRoute,
+          },
+          { path: "edit_settings", ...EditSettingsPage },
+          { path: "create_settings", ...CreateSettingsPage },
+        ],
+      },
+    ],
+  },
 ]);
 
 export default router;
