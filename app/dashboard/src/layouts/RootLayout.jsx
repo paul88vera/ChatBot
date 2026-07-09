@@ -3,7 +3,7 @@ import {
   Outlet,
   ScrollRestoration,
 } from "react-router";
-import Footer from "../components/Footer1";
+import Footer from "../components/Footer";
 import Header from "../components/Header";
 import '../landing.css'
 

@@ -9,30 +9,30 @@ import {
   Outlet,
   ScrollRestoration,
 } from "react-router";
-// import { attachClerkInterceptor } from "../api/base";
+import { attachClerkInterceptor } from "../api/base";
 import Footer from "../components/Footer";
 import '../dashboard.css';
 
 const DashboardLayout = () => {
-  // const { getToken } = useAuth();
+  const { getToken } = useAuth();
 
-  // useEffect(() => {
-  //   attachClerkInterceptor(getToken);
-  // }, [getToken]);
+  useEffect(() => {
+    attachClerkInterceptor(getToken);
+  }, [getToken]);
 
 
   return (
     <>
       <ScrollRestoration />
-      {/* <SignedOut> */}
-        {/* <RedirectToSignIn /> */}
-      {/* </SignedOut>
-      <SignedIn> */}
-        <div className="container">
+      <SignedOut>
+        <RedirectToSignIn />
+      </SignedOut>
+      <SignedIn>
+        <div className="dashboard-container">
           <Outlet />
           <Footer />
         </div>
-      {/* </SignedIn> */}
+      </SignedIn>
     </>
   );
 };

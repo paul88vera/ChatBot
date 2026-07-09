@@ -1,64 +1,89 @@
-// import { useEffect } from "react";
-// import { useLocation, useNavigate, useMatches } from "react-router-dom";
-// import { useOrganization, useUser } from "@clerk/clerk-react";
+import { useEffect } from "react";
+import { useLocation, useNavigate, useMatches, useLoaderData } from "react-router-dom";
+import { useOrganization, useUser } from "@clerk/clerk-react";
 
-// function OrgRedirect() {
-//   const { organization, isLoaded: orgLoaded } = useOrganization();
-//   const { isLoaded: userLoaded, user } = useUser();
-//   const location = useLocation();
-//   const navigate = useNavigate();
-//   const matches = useMatches();
+export function OrgRedirect() {
+  const { organization, isLoaded: orgLoaded } = useOrganization();
+  const { isLoaded: userLoaded, user } = useUser();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const matches = useMatches();
 
-//   useEffect(() => {
-//     // Skip redirect for localhost:5400
-//     if (window.location.port === "5400") return;
+  useEffect(() => {
+  if (!userLoaded || !orgLoaded) return;
 
-//     if (!userLoaded) return; // Still loading user
-//     if (!user) {
-//       navigate("/sign-in", { replace: true });
-//       return;
-//     }
+  if (!user) {
+    navigate("/sign-in", { replace: true });
+    return;
+  }
 
-//     if (!orgLoaded) return;
-//     if (!organization) {
-//       navigate("/no-organization", { replace: true });
-//       return;
-//     }
+  if (!organization) {
+    navigate("/no-organization", { replace: true });
+    return;
+  }
 
-//     const orgId = organization.id;
+  // Only redirect from the dashboard index
+  if (location.pathname !== "/dashboard") return;
 
-//     const parts = location.pathname.split("/").filter(Boolean);
+  // Fetch or determine the user's companyId here
+  // const companyId = publicId;
 
-//     // If already at /orgId/... → do NOTHING
-//     if (parts[0] === orgId) return;
+  navigate(
+    `/dashboard/${organization.id}`,
+    { replace: true }
+  );
+}, [userLoaded, orgLoaded, user, organization, location.pathname, navigate]);
 
-//     // Remove repeated "dashboard" segments
-//     const cleanedParts = parts.filter((seg, idx) => {
-//       // Keep first "dashboard", remove duplicates after
-//       if (seg === "dashboard" && parts.indexOf("dashboard") !== idx) {
-//         return false;
-//       }
-//       return true;
-//     });
+  // useEffect(() => {
+  //   // Skip redirect for localhost:5400
+  //   if (window.location.port === "5400") return;
 
-//     // Force dashboard for empty or root-like routes
-//     const subPath = cleanedParts.length > 0
-//       ? cleanedParts.join("/")
-//       : "dashboard";
+  //   if (!userLoaded) return; // Still loading user
+  //   if (!user) {
+  //     navigate("/sign-in", { replace: true });
+  //     return;
+  //   }
 
-//     const newPath = `/${orgId}/${subPath}`;
+  //   if (!orgLoaded) return;
+  //   if (!organization) {
+  //     navigate("/no-organization", { replace: true });
+  //     return;
+  //   }
 
-//     // Prevent redirect loops
-//     if (location.pathname === newPath) return;
+  //   const orgId = organization.id;
 
-//     // Validate route actually exists
-//     const newPathExists = matches.some((m) => m.pathname === newPath);
+  //   const parts = location.pathname.split("/").filter(Boolean);
 
-//     navigate(
-//       newPathExists ? newPath : `/${orgId}/dashboard`,
-//       { replace: true }
-//     );
-//   }, [organization, userLoaded, orgLoaded, location.pathname, navigate, matches]);
+  //   // If already at /orgId/... → do NOTHING
+  //   if (parts[0] === orgId) return;
 
-//   return null;
-// }
+  //   // Remove repeated "dashboard" segments
+  //   const cleanedParts = parts.filter((seg, idx) => {
+  //     // Keep first "dashboard", remove duplicates after
+  //     if (seg === "dashboard" && parts.indexOf("dashboard") !== idx) {
+  //       return false;
+  //     }
+  //     return true;
+  //   });
+
+  //   // Force dashboard for empty or root-like routes
+  //   const subPath = cleanedParts.length > 0
+  //     ? cleanedParts.join("/")
+  //     : "dashboard";
+
+  //   const newPath = `/dashboard/${orgId}/${subPath}`;
+
+  //   // Prevent redirect loops
+  //   if (location.pathname === newPath) return;
+
+  //   // Validate route actually exists
+  //   const newPathExists = matches.some((m) => m.pathname === newPath);
+
+  //   navigate(
+  //     newPathExists ? newPath : `/dashboard/${orgId}/`,
+  //     { replace: true }
+  //   );
+  // }, [organization, userLoaded, orgLoaded, location.pathname, navigate, matches]);
+
+  return null;
+}

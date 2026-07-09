@@ -7,7 +7,7 @@ import Banner from "./Banner";
 const MOBILE_BREAKPOINT = 947;
 
 const Header = () => {
-  const banner = "GRAND OPENING SALE - 20% OFF!";
+  const banner = "";
 
   const [isMobile, setIsMobile] = useState(
     window.innerWidth <= MOBILE_BREAKPOINT

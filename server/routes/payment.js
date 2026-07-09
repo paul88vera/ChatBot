@@ -1,13 +1,13 @@
-import express from "express";
-import stripeEvent from "../controllers/stripe.controller.js";
+// import express from "express";
+// import stripeEvent from "../controllers/stripe.controller.js";
 
-const router = express.Router();
+// const router = express.Router();
 
-// IMPORTANT: use express.raw() only for this endpoint
-router.post(
-  "/webhook",
-  express.raw({ type: "application/json" }),
-  stripeEvent
-);
+// // IMPORTANT: use express.raw() only for this endpoint
+// router.post(
+//   "/webhook",
+//   express.raw({ type: "application/json" }),
+//   stripeEvent
+// );
 
-export default router;
+// export default router;

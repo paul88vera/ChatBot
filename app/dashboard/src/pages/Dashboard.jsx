@@ -21,12 +21,13 @@ const Dashboard = () => {
 
 
   // filter company for the current organization
-  const companyFilter = company.find(
-    (comp) => comp.ownerId === organization.id
-  );
+  // const companyFilter = company.find(
+  //   (comp) => comp.ownerId === organization.id
+  // );
+  console.log(company)
 
   if (companyFilter === undefined || companyFilter.publicId == undefined) {
-    window.location.replace(`/${organization.id}/create_settings`)
+    window.location.replace(`/dashboard/${organization.id}/create_settings`)
   }
 
   const companyData = companyFilter[0]?.length
@@ -84,7 +85,7 @@ const Dashboard = () => {
               <h2>Customize your new ChatBox using your branding colors</h2>
             </div>
             <Link
-              to={`/${organization.id}/create_settings`}>
+              to={`/dashboard/${organization.id}/create_settings`}>
               Create Your ChatBox
             </Link>
           </div>
@@ -95,7 +96,7 @@ const Dashboard = () => {
             </div>
             <p>*<button style={{textDecoration: 'underline', background: 'none', border: 'none', color: 'inherit', cursor: 'pointer'}} onClick={() => window.location.reload()}>Refresh the page</button> to see your edits live.</p>
             <Link
-              to={`/${organization.id}/${companyFilter.publicId}/edit_settings`}>
+              to={`/dashboard/${organization.id}/edit_settings`}>
               Edit ChatBox Settings
             </Link>
           </div>
