@@ -11,19 +11,21 @@ import { SignOutButton, useClerk, useOrganization, SignIn } from "@clerk/clerk-r
 
 const Dashboard = () => {
   const { signOut } = useClerk();
+  const company = useLoaderData();
+
+  console.log(company)
 
   const handleChange = (checked) => {
     if (checked) signOut();
   };
 
-  const company = useLoaderData();
   const { organization } = useOrganization();
 
 
   // filter company for the current organization
-  // const companyFilter = company.find(
-  //   (comp) => comp.ownerId === organization.id
-  // );
+  const companyFilter = company.find(
+    (comp) => comp.ownerId === organization.id
+  );
   console.log(company)
 
   if (companyFilter === undefined || companyFilter.publicId == undefined) {
@@ -143,7 +145,7 @@ async function loader({ request: { signal } }) {
   return company;
 }
 
-export const SettingsRoute = {
+export const DashboardRoute = {
   element: <Dashboard />,
   loader,
 };

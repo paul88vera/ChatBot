@@ -62,8 +62,8 @@ app.use("/api", requireAuth, otherRoutes); // private
 
 
 // DEVELOPMENT ONLY - SERVE FRONTEND
-// app.use(express.static("public"));
-// app.use(express.static("dist"));
+app.use(express.static("public"));
+app.use(express.static("dist"));
 
 app.set("trust proxy", true); 
 

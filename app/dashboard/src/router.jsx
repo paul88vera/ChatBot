@@ -2,7 +2,7 @@ import { createBrowserRouter, Navigate } from "react-router";
 import RootLayout from "./layouts/RootLayout";
 import DashboardLayout from "./layouts/DashboardLayout";
 import { EditSettingsPage } from "./pages/EditSettings";
-import Dashboard, { SettingsRoute } from "./pages/Dashboard";
+import { DashboardRoute } from "./pages/Dashboard";
 import ErrorMessage from "./pages/ErrorMessage";
 import { CreateSettingsPage } from "./pages/CreateChatBox";
 import Home from "./pages/Home.jsx";
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
     },
     {
       path: ":orgId",
-      element: <Dashboard />,
+      ...DashboardRoute,
     },
     {
       path: ":orgId/edit_settings",

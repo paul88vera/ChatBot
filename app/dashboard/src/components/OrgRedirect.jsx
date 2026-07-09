@@ -25,9 +25,6 @@ export function OrgRedirect() {
   // Only redirect from the dashboard index
   if (location.pathname !== "/dashboard") return;
 
-  // Fetch or determine the user's companyId here
-  // const companyId = publicId;
-
   navigate(
     `/dashboard/${organization.id}`,
     { replace: true }
