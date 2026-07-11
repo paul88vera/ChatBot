@@ -1,33 +1,43 @@
 :root {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  --border-color: rgb(166, 174, 184);
-  --accent-color: rgb(100, 149, 237);
+  --background-color: rgb(0, 0, 0);
+  --border-color: rgb(255, 255, 255);
+  --accent-color: antiquewhite;
+  --text: white;
+  --text-opposite: black;
+  --placeholder-text: rgb(132, 132, 132);
 }
 h1,
 h2 {
-  color: antiquewhite;
+  color: var(--accent-color);
+}
+
+.dashboard-container, .dash_form-container {
+  background-color: var(--background-color);
+  padding: 2em 1em;
+}
+
+.dash_form-container label {
+  color: var(--text);
+  font-size: 1.2em;
 }
 
 
-.dashboard-container {
-  background-color: rgb(49, 49, 49);
-  padding: 2em;
-}
 
 .settings-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-  color: white;
+  color: var(--text);
   border-radius: 5px;
   min-height: auto;
 }
 .settings-container a,
 .settings-container-sub a {
-  color: white;
+  color: var(--text);
   border: 2px solid var(--border-color);
-  background-color: var(--accent-color);
+  background-color: var(--background-color);
   text-decoration: none;
   padding: 0.5rem;
   border-radius: 5px;
@@ -49,7 +59,7 @@ h2 {
   padding: 0;
 }
 .header-icon-container svg {
-  fill: antiquewhite
+  fill: var(--accent-color)
 }
 .header-icon {
   font-size: 2.5rem;
@@ -64,6 +74,10 @@ h2 {
   margin-bottom: 1rem;
   gap: 2rem;
 }
+.settings-header a {
+  color: var(--accent-color);
+}
+
 .reg-header {
   font-size: 2rem;
 }
@@ -75,6 +89,7 @@ h2 {
   max-width: 900px;
   font-size: 1.1rem;
   font-weight: 300;
+  margin: 0 auto;
 }
 .settings-form {
   display: flex;
@@ -87,18 +102,22 @@ h2 {
   border-radius: 3px;
 }
 
+.settings-form input[type="text"], .settings-form textarea {
+  color: var(--text-opposite) !important;
+}
+
 .settings-form button[type="submit"] {
   padding: 0.5rem 1rem;
   font-size: 1rem;
-  color: rgb(246, 246, 231);
-  background-color: rgb(46, 163, 67);
-  border: none;
+  color: var(--text);
+  background-color: var(--background-color);
+  border: 1px solid var(--text);
   border-radius: 5px;
   cursor: pointer;
   transition: background-color ease-in-out;
 }
 .settings-form button[type="submit"]:hover {
-  background-color: var(--accent-color);
+  opacity: .5;
 }
 .form-group {
   display: flex;
@@ -112,8 +131,9 @@ textarea {
   font-size: 1rem;
   border: solid 1px var(--border-color);
   border-radius: 5px;
-  background-color: rgb(60, 60, 60);
-  color: rgb(246, 246, 231);
+  background-color: var(--accent-color);
+  color: var(--text-opposite);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .form-group textarea {
   resize: vertical;
@@ -130,7 +150,7 @@ textarea {
 }
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: var(--border-color);
+  color: var(--placeholder-text);
 }
 
 .form-group input[type="color"] {
@@ -143,7 +163,7 @@ textarea {
 }
 .form-group input[type="color"]:focus {
   outline: none;
-  border: solid 2px rgb(100, 149, 237);
+  border: solid 2px var(--accent-color);
 }
 
 .settings-form-row-col {
@@ -156,6 +176,11 @@ textarea {
   flex-direction: row;
   gap: 1rem;
 }
+.rol-cols {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
 
 /* Script Section */
 .script-section-container {
@@ -164,6 +189,13 @@ textarea {
   gap: 1rem;
   text-align: center;
   margin-top: 4rem;
+  color: var(--text);
+  font-size: 1em;
+}
+.script-section-container p, .settings-container-sub p, .settings-container-sub button, .settings-container-sub a {
+  color: var(--text);
+  font-size: 1.2em;
+  max-width: 1000px;
 }
 .script-section {
   padding: 4rem 2rem;
@@ -178,9 +210,9 @@ textarea {
   width: 100%;
   text-align: center;
   background-color: transparent;
-  color: white;
+  color: var(--text);
   border: none;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 #company-script:focus,
 #company-script:active,

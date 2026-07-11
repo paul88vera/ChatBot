@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import otherRoutes from "./routes/chat.js";
 import companyRoute from './routes/company.js';
-// import stripeRoute from './routes/payment.js';
+import stripeRoute from './routes/payment.js';
 import dotenv from "@dotenvx/dotenvx";
 import  { clerkMiddleware, getAuth } from "@clerk/express";
 
@@ -33,7 +33,7 @@ app.use(cors({
 }));
 
 // Stripe route
-// app.use("api/stripe", stripeRoute); //public
+app.use("api/stripe", stripeRoute); //public
 
 app.use(express.json());
 

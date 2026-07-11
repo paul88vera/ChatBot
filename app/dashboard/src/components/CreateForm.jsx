@@ -1,33 +1,17 @@
-import { UserButton } from "@clerk/clerk-react";
-import { Form, Link, redirect, useActionData } from "react-router";
-import FormGroup from "../components/FormGroup";
-import "../Dashboard.css";
-import { createCompany } from "../api/company";
-import { useOrganization } from "@clerk/clerk-react";
-import React from "react";
-import EditForm from "../components/editForm";
-import CreateForm from "../components/CreateForm";
-// import AvatarUploader from "../components/AvatarUploader";
+import {Form, useActionData} from 'react-router';
+import FormGroup from './FormGroup';
+import { useOrganization, UserButton } from "@clerk/clerk-react";
 
-const CreateSettings = () => {
+const CreateForm = ({text}) => {
   const { organization } = useOrganization();
-  // const actionData = useActionData();
-  // const errors = actionData?.errors || {};
-  // const values = actionData?.values || {};
+  const actionData = useActionData();
+  const errors = actionData?.errors || {};
+  const values = actionData?.values || {};
 
-  // const orgId = organization.id;
-  // const companyData = [];
+  const orgId = organization.id;
 
   return (
-    <div className="dash_form-container">
-      <div className="settings-header">
-        <UserButton className="clerk-user" />
-        <h1>
-          <Link to={`/dashboard/${organization.id}`}>ChatBox</Link>
-        </h1>
-      </div>
-      <CreateForm text={'Create Settings'} />
-      {/* <Form
+    <Form
         method="post"
         className="settings-form"
         onSubmit={(e) => {
@@ -176,7 +160,7 @@ const CreateSettings = () => {
               
                 <AvatarUploader company={values.companyData} />
               
-            </FormGroup> 
+            </FormGroup> */}
         </div>
         <FormGroup errorMessage={errors.companyDescription}>
           <label htmlFor="CompanyDescription">Company Description: </label>
@@ -200,73 +184,10 @@ const CreateSettings = () => {
         </FormGroup>
 
         <button type="submit">
-          Save Settings
+          {text}
         </button>
-      </Form> */}
-    </div>
-  );
-};
-
-function postFormValidator({
-  companyName,
-  companyEmail,
-  companyDescription,
-  companyFaqs,
-  brandName,
-  brandLink,
-  agentName,
-  agentSubtitle,
-  welcomeMessage
-}) {
-  const errors = {};
-
-  if (!companyName?.trim()) errors.companyName = "Required";
-  if (!companyEmail?.trim()) errors.companyEmail = "Required";
-  if (!companyDescription?.trim()) errors.companyDescription = "Required";
-  if (!companyFaqs?.trim()) errors.companyFaqs = "Required";
-  if (!brandName?.trim()) errors.brandName = "Required";
-  if (!brandLink?.trim()) errors.brandLink = "Required";
-  if (!agentName?.trim()) errors.agentName = "Required";
-  if (!agentSubtitle?.trim()) errors.agentSubtitle = "Required";
-  if (!welcomeMessage?.trim()) errors.welcomeMessage = "Required";
-
-  return errors;
+      </Form>
+  )
 }
 
-async function action({ request }) {
-  const formData = await request.formData();
-  const companyData = {
-    id: formData.get("companyId"),
-    ownerId: formData.get("ownerId"),
-    companyName: formData.get("CompanyName"),
-    companyEmail: formData.get("CompanyEmail"),
-    companyWebsite: formData.get("CompanyWebsite"),
-    companyLink: formData.get("CompanyLink"),
-    companyDescription: formData.get("CompanyDescription"),
-    agentName: formData.get("AgentName"),
-    agentSubtitle: formData.get("AgentSubtitle"),
-    brandName: formData.get("BrandName"),
-    brandLink: formData.get("BrandLink"),
-    welcomeMessage: formData.get("WelcomeMessage"),
-    companyFaqs: formData.get("CompanyFaqs"),
-    companyColor: formData.get("CompanyColor"),
-    companyDirection: formData.get("CompanyDirection"),
-  };
-
-  const errors = postFormValidator(companyData);
-
-  if (Object.keys(errors).length > 0) {
-    return { errors, values: companyData };
-  }
-
-  await createCompany(companyData);
-
-  return redirect(`/dashboard`);
-}
-
-export const CreateSettingsPage = {
-  action,
-  element: <CreateSettings />,
-};
-
-export default React.memo(CreateSettings);
+export default CreateForm
