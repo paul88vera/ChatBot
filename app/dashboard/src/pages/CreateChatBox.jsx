@@ -44,7 +44,7 @@ const CreateSettings = () => {
             return;
           }
         }}>
-        <input type="hidden" name="ownerId" value={orgId} />
+        <input type="hidden" name="orgId" value={orgId} />
 
         <div className="settings-form-row-col">
           <FormGroup errorMessage={errors.companyName}>
@@ -237,7 +237,7 @@ async function action({ request }) {
   const formData = await request.formData();
   const companyData = {
     id: formData.get("companyId"),
-    ownerId: formData.get("ownerId"),
+    orgId: formData.get("orgId"),
     companyName: formData.get("CompanyName"),
     companyEmail: formData.get("CompanyEmail"),
     companyWebsite: formData.get("CompanyWebsite"),

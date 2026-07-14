@@ -2,8 +2,8 @@ DROP TABLE IF EXISTS companies;
 
 CREATE TABLE companies (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  ownerId VARCHAR(255),
-  companyName VARCHAR(255) NOT NULL,
+  orgId VARCHAR(255), 
+  companyName VARCHAR(255) NOT NULL DEFAULT 'New',
   companyEmail VARCHAR(255) NOT NULL,
   companyWebsite VARCHAR(255),
   companyLink VARCHAR(255),
@@ -22,18 +22,16 @@ CREATE TABLE companies (
 );
 
 ALTER TABLE companies
-  ADD COLUMN publicId VARCHAR(32) NOT NULL UNIQUE AFTER id;
-  CREATE INDEX idx_owner_id ON companies(ownerId);
-  -- ADD COLUMN avatarUrl VARCHAR(512) NULL AFTER companyColor;
+  ADD COLUMN publicId VARCHAR(32) NOT NULL UNIQUE AFTER id,
   ADD COLUMN stripeCustomerId VARCHAR(255),
   ADD COLUMN stripeSubscriptionId VARCHAR(255),
   ADD COLUMN stripePriceId VARCHAR(255),
-  ADD COLUMN subscriptionStatus VARCHAR(50),
-  ADD COLUMN plan ENUM(
-    'free'.
-    'new',
+  ADD COLUMN subscriptionStatus VARCHAR(50) DEFAULT 'inactive',
+  ADD COLUMN subscriptionPlan ENUM(
+    'member',
     'starter',
     'pro',
-    'business',
-    'enterpirse'
-  ) DEFAULT 'free';
+    'enterprise'
+  ) DEFAULT NULL;
+
+CREATE INDEX idx_org_id ON companies(orgId);

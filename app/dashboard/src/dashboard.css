@@ -251,3 +251,44 @@ textarea {
     flex-direction: row;
   }
 }
+.pricing-table {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5em;
+  margin-top: 3em;
+}
+
+.pricing-table a {
+  font-size: 1.2em;
+}
+
+.check-icon {
+  color: limegreen;
+  font-size: 2em;
+}
+
+.x-icon {
+  color: red;
+  font-size: 2em;
+}
+
+.feature-title {
+  font-weight: 800;
+  font-size: 2em;
+  padding: .2em 1em;
+  text-align: left;
+}
+
+.feature-name {
+  font-size: 1.2em;
+  padding: .2em 1.7em;
+  text-align: left;
+}
+
+.icon-container {
+  padding: 0 2em;
+  margin: 0 auto;
+  text-align: center;
+}

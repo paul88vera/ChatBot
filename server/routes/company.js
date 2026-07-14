@@ -4,6 +4,48 @@ import crypto from "crypto";
 
 import db from "../db/connections.js";
 
+import { getPermissions } from "../helpers/permissions.js";
+
+// Subscription Permissions Check
+// router.get("/:orgId", async (req, res) => {
+//   try {
+//     const connection = await db();
+//     const companyId = req.params.id;
+
+//     // get company from publicId
+//     const [rows] = await connection.query(
+//       "SELECT * FROM companies WHERE publicId = ?",
+//       [companyId],
+//     );
+//     if (rows.length === 0) {
+//       return res.status(404).json({ error: "Company not found" });
+//     }
+
+//     // get company subscription plan from
+//     const [company] = await connection.query(
+//       "SELECT subscriptionPlan FROM companies WHERE orgId = ?",
+//       [companyId],
+//     );
+
+//     if (!company.subscriptionPlan) {
+//       return res.status(403).json({
+//         message: "Active subscription required.",
+//       });
+//     }
+
+//     const [results] = connection.query(company);
+//     const permissions = getPermissions(company.FEATURES);
+
+//     res.json({
+//       company,
+//       permissions,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//   }
+// });
+
+// Get All companies - Private
 router.get("/", async (req, res) => {
   try {
     const connection = await db();
@@ -16,20 +58,29 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+// Get single company by orgId - Private
+router.get("/:orgId", async (req, res) => {
   try {
     const connection = await db();
-    const companyId = req.params.id;
-
+    const orgId = req.params.orgId;
 
     const [rows] = await connection.query(
-      "SELECT * FROM companies WHERE publicId = ?",
-      [companyId]
+      "SELECT * FROM companies WHERE orgId = ?",
+      [orgId],
     );
 
+    
     if (rows.length === 0) {
       return res.status(404).json({ error: "Company not found" });
     }
+    
+    if (!rows[0].subscriptionPlan) {
+      // No paid subscription
+      return res.status(403).json({
+        message: "Active subscription required.",
+      });
+    }
+
     res.json(rows[0]);
   } catch (error) {
     console.error(error);
@@ -37,12 +88,13 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Create company
 router.post("/", async (req, res) => {
   try {
     const connection = await db();
 
     let {
-      ownerId,
+      orgId,
       companyName,
       companyEmail,
       companyWebsite,
@@ -59,27 +111,23 @@ router.post("/", async (req, res) => {
       companyChatboxActive,
     } = req.body;
 
-    if (!ownerId) {
+    if (!orgId) {
       return res.status(400).json({ error: "Organization Id is required" });
     }
 
     // Normalize companyChatboxActive: default to true (1)
     companyChatboxActive =
-      companyChatboxActive === undefined
-        ? 1
-        : companyChatboxActive
-        ? 1
-        : 0;
+      companyChatboxActive === undefined ? 1 : companyChatboxActive ? 1 : 0;
 
     // Generate public ID
     const publicId = "cmp_" + crypto.randomBytes(4).toString("hex");
 
     const [result] = await connection.query(
       `INSERT INTO companies 
-      (ownerId, publicId, companyName, companyEmail, companyWebsite, companyLink, companyDescription, agentName, agentSubtitle, brandName, brandLink, welcomeMessage, companyFaqs, companyColor, companyDirection, companyChatboxActive)
+      (orgId, publicId, companyName, companyEmail, companyWebsite, companyLink, companyDescription, agentName, agentSubtitle, brandName, brandLink, welcomeMessage, companyFaqs, companyColor, companyDirection, companyChatboxActive)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
-        ownerId,
+        orgId,
         publicId,
         companyName,
         companyEmail,
@@ -95,13 +143,13 @@ router.post("/", async (req, res) => {
         companyColor,
         companyDirection,
         companyChatboxActive,
-      ]
+      ],
     );
 
     res.status(201).json({
       id: result.insertId,
       publicId,
-      ownerId,
+      orgId,
       companyName,
       companyEmail,
       companyWebsite,
@@ -123,10 +171,11 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+// Update companny
+router.put("/:orgId", async (req, res) => {
   try {
     const connection = await db();
-    const companyId = req.params.id;
+    const orgId = req.params.orgId;
     const updateData = { ...req.body };
 
     if (updateData.companyFaqs) {
@@ -135,19 +184,18 @@ router.put("/:id", async (req, res) => {
 
     // Normalize companyChatboxActive if present
     if (updateData.companyChatboxActive !== undefined) {
-      updateData.companyChatboxActive = updateData.companyChatboxActive
-        ? 1
-        : 0;
+      updateData.companyChatboxActive = updateData.companyChatboxActive ? 1 : 0;
     }
 
-    const ownerId = updateData.ownerId;
-    if (!ownerId) {
+    const updatedOrgId = updateData.orgId;
+
+    if (!orgId) {
       return res.status(400).json({ error: "Company orgId missing" });
     }
 
     const [result] = await connection.query(
-      "UPDATE companies SET ? WHERE publicId = ?",
-      [updateData, updateData.publicId]
+      "UPDATE companies SET ? WHERE orgId = ?",
+      [updateData, updatedOrgId],
     );
 
     if (result.affectedRows === 0) {
@@ -156,24 +204,27 @@ router.put("/:id", async (req, res) => {
 
     // Return boolean for frontend
     if (updateData.companyChatboxActive !== undefined) {
-      updateData.companyChatboxActive = Boolean(updateData.companyChatboxActive);
+      updateData.companyChatboxActive = Boolean(
+        updateData.companyChatboxActive,
+      );
     }
 
-    res.json({ id: companyId, ...updateData });
+    res.json({ orgId: orgId, ...updateData });
+    
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to update company" });
   }
 });
 
-
-router.delete("/:id", async (req, res) => {
+// Delete company
+router.delete("/:orgId", async (req, res) => {
   try {
     const connection = await db();
-    const companyId = req.params.id;
+    const orgId = req.params.orgId;
     const [result] = await connection.query(
-      "DELETE FROM companies WHERE id = ?",
-      [companyId]
+      "DELETE FROM companies WHERE orgId = ?",
+      [orgId],
     );
     if (result.affectedRows === 0) {
       return res.status(404).json({ error: "Company not found" });

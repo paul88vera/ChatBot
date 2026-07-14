@@ -28,7 +28,7 @@ const CreateForm = ({text}) => {
             return;
           }
         }}>
-        <input type="hidden" name="ownerId" value={orgId} />
+        <input type="hidden" name="orgId" value={orgId} />
 
         <div className="settings-form-row-col">
           <FormGroup errorMessage={errors.companyName}>

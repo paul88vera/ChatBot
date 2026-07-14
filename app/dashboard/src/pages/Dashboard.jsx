@@ -4,7 +4,7 @@ import "../dashboard.css";
 import { FaCopy } from "react-icons/fa";
 import { getCompanies } from "../api/company";
 import { BiSolidMessageRoundedDots } from "react-icons/bi";
-import { PiSignOutBold } from "react-icons/pi";
+
 
 import {
   SignOutButton,
@@ -12,10 +12,14 @@ import {
   useOrganization,
   SignIn,
 } from "@clerk/clerk-react";
+import PricingTable from "../components/PricingTable";
+import { PiSignOutBold } from "react-icons/pi";
 
 const Dashboard = () => {
   const { signOut } = useClerk();
-  const company = useLoaderData();
+  const {company} = useLoaderData();
+
+  // console.log(permissions)
 
   const handleChange = (checked) => {
     if (checked) signOut();
@@ -25,7 +29,7 @@ const Dashboard = () => {
 
   // filter company for the current organization
   const companyFilter = company.find(
-    (comp) => comp.ownerId === organization.id,
+    (comp) => comp.orgId === organization.id,
   );
 
   if (companyFilter === undefined || companyFilter.publicId == undefined) {
@@ -36,7 +40,7 @@ const Dashboard = () => {
     ? companyFilter[0]
     : {
         companyId: "",
-        ownerId: "",
+        orgId: "",
         companyName: "",
         companyEmail: "",
         companyWebsite: "",
@@ -122,20 +126,15 @@ const Dashboard = () => {
             </Link>
           </div>
         )}
-        <div>
+        <div className="pricing-table">
           {/* ========== Code Actual Table ============ */}
-        <code>
-          | Feature       | Member | Starter | Pro | Enterprise |<br />
-          | ------------  | :----: | :-----: | :-: | :--------: |<br />
-          | Theme Color   | ✅      | ✅      | ✅  |   ✅ |<br />
-          | FAQs          | ❌      | ✅      | ✅  |   ✅ |<br />
-          | Branding      | ❌      | ✅      | ✅  |   ✅ |<br />
-          | Lead Capture  | ❌      | ❌      | ✅  |   ✅ |<br />
-          | AI Agent      | ❌      | ❌      | ❌  |   ✅ |<br />
-        </code>
-        <Link to='https://billing.stripe.com/p/login/14AeV6eIgaXZ7n80TCeUU00' target="_blank">Upgrade you ChatBox experience</Link>
+          <PricingTable />
+          <Link
+            to="https://billing.stripe.com/p/login/14AeV6eIgaXZ7n80TCeUU00"
+            target="_blank">
+            Upgrade your ChatBox experience
+          </Link>
         </div>
-
 
         <div className="script-section-container">
           <div className="settings-para">
@@ -176,9 +175,10 @@ const Dashboard = () => {
   );
 };
 
-async function loader({ request: { signal } }) {
+async function loader({ request: { signal }, params: {id} }) {
+  // const permissions = await getPermissions(id, {signal});
   const company = await getCompanies({ signal });
-  return company;
+  return {company: company};
 }
 
 export const DashboardRoute = {

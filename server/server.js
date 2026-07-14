@@ -32,8 +32,8 @@ app.use(cors({
   methods: ["GET","POST","PUT","DELETE","OPTIONS"]
 }));
 
-// Stripe route
-app.use("api/stripe", stripeRoute); //public
+// === Stripe route ===
+app.use("/api/stripe", stripeRoute); //public
 
 app.use(express.json());
 

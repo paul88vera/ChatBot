@@ -27,7 +27,7 @@ const EditSettings = () => {
 
   // filter company by id
   const companyData = company.filter(
-    (comp) => comp.ownerId === organization.id,
+    (comp) => comp.orgId === organization.id,
   );
 
   const errors = {}; // Placeholder for error messages
@@ -53,7 +53,7 @@ async function action({ request }) {
   const formData = await request.formData();
   const companyData = {
     id: formData.get("companyId"),
-    ownerId: formData.get("ownerId"),
+    orgId: formData.get("orgId"),
     publicId: formData.get("publicId"),
     companyName: formData.get("CompanyName"),
     companyEmail: formData.get("CompanyEmail"),
@@ -72,7 +72,7 @@ async function action({ request }) {
 
   await updateCompany(companyData.id, companyData);
 
-  return redirect(`/dashboard/${companyData.ownerId}`);
+  return redirect(`/dashboard/${companyData.orgId}`);
 }
 
 export const EditSettingsPage = {

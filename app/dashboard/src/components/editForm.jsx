@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const EditForm = ({companyData, text, errors}) => {
   const [id] = useState(companyData[0].id);
-  const [ownerId] = useState(companyData[0].ownerId);
+  const [orgId] = useState(companyData[0].orgId);
   const [publicId] = useState(companyData[0].publicId);
   const [name, setName] = useState(companyData[0].companyName || "");
   const [email, setEmail] = useState(companyData[0].companyEmail || "");
@@ -23,7 +23,7 @@ const EditForm = ({companyData, text, errors}) => {
   return (
     <Form method="post" className="settings-form">
         <input type="hidden" name="companyId" value={id} />
-        <input type="hidden" name="ownerId" value={ownerId} />
+        <input type="hidden" name="orgId" value={orgId} />
         <input type="hidden" name="publicId" value={publicId} />
 
         <div className="settings-form-row-col row-cols">
