@@ -19,7 +19,6 @@ const Dashboard = () => {
   const { signOut } = useClerk();
   const {company} = useLoaderData();
 
-  // console.log(permissions)
 
   const handleChange = (checked) => {
     if (checked) signOut();

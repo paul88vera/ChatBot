@@ -44,7 +44,7 @@ export default async function stripeEvent(req, res) {
         const plan = session.metadata?.plan;
         await connection.query(
           `
-          UPDATE companies
+          UPDATE chatbot_db.companies
           SET subscriptionPlan = ?
           WHERE orgId = ?
           `,
@@ -69,7 +69,7 @@ export default async function stripeEvent(req, res) {
         const plan = session.metadata?.plan;
         await connection.query(
           `
-          UPDATE companies
+          UPDATE chatbot_db.companies
           SET subscriptionPlan = null
           WHERE orgId = ?
           `,

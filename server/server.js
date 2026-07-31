@@ -3,19 +3,20 @@ import cors from "cors";
 import otherRoutes from "./routes/chat.js";
 import companyRoute from './routes/company.js';
 import stripeRoute from './routes/payment.js';
+import orgRoute from './routes/organization.js';
 import dotenv from "@dotenvx/dotenvx";
 import  { clerkMiddleware, getAuth } from "@clerk/express";
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5400;
+const PORT = process.env.PORT || 5500;
 
 // List of allowed origins
 const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:5174",
   "https://chatbox.verafied.tech",
+  "https://app.verafied.tech",
+  "http://localhost:5173"
 ];
 
 app.use(cors({
@@ -29,11 +30,16 @@ app.use(cors({
     }
   },
   credentials: true,
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization"
+  ],
   methods: ["GET","POST","PUT","DELETE","OPTIONS"]
 }));
 
 // === Stripe route ===
 app.use("/api/stripe", stripeRoute); //public
+app.use("/api/webhook", orgRoute); // public
 
 app.use(express.json());
 
@@ -57,13 +63,13 @@ function requireAuth(req, res, next) {
 }
 
 // === ROUTES ===
-app.use("/api/company", companyRoute); // public
+app.use("/api/company", requireAuth, companyRoute); // private
 app.use("/api", requireAuth, otherRoutes); // private
 
 
 // DEVELOPMENT ONLY - SERVE FRONTEND
-app.use(express.static("public"));
-app.use(express.static("dist"));
+// app.use(express.static("public"));
+// app.use(express.static("dist"));
 
 app.set("trust proxy", true); 
 

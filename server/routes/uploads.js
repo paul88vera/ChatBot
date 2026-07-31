@@ -33,7 +33,7 @@ router.post("/company-avatar/:publicId", upload.single("avatar"), async (req, re
 
     const connection = await db();
     await connection.query(
-      "UPDATE companies SET avatarUrl = ? WHERE publicId = ?",
+      "UPDATE chatbot_db.companies SET avatarUrl = ? WHERE publicId = ?",
       [url, publicId]
     );
 

@@ -13,7 +13,7 @@ router.post("/", async (req, res) => {
     // --- Get Company ---
     const connection = await db();
     const [rows] = await connection.query(
-      "SELECT * FROM companies WHERE id = ?",
+      "SELECT * FROM chatbot_db.companies WHERE id = ?",
       [companyId]
     );
     const company = rows[0];

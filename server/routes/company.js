@@ -49,7 +49,7 @@ import { getPermissions } from "../helpers/permissions.js";
 router.get("/", async (req, res) => {
   try {
     const connection = await db();
-    const query = "SELECT * FROM companies";
+    const query = "SELECT * FROM chatbot_db.companies";
     const [rows] = await connection.query(query);
     res.json(rows);
   } catch (error) {
@@ -65,7 +65,7 @@ router.get("/:orgId", async (req, res) => {
     const orgId = req.params.orgId;
 
     const [rows] = await connection.query(
-      "SELECT * FROM companies WHERE orgId = ?",
+      "SELECT * FROM chatbot_db.companies WHERE orgId = ?",
       [orgId],
     );
 
@@ -123,9 +123,9 @@ router.post("/", async (req, res) => {
     const publicId = "cmp_" + crypto.randomBytes(4).toString("hex");
 
     const [result] = await connection.query(
-      `INSERT INTO companies 
+      `INSERT INTO chatbot_db.companies 
       (orgId, publicId, companyName, companyEmail, companyWebsite, companyLink, companyDescription, agentName, agentSubtitle, brandName, brandLink, welcomeMessage, companyFaqs, companyColor, companyDirection, companyChatboxActive)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`,
       [
         orgId,
         publicId,
@@ -194,7 +194,7 @@ router.put("/:orgId", async (req, res) => {
     }
 
     const [result] = await connection.query(
-      "UPDATE companies SET ? WHERE orgId = ?",
+      "UPDATE chatbot_db.companies SET ? WHERE orgId = ?",
       [updateData, updatedOrgId],
     );
 
@@ -223,7 +223,7 @@ router.delete("/:orgId", async (req, res) => {
     const connection = await db();
     const orgId = req.params.orgId;
     const [result] = await connection.query(
-      "DELETE FROM companies WHERE orgId = ?",
+      "DELETE FROM chatbot_db.companies WHERE orgId = ?",
       [orgId],
     );
     if (result.affectedRows === 0) {
