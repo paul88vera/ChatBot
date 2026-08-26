@@ -1,6 +1,13 @@
 // permissions.js
 
 export const FEATURES = Object.freeze({
+  free: {
+    color: false,
+    agent: false,
+    branding: false,
+    leadCapture: false,
+    faqs: false,
+  },
   member: {
     color: true,
     agent: false,

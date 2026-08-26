@@ -1,0 +1,21 @@
+version: 1
+
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "Building with API URL: $VITE_API_URL"
+        - npm install -g pnpm
+        - pnpm install --frozen-lockfile
+    build:
+      commands:
+        - pnpm run build
+
+  artifacts:
+    baseDirectory: dist
+    files:
+      - '**/*'
+
+  cache:
+    paths:
+      - node_modules/**/*

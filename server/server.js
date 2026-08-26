@@ -14,6 +14,7 @@ const PORT = process.env.PORT || 5500;
 
 // List of allowed origins
 const allowedOrigins = [
+  "https://verafied.tech",
   "https://chatbox.verafied.tech",
   "https://app.verafied.tech",
   "http://localhost:5173"
@@ -43,7 +44,7 @@ app.use("/api/webhook", orgRoute); // public
 
 app.use(express.json());
 
-// === Clerk Auth ===
+// === Clerk AUTH ===
 app.use(
   clerkMiddleware({
     publishableKey: process.env.VITE_CLERK_PUBLISHABLE_KEY,
@@ -51,12 +52,24 @@ app.use(
   })
 );
 
-// === AUTH ===
+// === Clerk AUTH Check For Routes ===
 function requireAuth(req, res, next) {
   const { userId, orgId } = getAuth(req);
 
-  if (!userId || !orgId) {
-    return res.status(401).json({ message: "Unauthorized" });
+  console.log("=== AUTH ===");
+  console.log("userId:", userId);
+  console.log("orgId:", orgId);
+
+  // if (!userId) {
+  //   return res.status(401).json({
+  //     message: "Unauthorized - no Clerk user",
+  //   });
+  // }
+
+  if (!orgId) {
+    return res.status(401).json({
+      message: "Unauthorized - no active organization",
+    });
   }
 
   next();
@@ -64,12 +77,21 @@ function requireAuth(req, res, next) {
 
 // === ROUTES ===
 app.use("/api/company", requireAuth, companyRoute); // private
+// app.use(
+//   "/api/company",
+//   (req, res, next) => {
+//   console.log("=== COMPANY AUTH DEBUG ===");
+//   console.log(
+//     "Authorization present:",
+//     Boolean(req.headers.authorization)
+//   );
+//   next();
+// },
+//   requireAuth,
+//   companyRoute
+// ); // temp debug - delete
 app.use("/api", requireAuth, otherRoutes); // private
 
-
-// DEVELOPMENT ONLY - SERVE FRONTEND
-// app.use(express.static("public"));
-// app.use(express.static("dist"));
 
 app.set("trust proxy", true); 
 

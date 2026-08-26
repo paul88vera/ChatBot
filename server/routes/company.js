@@ -6,7 +6,7 @@ import db from "../db/connections.js";
 
 import { getPermissions } from "../helpers/permissions.js";
 
-// Subscription Permissions Check
+// Subscription Permissions Check TODO:
 // router.get("/:orgId", async (req, res) => {
 //   try {
 //     const connection = await db();

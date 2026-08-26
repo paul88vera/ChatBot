@@ -1,31 +1,47 @@
 import stripe from "stripe";
 import db from "../db/connections.js";
 
-// const session = await stripe.checkout.sessions.create({
-//   mode: "subscription",
+const { userId, orgId } = getAuth(req);
 
-//   line_items: [
-//     {
-//       price: "price_1TLES56baMArmzIIcTGuSRZY",
-//       quantity: 1,
-//     }
-//   ],
+const customer = await stripe.customers.create({
+  metadata: {
+    orgId,
+    clerkUserId: userId,
+  },
+});
 
-//   success_url: "http://localhost:5173/success",
-//   cancel_url: "http://localhost:5173/cancel",
+const session = await stripe.checkout.sessions.create({
+  customer: customer.id,
 
-//   metadata: {
-//     orgId: organization.id,
-//     plan: "pro",
-//   },
+  mode: "subscription",
 
-//   subscription_data: {
-//     metadata: {
-//       orgId: organization.id,
-//       plan: "pro",
-//     },
-//   },
-// });
+  line_items: [
+    {
+      price: priceId,
+      quantity: 1,
+    },
+  ],
+
+  metadata: {
+    orgId,
+    clerkUserId: userId,
+    plan,
+  },
+
+  subscription_data: {
+    metadata: {
+      orgId,
+      clerkUserId: userId,
+      plan,
+    },
+  },
+
+  success_url:
+    "https://chatbox.verafied.tech/dashboard?payment=success",
+
+  cancel_url:
+    "https://chatbox.verafied.tech/dashboard?payment=cancelled",
+});
 
 export default async function stripeEvent(req, res) {
   const connection = await db();
@@ -39,7 +55,6 @@ export default async function stripeEvent(req, res) {
     case "checkout.session.completed":
       // Upgrade the organization in your database
       try {
-        const session = event.data.object;
         const orgId = session.metadata?.orgId;
         const plan = session.metadata?.plan;
         await connection.query(
@@ -64,13 +79,10 @@ export default async function stripeEvent(req, res) {
     case "customer.subscription.deleted":
       // Downgrade to free
       try {
-        const session = event.data.object;
         const orgId = session.metadata?.orgId;
-        const plan = session.metadata?.plan;
         await connection.query(
           `
-          UPDATE chatbot_db.companies
-          SET subscriptionPlan = null
+          DELETE FROM chatbot_db.companies
           WHERE orgId = ?
           `,
           [orgId],

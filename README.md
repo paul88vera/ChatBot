@@ -30,6 +30,21 @@ Widget:
 - Enter Company information to use with Ai frequent questions
 - Answers client questions using company knowledge
 
+## User Workflow
+1. User signs up
+        ↓
+2. Clerk User created
+        ↓
+3. Clerk Organization created
+        ↓
+4. User chooses Pro
+        ↓
+5. Stripe Checkout
+        ↓
+6. Payment succeeds
+        ↓
+7. Company/ChatBox created
+
 ## Contact Information
 
 Developer: Paul Vera

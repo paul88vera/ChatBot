@@ -27,7 +27,7 @@ const Pricing = () => {
       <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
       <stripe-pricing-table
         pricing-table-id="prctbl_1Tql3K6baMArmzIID7hfhwYU"
-        publishable-key="pk_live_51TLE7x6baMArmzIIZ0ZxukZr7Ff2dsMlncBOQ1bTV7KUFzFip2e8uySZgEeRvsKrkBcydhnhjnnNa6JnBMcYGyIC00Zg0RpJjG"></stripe-pricing-table>
+        publishable-key={import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY}></stripe-pricing-table>
       {/* <div className='pricing-cards'>
        
           <PriceCard {...price[0]} mwidth={"350px"} />
