@@ -7,45 +7,46 @@ import db from "../db/connections.js";
 import { getPermissions } from "../helpers/permissions.js";
 
 // Subscription Permissions Check TODO:
-// router.get("/:orgId", async (req, res) => {
-//   try {
-//     const connection = await db();
-//     const companyId = req.params.id;
+router.get("/:orgId", async (req, res) => {
+  try {
+    const connection = await db();
+    const companyId = req.params.id;
 
-//     // get company from publicId
-//     const [rows] = await connection.query(
-//       "SELECT * FROM companies WHERE publicId = ?",
-//       [companyId],
-//     );
-//     if (rows.length === 0) {
-//       return res.status(404).json({ error: "Company not found" });
-//     }
+    // get company from publicId
+    const [rows] = await connection.query(
+      "SELECT * FROM chatbot_db.companies WHERE publicId = ?",
+      [companyId],
+    );
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "Company not found" });
+    }
 
-//     // get company subscription plan from
-//     const [company] = await connection.query(
-//       "SELECT subscriptionPlan FROM companies WHERE orgId = ?",
-//       [companyId],
-//     );
+    // get company subscription plan from
+    const [company] = await connection.query(
+      "SELECT subscriptionPlan FROM chatbot_db.organizations WHERE orgId = ?",
+      [companyId],
+    );
 
-//     if (!company.subscriptionPlan) {
-//       return res.status(403).json({
-//         message: "Active subscription required.",
-//       });
-//     }
+    if (!company.subscriptionPlan) {
+      return res.status(403).json({
+        message: "Active subscription required.",
+      });
+    }
 
-//     const [results] = connection.query(company);
-//     const permissions = getPermissions(company.FEATURES);
+    const [results] = connection.query(company);
+    const permissions = getPermissions(company.FEATURES);
 
-//     res.json({
-//       company,
-//       permissions,
-//     });
-//   } catch (error) {
-//     console.error(error);
-//   }
-// });
+    res.json({
+      company,
+      permissions,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 // Get All companies - Private
+
 router.get("/", async (req, res) => {
   try {
     const connection = await db();
@@ -94,7 +95,6 @@ router.post("/", async (req, res) => {
     const connection = await db();
 
     let {
-      orgId,
       companyName,
       companyEmail,
       companyWebsite,

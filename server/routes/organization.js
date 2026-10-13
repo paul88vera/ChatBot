@@ -20,7 +20,6 @@ router.post(
     }
 
     const wh = new Webhook(webhookSecret);
-
     let event;
 
     try {
@@ -31,7 +30,6 @@ router.post(
       });
     } catch (err) {
       console.error("Webhook verification failed:", err);
-
       return res.status(400).json({
         error: "Invalid webhook",
       });
@@ -43,16 +41,11 @@ router.post(
     if (event.type === "organization.created") {
       try {
         const organization = event.data;
-
         console.log("New organization:", organization);
-
         const orgId = organization.id;
         // const companyName = organization.name; // temp
-
         const connection = await db();
-
-        // const publicId = "cmp_" + crypto.randomBytes(4).toString("hex"); // temp
-
+        
         await connection.execute(
           `
           INSERT INTO chatbot_db.organizations (orgId) VALUES (?);
@@ -63,7 +56,6 @@ router.post(
         console.log(`Company created for Clerk organization: ${orgId}`);
       } catch (err) {
         console.error("Failed to create company from Clerk organization:", err);
-
         return res.status(500).json({
           error: "Failed to create company",
         });

@@ -1,7 +1,7 @@
-import stripe from "stripe";
+import Stripe from "stripe";
 import db from "../db/connections.js";
 
-const { userId, orgId } = getAuth(req);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const customer = await stripe.customers.create({
   metadata: {
@@ -55,11 +55,11 @@ export default async function stripeEvent(req, res) {
     case "checkout.session.completed":
       // Upgrade the organization in your database
       try {
-        const orgId = session.metadata?.orgId;
+        const orgId = session.metadata?.orgId; // temp
         const plan = session.metadata?.plan;
         await connection.query(
           `
-          UPDATE chatbot_db.companies
+          UPDATE chatbot_db.organizations
           SET subscriptionPlan = ?
           WHERE orgId = ?
           `,
@@ -79,10 +79,10 @@ export default async function stripeEvent(req, res) {
     case "customer.subscription.deleted":
       // Downgrade to free
       try {
-        const orgId = session.metadata?.orgId;
+        const orgId = session.metadata?.orgId; // temp
         await connection.query(
           `
-          DELETE FROM chatbot_db.companies
+          DELETE FROM chatbot_db.organizations
           WHERE orgId = ?
           `,
           [orgId],
