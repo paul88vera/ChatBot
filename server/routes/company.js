@@ -37,7 +37,7 @@ router.get("/:orgId", async (req, res) => {
     const permissions = getPermissions(company.FEATURES);
 
     res.json({
-      company,
+      results,
       permissions,
     });
   } catch (error) {
@@ -95,6 +95,7 @@ router.post("/", async (req, res) => {
     const connection = await db();
 
     let {
+      orgId,
       companyName,
       companyEmail,
       companyWebsite,

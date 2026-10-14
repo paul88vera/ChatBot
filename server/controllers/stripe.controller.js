@@ -1,102 +1,106 @@
+
 import Stripe from "stripe";
 import db from "../db/connections.js";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-const customer = await stripe.customers.create({
-  metadata: {
-    orgId,
-    clerkUserId: userId,
-  },
-});
-
-const session = await stripe.checkout.sessions.create({
-  customer: customer.id,
-
-  mode: "subscription",
-
-  line_items: [
-    {
-      price: priceId,
-      quantity: 1,
-    },
-  ],
-
-  metadata: {
-    orgId,
-    clerkUserId: userId,
-    plan,
-  },
-
-  subscription_data: {
-    metadata: {
-      orgId,
-      clerkUserId: userId,
-      plan,
-    },
-  },
-
-  success_url:
-    "https://chatbox.verafied.tech/dashboard?payment=success",
-
-  cancel_url:
-    "https://chatbox.verafied.tech/dashboard?payment=cancelled",
-});
-
 export default async function stripeEvent(req, res) {
-  const connection = await db();
-  let event = stripe.webhooks.constructEvent(
-    req.body,
-    req.headers["stripe-signature"],
-    process.env.STRIPE_WEBHOOK_SECRET,
-  );
+  let event;
 
-  switch (event.type) {
-    case "checkout.session.completed":
-      // Upgrade the organization in your database
-      try {
-        const orgId = session.metadata?.orgId; // temp
+  // Verify that this request genuinely came from Stripe.
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      req.headers["stripe-signature"],
+      process.env.STRIPE_WEBHOOK_SECRET,
+    );
+  } catch (error) {
+    console.error("Stripe webhook signature error:", error.message);
+
+    return res.status(400).send(
+      `Webhook Error: ${error.message}`
+    );
+  }
+
+  try {
+    const connection = await db();
+
+    switch (event.type) {
+      case "checkout.session.completed": {
+        const session = event.data.object;
+
+        const orgId = session.metadata?.orgId;
         const plan = session.metadata?.plan;
+
+        if (!orgId || !plan) {
+          console.error("Missing orgId or plan in Checkout Session metadata");
+          return res.status(400).json({
+            error: "Missing checkout metadata",
+          });
+        }
+
+        // For subscription checkout, the subscription status should
+        // also be verified before granting paid features.
+        if (session.mode !== "subscription") {
+          break;
+        }
+
         await connection.query(
-          `
-          UPDATE chatbot_db.organizations
-          SET subscriptionPlan = ?
-          WHERE orgId = ?
-          `,
+          `UPDATE chatbot_db.organizations
+           SET subscriptionPlan = ?
+           WHERE orgId = ?`,
           [plan, orgId],
         );
-        console.log({
-          event: event.type,
-          database: process.env.DEV_DB_HOST,
-          plan,
-          orgId,
-        });
-      } catch (error) {
-        console.error(error);
-      }
-      break;
 
-    case "customer.subscription.deleted":
-      // Downgrade to free
-      try {
-        const orgId = session.metadata?.orgId; // temp
-        await connection.query(
-          `
-          DELETE FROM chatbot_db.organizations
-          WHERE orgId = ?
-          `,
-          [orgId],
-        );
-        console.log({
-          event: event.type,
-          database: process.env.DEV_DB_HOST,
-          plan,
+        console.log("Organization subscription updated:", {
           orgId,
+          plan,
+          event: event.type,
         });
-      } catch (error) {
-        console.error(error);
+
+        break;
       }
-      break;
+
+      case "customer.subscription.deleted": {
+        const subscription = event.data.object;
+
+        const orgId = subscription.metadata?.orgId;
+
+        if (!orgId) {
+          console.error(
+            "Missing orgId in subscription metadata",
+            subscription.id
+          );
+          break;
+        }
+
+        // Downgrade the organization instead of deleting it.
+        await connection.query(
+          `UPDATE chatbot_db.organizations
+           SET subscriptionPlan = ?
+           WHERE orgId = ?`,
+          ["free", orgId],
+        );
+
+        console.log("Organization subscription cancelled:", {
+          orgId,
+          event: event.type,
+        });
+
+        break;
+      }
+
+      default:
+        console.log("Unhandled Stripe event:", event.type);
+    }
+
+    return res.json({ received: true });
+  } catch (error) {
+    console.error("Stripe webhook processing error:", error);
+
+    // Return an error so Stripe can retry the event.
+    return res.status(500).json({
+      error: "Webhook processing failed",
+    });
   }
-  res.json({ received: true });
 }

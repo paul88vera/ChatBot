@@ -39,8 +39,9 @@ app.use(cors({
 }));
 
 // === Stripe route ===
-app.use("/api/stripe", stripeRoute); //public
 app.use("/api/webhook", orgRoute); // public
+app.use("/api/stripe", stripeRoute); //public
+
 
 app.use(express.json());
 

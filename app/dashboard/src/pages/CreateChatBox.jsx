@@ -1,11 +1,11 @@
 import { UserButton } from "@clerk/clerk-react";
 import { Form, Link, redirect, useActionData } from "react-router";
-import FormGroup from "../components/FormGroup";
+// import FormGroup from "../components/FormGroup";
 import "../Dashboard.css";
 import { createCompany } from "../api/company";
 import { useOrganization } from "@clerk/clerk-react";
 import React from "react";
-import EditForm from "../components/editForm";
+// import EditForm from "../components/editForm";
 import CreateForm from "../components/CreateForm";
 // import AvatarUploader from "../components/AvatarUploader";
 
