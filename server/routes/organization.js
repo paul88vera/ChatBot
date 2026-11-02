@@ -3,6 +3,8 @@ import { Webhook } from "svix";
 import bodyParser from "body-parser";
 // import crypto from "crypto";
 import db from "../db/connections.js";
+import dotenv from "@dotenvx/dotenvx";
+dotenv.config();
 
 const router = express.Router();
 

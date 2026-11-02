@@ -4,8 +4,8 @@ import otherRoutes from "./routes/chat.js";
 import companyRoute from './routes/company.js';
 import stripeRoute from './routes/payment.js';
 import orgRoute from './routes/organization.js';
-import dotenv from "@dotenvx/dotenvx";
 import  { clerkMiddleware, getAuth } from "@clerk/express";
+import dotenv from "@dotenvx/dotenvx";
 
 dotenv.config();
 
@@ -38,8 +38,9 @@ app.use(cors({
   methods: ["GET","POST","PUT","DELETE","OPTIONS"]
 }));
 
-// === Stripe route ===
+// === Clerk route ===
 app.use("/api/webhook", orgRoute); // public
+// === Stripe route ===
 app.use("/api/stripe", stripeRoute); //public
 
 

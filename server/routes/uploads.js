@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from "uuid";
 import s3 from "../lib/s3";
 import upload from "../lib/upload.js";
 import db from "../db/connections.js";
+import dotenv from "@dotenvx/dotenvx";
+dotenv.config();
 
 const router = express.Router();
 
