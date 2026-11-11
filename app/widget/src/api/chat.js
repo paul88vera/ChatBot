@@ -1,6 +1,7 @@
 export async function getMessage(message, companyId) {
 
-  const res = await fetch("http://localhost:5400/api/chat", {
+  // PPRODUCTION
+  const res = await fetch("https://server.verafied.tech/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json"},
     body: JSON.stringify({
@@ -8,6 +9,15 @@ export async function getMessage(message, companyId) {
       companyId
     }),
   });
+  // // DEVELOPMENT
+  // const res = await fetch("http://localhost:5400/api/chat", {
+  //   method: "POST",
+  //   headers: { "Content-Type": "application/json"},
+  //   body: JSON.stringify({
+  //     message,
+  //     companyId
+  //   }),
+  // });
 
   if (!res.ok) {
     const error = await res.json().catch(() => ({}));

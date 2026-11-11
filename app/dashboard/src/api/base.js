@@ -9,19 +9,23 @@ export const baseApi = axios.create({
 });
 
 export function attachClerkInterceptor(getToken) {
-  baseApi.interceptors.request.use(async (config) => {
-    const token = await getToken();
+  const interceptorId = baseApi.interceptors.request.use(
+    async (config) => {
+      const token = await getToken();
 
-    console.log("=== AXIOS CLERK ===");
-    console.log("URL:", config.url);
-    console.log("Token exists:", Boolean(token));
-    console.log("Token length:", token?.length);
+      console.log("=== AXIOS CLERK ===");
+      console.log("URL:", config.url);
+      console.log("Token exists:", Boolean(token));
+      console.log("Token length:", token?.length);
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      if (token) {
+        config.headers = config.headers || {};
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+
+      return config;
     }
-    return config;
-  });
+  );
 
   return () => {
     baseApi.interceptors.request.eject(interceptorId);

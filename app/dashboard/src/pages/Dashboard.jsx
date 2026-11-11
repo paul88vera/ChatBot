@@ -31,6 +31,8 @@ const Dashboard = () => {
     (comp) => comp.orgId === organization.id,
   );
 
+  console.log(company)
+
   if (companyFilter === undefined || companyFilter.publicId == undefined) {
     window.location.replace(`/dashboard/${organization.id}/create_settings`);
   }
