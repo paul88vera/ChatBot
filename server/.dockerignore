@@ -1,11 +1,4 @@
 node_modules
-<<<<<<< HEAD
-server/node_modules
 npm-debug.log
-Dockerfile*
-.dockerignore
-=======
-npm-debug.log
->>>>>>> develop
 .git
 .gitignore

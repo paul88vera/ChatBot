@@ -62,24 +62,5 @@ CREATE TABLE companies (
 
 );
 
-<<<<<<< HEAD
-ALTER TABLE companies
-  ADD COLUMN publicId VARCHAR(32) NOT NULL UNIQUE AFTER id;
-  CREATE INDEX idx_owner_id ON companies(ownerId);
-  -- ADD COLUMN avatarUrl VARCHAR(512) NULL AFTER companyColor;
-  ADD COLUMN stripeCustomerId VARCHAR(255),
-  ADD COLUMN stripeSubscriptionId VARCHAR(255),
-  ADD COLUMN stripePriceId VARCHAR(255),
-  ADD COLUMN subscriptionStatus VARCHAR(50),
-  ADD COLUMN plan ENUM(
-    'free'.
-    'new',
-    'starter',
-    'pro',
-    'business',
-    'enterpirse'
-  ) DEFAULT 'free';
-=======
 CREATE INDEX idx_companies_org_id
   ON companies(orgId);
->>>>>>> develop

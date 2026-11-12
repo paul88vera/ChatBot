@@ -5,14 +5,10 @@ import { EditSettingsPage } from "./pages/EditSettings";
 import { DashboardRoute } from "./pages/Dashboard";
 import ErrorMessage from "./pages/ErrorMessage";
 import { CreateSettingsPage } from "./pages/CreateChatBox";
-<<<<<<< HEAD
-import PricingScreen from './pages/PricingTable';
-=======
 import Home from "./pages/Home.jsx";
 import Product from "./pages/Product.jsx";
 import Pricing from "./pages/Pricing.jsx";
 import { OrgRedirect } from "./components/OrgRedirect.jsx";
->>>>>>> develop
 
 const router = createBrowserRouter([
   {
@@ -21,22 +17,6 @@ const router = createBrowserRouter([
     errorElement: <ErrorMessage />,
     children: [
       {
-<<<<<<< HEAD
-        errorElement: <ErrorMessage />,
-        children: [
-          {
-            index: true,
-            element: <Navigate to="dashboard" />,
-          },
-          {
-            path: "dashboard",
-            ...SettingsRoute,
-          },
-          { path: ":id/edit_settings", ...EditSettingsPage },
-          { path: "create_settings", ...CreateSettingsPage },
-          {path: "pricing", element: <PricingScreen />},
-        ],
-=======
         index: true,
         element: <Home />,
       },
@@ -47,7 +27,6 @@ const router = createBrowserRouter([
       {
         path: "pricing",
         element: <Pricing />,
->>>>>>> develop
       },
     ],
   },

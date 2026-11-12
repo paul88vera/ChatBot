@@ -2,11 +2,8 @@ import express from "express";
 const router = express.Router();
 import buildSystemPrompt from "../company/systemPrompt.js";
 import db from "../db/connections.js";
-<<<<<<< HEAD
-=======
 import dotenv from "@dotenvx/dotenvx";
 dotenv.config();
->>>>>>> develop
 
 router.post("/", async (req, res) => {
   try {

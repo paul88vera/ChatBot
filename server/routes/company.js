@@ -1,10 +1,6 @@
 import express from "express";
 const router = express.Router();
 import crypto from "crypto";
-<<<<<<< HEAD
-
-import db from "../db/connections.js";
-=======
 
 import db from "../db/connections.js";
 
@@ -50,7 +46,6 @@ import { getPermissions } from "../helpers/permissions.js";
 // }); 
 
 // Get All companies - Private
->>>>>>> develop
 
 router.get("/", async (req, res) => {
   try {
@@ -94,10 +89,7 @@ router.get("/:orgId", async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
 // Create company
->>>>>>> develop
 router.post("/", async (req, res) => {
   try {
     const connection = await db();
@@ -132,15 +124,9 @@ router.post("/", async (req, res) => {
     const publicId = "cmp_" + crypto.randomBytes(4).toString("hex");
 
     const [result] = await connection.query(
-<<<<<<< HEAD
-      `INSERT INTO companies 
-      (ownerId, publicId, companyName, companyEmail, companyWebsite, companyLink, companyDescription, agentName, agentSubtitle, brandName, brandLink, welcomeMessage, companyFaqs, companyColor, companyDirection, companyChatboxActive)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-=======
       `INSERT INTO chatbot_db.companies 
       (orgId, publicId, companyName, companyEmail, companyWebsite, companyLink, companyDescription, agentName, agentSubtitle, brandName, brandLink, welcomeMessage, companyFaqs, companyColor, companyDirection, companyChatboxActive)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`,
->>>>>>> develop
       [
         orgId,
         publicId,
