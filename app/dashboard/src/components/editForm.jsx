@@ -80,6 +80,7 @@ const EditForm = ({companyData, text, errors}) => {
             />
           </FormGroup>
         </div>
+
         <div className="settings-form-row">
           <FormGroup errorMessage={errors.companyColor}>
             <label htmlFor="CompanyColor">Brand Color: </label>
@@ -106,8 +107,7 @@ const EditForm = ({companyData, text, errors}) => {
               <option value="right">Right</option>
             </select>
           </FormGroup>
-        </div>
-        <div>
+        
           <FormGroup errorMessage={errors.agentName}>
             <label htmlFor="AgentName">Agent Name: </label>
             <input

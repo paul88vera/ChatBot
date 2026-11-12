@@ -76,6 +76,7 @@ const CreateForm = ({text}) => {
             />
           </FormGroup>
         </div>
+        
         <div className="settings-form-row">
           <FormGroup errorMessage={errors.companyColor}>
             <label htmlFor="CompanyColor">Brand Color: </label>
@@ -132,6 +133,7 @@ const CreateForm = ({text}) => {
             />
             </FormGroup>
         </div>
+
         <div>
           <FormGroup errorMessage={errors.brandName}>
             <label htmlFor="BrandName">Brand Name: </label>

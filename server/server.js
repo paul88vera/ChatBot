@@ -54,7 +54,8 @@ app.use(
     authorizedParties: [
       "https://verafied.tech",
       "https://chatbox.verafied.tech",
-      "https://server.verafied.tech"
+      "https://server.verafied.tech",
+      "http://localhost:5173"
     ],
   }),
 );

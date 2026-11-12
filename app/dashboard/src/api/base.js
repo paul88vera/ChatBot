@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const baseApi = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'https://server.verafied.tech/api',
+  // baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5500/api',
   headers: {
     "Content-Type": "application/json",
   },
