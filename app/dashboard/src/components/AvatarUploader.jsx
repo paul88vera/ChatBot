@@ -17,7 +17,11 @@ function AvatarUploader({ company, onUploaded }) {
       form.append("avatar", file);
 
       const res = await fetch(
+<<<<<<< HEAD
         `http://localhost:5400/api/upload/company-avatar/${company.publicId}`,
+=======
+        `https://server.verafied.tech/api/upload/company-avatar/${company.publicId}`,
+>>>>>>> develop
         {
           method: "POST",
           body: form,

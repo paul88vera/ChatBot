@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  chatbox-server:
+    container_name: chatbox-server
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "5500:5500"
+    networks:
+      - chatbox-network
+
+networks:
+  chatbox-network:
+    driver: bridge

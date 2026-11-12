@@ -2,6 +2,11 @@ import express from "express";
 const router = express.Router();
 import buildSystemPrompt from "../company/systemPrompt.js";
 import db from "../db/connections.js";
+<<<<<<< HEAD
+=======
+import dotenv from "@dotenvx/dotenvx";
+dotenv.config();
+>>>>>>> develop
 
 router.post("/", async (req, res) => {
   try {
@@ -13,7 +18,7 @@ router.post("/", async (req, res) => {
     // --- Get Company ---
     const connection = await db();
     const [rows] = await connection.query(
-      "SELECT * FROM companies WHERE id = ?",
+      "SELECT * FROM chatbot_db.companies WHERE id = ?",
       [companyId]
     );
     const company = rows[0];

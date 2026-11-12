@@ -1,28 +1,27 @@
 import { UserButton } from "@clerk/clerk-react";
-import { Form, Link, redirect, useActionData } from "react-router";
-import FormGroup from "../components/FormGroup";
+import { Link, redirect } from "react-router";
 import "../Dashboard.css";
 import { createCompany } from "../api/company";
 import { useOrganization } from "@clerk/clerk-react";
 import React from "react";
+<<<<<<< HEAD
 // import AvatarUploader from "../components/AvatarUploader";
+=======
+import CreateForm from "../components/CreateForm";
+>>>>>>> develop
 
 const CreateSettings = () => {
   const { organization } = useOrganization();
-  const actionData = useActionData();
-  const errors = actionData?.errors || {};
-  const values = actionData?.values || {};
-
-  const orgId = organization.id;
 
   return (
-    <div>
+    <div className="dash_form-container">
       <div className="settings-header">
         <UserButton className="clerk-user" />
         <h1>
-          <Link to={`../`}>ChatBox</Link>
+          <Link to={`/dashboard/${organization.id}`}>ChatBox</Link>
         </h1>
       </div>
+<<<<<<< HEAD
       <Form
         method="post"
         className="settings-form"
@@ -199,6 +198,9 @@ const CreateSettings = () => {
           Save Settings
         </button>
       </Form>
+=======
+      <CreateForm text={'Create Settings'} />
+>>>>>>> develop
     </div>
   );
 };
@@ -233,7 +235,7 @@ async function action({ request }) {
   const formData = await request.formData();
   const companyData = {
     id: formData.get("companyId"),
-    ownerId: formData.get("ownerId"),
+    orgId: formData.get("orgId"),
     companyName: formData.get("CompanyName"),
     companyEmail: formData.get("CompanyEmail"),
     companyWebsite: formData.get("CompanyWebsite"),

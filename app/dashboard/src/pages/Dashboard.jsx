@@ -1,38 +1,45 @@
 import React from "react";
-import { Link, redirect, useLoaderData } from "react-router";
+import { Link, useLoaderData } from "react-router";
 import "../dashboard.css";
 import { FaCopy } from "react-icons/fa";
 import { getCompanies } from "../api/company";
 import { BiSolidMessageRoundedDots } from "react-icons/bi";
+
+
+import {
+  SignOutButton,
+  useClerk,
+  useOrganization,
+} from "@clerk/clerk-react";
+import PricingTable from "../components/PricingTable";
 import { PiSignOutBold } from "react-icons/pi";
-
-
-import { SignOutButton, useClerk, useOrganization, SignIn } from "@clerk/clerk-react";
 
 const Dashboard = () => {
   const { signOut } = useClerk();
+  const {company} = useLoaderData();
+
 
   const handleChange = (checked) => {
     if (checked) signOut();
   };
 
-  const company = useLoaderData();
   const { organization } = useOrganization();
 
   // filter company for the current organization
   const companyFilter = company.find(
-    (comp) => comp.ownerId === organization.id
+    (comp) => comp.orgId === organization.id,
   );
 
+
   if (companyFilter === undefined || companyFilter.publicId == undefined) {
-    window.location.replace(`/${organization.id}/create_settings`)
+    window.location.replace(`/dashboard/${organization.id}/create_settings`);
   }
 
   const companyData = companyFilter[0]?.length
     ? companyFilter[0]
     : {
         companyId: "",
-        ownerId: "",
+        orgId: "",
         companyName: "",
         companyEmail: "",
         companyWebsite: "",
@@ -49,11 +56,18 @@ const Dashboard = () => {
       };
 
   return (
-    <>
+    <div className="dashboard-container">
       <div className="header-icon-container">
         <div className="header-signout">
           <SignOutButton redirectUrl="/sign-in">
-            <PiSignOutBold style={{fontSize: '2rem', marginBottom: '1rem', cursor: 'pointer'}} title="SignOut" />
+            <PiSignOutBold
+              style={{
+                fontSize: "2rem",
+                marginBottom: "1rem",
+                cursor: "pointer",
+              }}
+              title="SignOut"
+            />
           </SignOutButton>
         </div>
 
@@ -82,8 +96,7 @@ const Dashboard = () => {
             <div className="settings-para">
               <h2>Customize your new ChatBox using your branding colors</h2>
             </div>
-            <Link
-              to={`/${organization.id}/create_settings`}>
+            <Link to={`/dashboard/${organization.id}/create_settings`}>
               Create Your ChatBox
             </Link>
           </div>
@@ -92,19 +105,44 @@ const Dashboard = () => {
             <div className="settings-para">
               <h2>Customize your existing ChatBox</h2>
             </div>
-            <p>*<button style={{textDecoration: 'underline', background: 'none', border: 'none', color: 'inherit', cursor: 'pointer'}} onClick={() => window.location.reload()}>Refresh the page</button> to see your edits live.</p>
-            <Link
-              to={`/${organization.id}/${companyFilter.publicId}/edit_settings`}>
+            <p>
+              *
+              <button
+                style={{
+                  textDecoration: "underline",
+                  background: "none",
+                  border: "none",
+                  color: "inherit",
+                  cursor: "pointer",
+                }}
+                onClick={() => window.location.reload()}>
+                Refresh the page
+              </button>{" "}
+              to see your edits live.
+            </p>
+            <Link to={`/dashboard/${organization.id}/edit_settings`}>
               Edit ChatBox Settings
             </Link>
           </div>
         )}
+        <div className="pricing-table">
+          {/* ========== Code Actual Table ============ */}
+          <PricingTable />
+          <Link
+            to="https://billing.stripe.com/p/login/14AeV6eIgaXZ7n80TCeUU00"
+            target="_blank">
+            Upgrade your ChatBox experience
+          </Link>
+        </div>
+
         <div className="script-section-container">
-          <h2>How to Use ChatBox:</h2>
+          <div className="settings-para">
+            <h2>How to Use ChatBox:</h2>
+          </div>
           <p>
-            Place this script at the end of your sites HTML. That's it! Any edits
-            you make to your settings will be automatically implemented in your
-            ChatBox and will be live on your site.
+            Place this script at the end of your sites HTML. That's it! Any
+            edits you make to your settings will be automatically implemented in
+            your ChatBox and will be live on your site.
           </p>
           <div className="script-section">
             <FaCopy
@@ -128,20 +166,20 @@ const Dashboard = () => {
             <input
               type="text"
               id="company-script"
-              defaultValue={`<script src='http://chat.verafied.tech.s3-website-us-east-1.amazonaws.com' data-company='${companyFilter.publicId}'></script>`}></input>
+              defaultValue={`<script src='d11lfamd8dwl3d.cloudfront.net' data-company='${companyFilter.publicId}'></script>`}></input>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
-async function loader({ request: { signal } }) {
+async function loader({ request: { signal }, params: {id} }) {
   const company = await getCompanies({ signal });
-  return company;
+  return {company: company};
 }
 
-export const SettingsRoute = {
+export const DashboardRoute = {
   element: <Dashboard />,
   loader,
 };

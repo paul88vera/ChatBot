@@ -8,11 +8,6 @@
   --accent-color: rgb(100, 149, 237);
 }
 
-* {
-  padding: 0;
-  margin: 0;
-}
-
 body {
   margin: 0;
   padding: 0;
@@ -63,6 +58,9 @@ a {
   text-align: center;
   padding: .5rem;
   color: #fff;
+}
+.why-you-need-ai-content h2, .hero-3 h2 {
+  color: black !important;
 }
 
 .header-nav, .header-nav_mobile {

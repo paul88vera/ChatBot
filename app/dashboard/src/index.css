@@ -1,4 +1,4 @@
-:root {
+/* :root {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 
   color: rgb(246, 246, 231);
@@ -13,14 +13,13 @@
 }
 
 body {
-  max-width: 900px;
-  margin: 0 auto;
+  margin: 0;
   padding: 0;
 }
 
-.container {
+/* .container {
   padding: 1rem;
-}
+} 
 
 a {
   text-decoration: none;
@@ -44,4 +43,4 @@ a:hover {
   body {
     padding: 2rem;
   }
-}
+} */

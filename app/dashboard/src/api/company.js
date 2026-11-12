@@ -1,6 +1,10 @@
 import { redirect } from "react-router";
 import { baseApi } from "./base";
 
+// export function getPermissions(id, companyData) {
+//   return baseApi.get(`/company/${id}`, companyData).then((res) => res.data);
+// }
+
 export function getCompanies() {
   return baseApi.get("/company").then((res) => res.data);
 }

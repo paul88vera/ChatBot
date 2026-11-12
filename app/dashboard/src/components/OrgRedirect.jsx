@@ -1,64 +1,56 @@
 import { useEffect } from "react";
-import { useLocation, useNavigate, useMatches } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useOrganization, useUser } from "@clerk/clerk-react";
 
 export function OrgRedirect() {
   const { organization, isLoaded: orgLoaded } = useOrganization();
   const { isLoaded: userLoaded, user } = useUser();
+
   const location = useLocation();
   const navigate = useNavigate();
-  const matches = useMatches();
 
   useEffect(() => {
-    // Skip redirect for localhost:5400
-    if (window.location.port === "5400") return;
+  if (!userLoaded || !orgLoaded) {
+    console.log("Waiting for Clerk to load...");
+    return;
+  }
 
-    if (!userLoaded) return; // Still loading user
-    if (!user) {
-      navigate("/sign-in", { replace: true });
-      return;
-    }
+  if (!user) {
+    console.log("No user → redirecting to sign-in");
+    navigate("/sign-in", { replace: true });
+    return;
+  }
 
-    if (!orgLoaded) return;
-    if (!organization) {
-      navigate("/no-organization", { replace: true });
-      return;
-    }
+  if (!organization) {
+    console.log("No active organization → redirecting to no-organization");
+    navigate("/no-organization", { replace: true });
+    return;
+  }
 
-    const orgId = organization.id;
 
-    const parts = location.pathname.split("/").filter(Boolean);
+  const pathname = location.pathname.replace(/\/$/, "");
 
-    // If already at /orgId/... → do NOTHING
-    if (parts[0] === orgId) return;
+if (pathname !== "/dashboard") {
+  console.log("Not dashboard index → doing nothing");
+  return;
+}
 
-    // Remove repeated "dashboard" segments
-    const cleanedParts = parts.filter((seg, idx) => {
-      // Keep first "dashboard", remove duplicates after
-      if (seg === "dashboard" && parts.indexOf("dashboard") !== idx) {
-        return false;
-      }
-      return true;
-    });
+navigate(`/dashboard/${organization.id}`, {
+  replace: true,
+});
 
-    // Force dashboard for empty or root-like routes
-    const subPath = cleanedParts.length > 0
-      ? cleanedParts.join("/")
-      : "dashboard";
 
-    const newPath = `/${orgId}/${subPath}`;
-
-    // Prevent redirect loops
-    if (location.pathname === newPath) return;
-
-    // Validate route actually exists
-    const newPathExists = matches.some((m) => m.pathname === newPath);
-
-    navigate(
-      newPathExists ? newPath : `/${orgId}/dashboard`,
-      { replace: true }
-    );
-  }, [organization, userLoaded, orgLoaded, location.pathname, navigate, matches]);
+  navigate(`/dashboard/${organization.id}`, {
+    replace: true,
+  });
+}, [
+  userLoaded,
+  orgLoaded,
+  user,
+  organization,
+  location.pathname,
+  navigate,
+]);
 
   return null;
 }

@@ -1,15 +1,19 @@
 import { useOrganization, UserButton } from "@clerk/clerk-react";
-import { Form, Link, redirect, useLoaderData } from "react-router";
-import FormGroup from "../components/FormGroup";
+import { Link, redirect, useLoaderData } from "react-router";
 import "../Dashboard.css";
 import { getCompanies, updateCompany } from "../api/company";
+<<<<<<< HEAD
 import { useState } from "react";
 // import AvatarUploader from "../components/AvatarUploader";
+=======
+import EditForm from "../components/editForm";
+>>>>>>> develop
 
 const EditSettings = () => {
   const { company } = useLoaderData();
   const { organization } = useOrganization();
 
+<<<<<<< HEAD
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -25,19 +29,24 @@ const EditSettings = () => {
   const [brandName, setBrandName] = useState("");
   const [brandLink, setBrandLink] = useState("");
 
+=======
+>>>>>>> develop
   // filter company by id
-  const companyData = company.filter((comp) => comp.ownerId === organization.id);
+  const companyData = company.filter(
+    (comp) => comp.orgId === organization.id,
+  );
 
   const errors = {}; // Placeholder for error messages
+  
   return (
-    <div>
+    <div className="dash_form-container">
       <div className="settings-header">
         <UserButton className="clerk-user" />
-        <h1><Link to={`/${organization.id}/dashboard`}>
-        ChatBox
-        </Link>
+        <h1>
+          <Link to={`/dashboard/${organization.id}`}>ChatBox</Link>
         </h1>
       </div>
+<<<<<<< HEAD
       <Form method="post" className="settings-form">
         <input type="hidden" name="companyId" value={companyData[0]?.id} />
         <input type="hidden" name="ownerId" value={companyData[0]?.ownerId} />
@@ -227,6 +236,9 @@ const EditSettings = () => {
         
         <button type="submit">Save Settings</button>
       </Form>
+=======
+      <EditForm errors={errors} companyData={companyData} text={'Save settings'} />
+>>>>>>> develop
     </div>
   );
 };
@@ -240,7 +252,7 @@ async function action({ request }) {
   const formData = await request.formData();
   const companyData = {
     id: formData.get("companyId"),
-    ownerId: formData.get("ownerId"),
+    orgId: formData.get("orgId"),
     publicId: formData.get("publicId"),
     companyName: formData.get("CompanyName"),
     companyEmail: formData.get("CompanyEmail"),
@@ -259,7 +271,7 @@ async function action({ request }) {
 
   await updateCompany(companyData.id, companyData);
 
-  return redirect(`/${companyData.ownerId}/dashboard`);
+  return redirect(`/dashboard/${companyData.orgId}`);
 }
 
 export const EditSettingsPage = {

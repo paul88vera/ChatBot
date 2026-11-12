@@ -7,7 +7,7 @@ import Banner from "./Banner";
 const MOBILE_BREAKPOINT = 947;
 
 const Header = () => {
-  const banner = "GRAND OPENING SALE - 20% OFF!";
+  const banner = "";
 
   const [isMobile, setIsMobile] = useState(
     window.innerWidth <= MOBILE_BREAKPOINT
@@ -45,10 +45,14 @@ const Header = () => {
               </Link>
             </div>
             <div className="header-nav-login header-nav-login_mobile mobile">
+<<<<<<< HEAD:app/landing/src/components/Header.jsx
               <Link to="/sign-in" className="header-nav-link_item">
+=======
+              <Link to="https://accounts.verafied.tech/sign-in" className="header-nav-link_item">
+>>>>>>> develop:app/dashboard/src/components/Header.jsx
                 Sign in
               </Link>
-              <FancyButton link={"/dashboard"} isMobile={isMobile}>
+              <FancyButton link={"https://accounts.verafied.tech/sign-in?redirect_url=https%3A%2F%2Fchatbox.verafied.tech%2Fdashboard"} isMobile={isMobile}>
                 Get started
               </FancyButton>
               <div>
@@ -83,10 +87,18 @@ const Header = () => {
               </Link>
             </div>
             <div className="header-nav-login">
+<<<<<<< HEAD:app/landing/src/components/Header.jsx
               <Link to="https://manager.verafied.tech" className="header-nav-link_item">
                 Sign in
               </Link>
               <FancyButton link={"https://accounts.verafied.tech/create-organization"} isMobile={isMobile}>
+=======
+              <Link to="https://billing.stripe.com/p/login/14AeV6eIgaXZ7n80TCeUU00" target="_blank">Billing</Link>
+              <Link to="https://accounts.verafied.tech/sign-in" className="header-nav-link_item">
+                Sign in
+              </Link>
+              <FancyButton link={"https://accounts.verafied.tech/sign-in?redirect_url=https%3A%2F%2Fchatbox.verafied.tech%2Fdashboard"} isMobile={isMobile}>
+>>>>>>> develop:app/dashboard/src/components/Header.jsx
                 Get started
               </FancyButton>
             </div>
@@ -109,6 +121,7 @@ const MobileNavi = () => {
       <Link to="/pricing" className="mobile-nav-link_item" onClick={() => toggleMobileNav()}>
         Pricing
       </Link>
+      <Link to="https://billing.stripe.com/p/login/14AeV6eIgaXZ7n80TCeUU00" onClick={() => toggleMobileNav()}>Billing</Link>
     </div>
   );
 };
