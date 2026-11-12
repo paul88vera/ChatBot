@@ -1,29 +1,12 @@
 import { useOrganization, UserButton } from "@clerk/clerk-react";
-import { Form, Link, redirect, useLoaderData } from "react-router";
+import { Link, redirect, useLoaderData } from "react-router";
 import "../Dashboard.css";
 import { getCompanies, updateCompany } from "../api/company";
-import { useState } from "react";
 import EditForm from "../components/editForm";
-// import AvatarUploader from "../components/AvatarUploader";
 
 const EditSettings = () => {
   const { company } = useLoaderData();
   const { organization } = useOrganization();
-
-  // const [name, setName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [websiteTitle, setWebsiteTitle] = useState("");
-  // const [websiteLink, setWebsiteLink] = useState("");
-  // const [companyColor, setCompanyColor] = useState("");
-  // const [companyDirection, setCompanyDirection] = useState("");
-  // const [companyDescription, setCompanyDescription] = useState("");
-  // const [companyFaqs, setCompanyFaqs] = useState("");
-  // const [agentName, setAgentName] = useState("");
-  // const [agentSubtitle, setAgentSubtitle] = useState("");
-  // const [welcomeMessage, setWelcomeMessage] = useState("");
-  // const [brandName, setBrandName] = useState("");
-  // const [brandLink, setBrandLink] = useState("");
-
 
   // filter company by id
   const companyData = company.filter(
@@ -31,6 +14,7 @@ const EditSettings = () => {
   );
 
   const errors = {}; // Placeholder for error messages
+  
   return (
     <div className="dash_form-container">
       <div className="settings-header">

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, redirect, useLoaderData } from "react-router";
+import React from "react";
+import { Link, useLoaderData } from "react-router";
 import "../dashboard.css";
 import { FaCopy } from "react-icons/fa";
 import { getCompanies } from "../api/company";
@@ -10,7 +10,6 @@ import {
   SignOutButton,
   useClerk,
   useOrganization,
-  SignIn,
 } from "@clerk/clerk-react";
 import PricingTable from "../components/PricingTable";
 import { PiSignOutBold } from "react-icons/pi";
@@ -31,7 +30,6 @@ const Dashboard = () => {
     (comp) => comp.orgId === organization.id,
   );
 
-  console.log(company)
 
   if (companyFilter === undefined || companyFilter.publicId == undefined) {
     window.location.replace(`/dashboard/${organization.id}/create_settings`);
@@ -168,7 +166,7 @@ const Dashboard = () => {
             <input
               type="text"
               id="company-script"
-              defaultValue={`<script src='http://chat.verafied.tech.s3-website-us-east-1.amazonaws.com' data-company='${companyFilter.publicId}'></script>`}></input>
+              defaultValue={`<script src='d11lfamd8dwl3d.cloudfront.net' data-company='${companyFilter.publicId}'></script>`}></input>
           </div>
         </div>
       </div>
@@ -177,7 +175,6 @@ const Dashboard = () => {
 };
 
 async function loader({ request: { signal }, params: {id} }) {
-  // const permissions = await getPermissions(id, {signal});
   const company = await getCompanies({ signal });
   return {company: company};
 }

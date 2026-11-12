@@ -1,6 +1,6 @@
 import {Form, useActionData} from 'react-router';
 import FormGroup from './FormGroup';
-import { useOrganization, UserButton } from "@clerk/clerk-react";
+import { useOrganization } from "@clerk/clerk-react";
 
 const CreateForm = ({text}) => {
   const { organization } = useOrganization();
@@ -155,13 +155,8 @@ const CreateForm = ({text}) => {
               
             />
             </FormGroup>
-          {/* TODO: Need to fix the image uploader */}
-            {/* <FormGroup>
-              
-                <AvatarUploader company={values.companyData} />
-              
-            </FormGroup> */}
         </div>
+
         <FormGroup errorMessage={errors.companyDescription}>
           <label htmlFor="CompanyDescription">Company Description: </label>
           <textarea

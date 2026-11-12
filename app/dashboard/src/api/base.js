@@ -5,7 +5,7 @@ export const baseApi = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true,
+  withCredentials: false,
 });
 
 export function attachClerkInterceptor(getToken) {
@@ -13,10 +13,10 @@ export function attachClerkInterceptor(getToken) {
     async (config) => {
       const token = await getToken();
 
-      console.log("=== AXIOS CLERK ===");
-      console.log("URL:", config.url);
-      console.log("Token exists:", Boolean(token));
-      console.log("Token length:", token?.length);
+      // console.log("=== AXIOS CLERK ===");
+      // console.log("URL:", config.url);
+      // console.log("Token exists:", Boolean(token));
+      // console.log("Token length:", token?.length);
 
       if (token) {
         config.headers = config.headers || {};

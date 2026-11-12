@@ -1,5 +1,3 @@
-import React from "react";
-import { PiSignOutBold } from "react-icons/pi";
 import { FaSquareCheck, FaRectangleXmark } from "react-icons/fa6";
 
 const PricingTable = () => {

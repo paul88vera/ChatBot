@@ -1,25 +1,52 @@
 import { useAuth } from "@clerk/clerk-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { attachClerkInterceptor } from "../api/base";
 
+// export default function ClerkAxiosProvider({ children }) {
+//   const {
+//     getToken,
+//     isLoaded,
+//     isSignedIn,
+//   } = useAuth();
+
+//   useEffect(() => {
+//     if (!isLoaded || !isSignedIn) {
+//       return;
+//     }
+
+//     console.log("=== INSTALLING CLERK AXIOS ===");
+
+//     const detach = attachClerkInterceptor(getToken);
+
+//     return detach;
+//   }, [getToken, isLoaded, isSignedIn]);
+
+//   return children;
+// }
+
 export default function ClerkAxiosProvider({ children }) {
-  const {
-    getToken,
-    isLoaded,
-    isSignedIn,
-  } = useAuth();
+  const { getToken, isLoaded, isSignedIn } = useAuth();
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     if (!isLoaded || !isSignedIn) {
+      setReady(false);
       return;
     }
 
-    console.log("=== INSTALLING CLERK AXIOS ===");
-
     const detach = attachClerkInterceptor(getToken);
 
-    return detach;
+    setReady(true);
+
+    return () => {
+      detach();
+      setReady(false);
+    };
   }, [getToken, isLoaded, isSignedIn]);
+
+  if (!ready) {
+    return <div>Loading authenticated dashboard...</div>;
+  }
 
   return children;
 }

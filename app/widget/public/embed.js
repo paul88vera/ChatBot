@@ -16,18 +16,17 @@
     // Inject widget CSS
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = "http://chat.verafied.tech.s3-website-us-east-1.amazonaws.com/widget.css";
+    link.href = "https://d11lfamd8dwl3d.cloudfront.net/widget.css";
     document.head.appendChild(link);
 
     // Fetch company data
     const res = await fetch(`https://server.verafied.tech/api/company/${publicId}`); // company publicId
-    // const res = await fetch(`http://localhost:5400/api/company/${publicId}`); // dev only 
     const result = await res.json();
     const company = result.data || result;
 
     // Inject widget JS
     const w = document.createElement("script");
-    w.src = "http://chat.verafied.tech.s3-website-us-east-1.amazonaws.com/widget.iife.js";
+    w.src = "https://d11lfamd8dwl3d.cloudfront.net/widget.iife.js";
     w.onload = () => {
       if (window.ChatWidget && typeof window.ChatWidget.mount === "function") {
         window.ChatWidget.mount(container, company);

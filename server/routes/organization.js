@@ -1,14 +1,13 @@
 
 import express from "express";
 import { Webhook } from "svix";
-import bodyParser from "body-parser";
 import db from "../db/connections.js";
 
 const router = express.Router();
 
 router.post(
   "/clerk",
-  bodyParser.raw({ type: "application/json" }),
+  express.raw({ type: "application/json" }),
   async (req, res) => {
     const webhookSecret = process.env.CLERK_WEBHOOK_SECRET;
 
@@ -33,10 +32,6 @@ router.post(
       return res.status(400).json({ error: "Invalid webhook" });
     }
 
-    console.log("=== CLERK WEBHOOK ===");
-    console.log("Event:", event.type);
-    console.log("Payload:", JSON.stringify(event.data, null, 2));
-
     try {
       const connection = await db();
 
@@ -60,7 +55,7 @@ router.post(
 
         await connection.execute(
           `
-          INSERT INTO organizations (orgId)
+          INSERT INTO chatbot_db.organizations (orgId)
           VALUES (?)
           ON DUPLICATE KEY UPDATE orgId = VALUES(orgId)
           `,
@@ -82,6 +77,25 @@ router.post(
         // Do not assign ownerId to every member.
         // Inspect the payload and establish the actual owner
         // using your verified organization-creation workflow.
+      }
+
+      // ORGANIZATION DELETION
+      else if (event.type === "organization.deleted") {
+        const orgId = event.data?.id;
+
+        if (!orgId) {
+          console.error("Missing organization ID in Clerk payload");
+          return res.status(400).json({
+            error: "Missing organization ID",
+          });
+        }
+
+        await connection.execute(
+          `DELETE FROM chatbot_db.organizations WHERE orgId = (orgId)`,
+          [orgId]
+        );
+
+        console.log("Organization deleted");
       }
 
       else {

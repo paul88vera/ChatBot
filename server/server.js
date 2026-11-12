@@ -39,29 +39,12 @@ app.use(
 );
 
 // === Clerk Webhook ===
-//   app.use("/api/webhook", (req, res, next) => {
-//   console.log("=== WEBHOOK REQUEST REACHED SERVER ===");
-//   console.log("URL:", req.originalUrl);
-//   console.log("METHOD:", req.method);
-//   next();
-// });
 app.use("/api/webhook", orgRoute);
-
-//   app.use("/api/webhook", (req, res) => {
-//   console.error("Webhook route not matched:", req.method, req.originalUrl);
-//   return res.status(404).json({ error: "Webhook route not found" });
-// });
 
 // === Stripe Webhook ===
 app.use("/api/stripe", stripeRoute);
 
 app.use(express.json());
-
-// WEBHOOK TEST
-//   app.post("/api/webhook/clerk", (req, res) => {
-//   console.log("=== WEBHOOK TEST ROUTE HIT ===");
-//   return res.status(200).json({ received: true });
-// });
 
 // === Clerk AUTH ===
 app.use(
@@ -69,23 +52,16 @@ app.use(
     publishableKey: process.env.VITE_CLERK_PUBLISHABLE_KEY,
     secretKey: process.env.VITE_CLERK_SECRET,
     authorizedParties: [
-      "https://verafied.tech/",
-      "https://chatbox.verafied.tech/",
+      "https://verafied.tech",
+      "https://chatbox.verafied.tech",
+      "https://server.verafied.tech"
     ],
   }),
 );
 
 // === Clerk AUTH Check For Private Routes ===
 function requireAuth(req, res, next) {
-  const { userId, orgId } = getAuth(req);
-
-  console.log("=== AUTH ===");
-
-  // if (!userId) {
-  //   return res.status(401).json({
-  //     message: "Unauthorized - no Clerk user",
-  //   });
-  // }
+  const { orgId } = getAuth(req);
 
   if (!orgId) {
     return res.status(401).json({
@@ -93,8 +69,7 @@ function requireAuth(req, res, next) {
     });
   }
 
-  console.log("userId:", userId);
-  console.log("orgId:", orgId);
+  
   next();
 }
 

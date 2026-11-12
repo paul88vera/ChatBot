@@ -175,11 +175,8 @@ const EditForm = ({companyData, text, errors}) => {
               }}
             />
           </FormGroup>
-          {/* TODO: Need to file image uploader */}
-          {/* <FormGroup>
-                <AvatarUploader company={companyData} />
-              </FormGroup> */}
         </div>
+        
         <FormGroup errorMessage={errors.companyDescription}>
           <label htmlFor="CompanyDescription">Company Description: </label>
           <textarea
