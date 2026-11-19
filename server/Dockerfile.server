@@ -4,22 +4,10 @@ WORKDIR /app
 
 COPY package*.json ./
 
-<<<<<<< HEAD
-# Install deps
 RUN npm install
 
-# Copy everything else from the server folder
-=======
-RUN npm install
-
->>>>>>> develop
 COPY . .
 
 EXPOSE 5500
 
-<<<<<<< HEAD
-# Start the app
 CMD ["npm", "start"]
-=======
-CMD ["npm", "start"]
->>>>>>> develop

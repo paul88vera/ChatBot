@@ -33,10 +33,8 @@ router.post(
     }
 
     try {
-      const connection = await db();
-
       // Verify which database the container is using
-      const [databaseInfo] = await connection.query(
+      const [databaseInfo] = await db.query(
         "SELECT DATABASE() AS databaseName"
       );
 
@@ -53,12 +51,8 @@ router.post(
           });
         }
 
-        await connection.execute(
-          `
-          INSERT INTO chatbot_db.organizations (orgId)
-          VALUES (?)
-          ON DUPLICATE KEY UPDATE orgId = VALUES(orgId)
-          `,
+        await db.query(
+          `INSERT INTO chatbot_db.organizations (orgId) VALUES (?) ON DUPLICATE KEY UPDATE orgId = VALUES(orgId)`,
           [orgId]
         );
 
@@ -90,7 +84,7 @@ router.post(
           });
         }
 
-        await connection.execute(
+        await db.query(
           `DELETE FROM chatbot_db.organizations WHERE orgId = (orgId)`,
           [orgId]
         );

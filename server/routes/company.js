@@ -4,7 +4,7 @@ import crypto from "crypto";
 
 import db from "../db/connections.js";
 
-import { getPermissions } from "../helpers/permissions.js";
+// import { getPermissions } from "../helpers/permissions.js";
 
 // Subscription Permissions Check TODO:
 // router.get("/:orgId", async (req, res) => {
@@ -13,7 +13,7 @@ import { getPermissions } from "../helpers/permissions.js";
 //     const companyId = req.params.id;
 
 //     // get company from publicId
-//     const [rows] = await connection.query(
+//     const [rows] = await db.query(
 //       "SELECT * FROM chatbot_db.companies WHERE publicId = ?",
 //       [companyId],
 //     );
@@ -22,7 +22,7 @@ import { getPermissions } from "../helpers/permissions.js";
 //     }
 
 //     // get company subscription plan from
-//     const [company] = await connection.query(
+//     const [company] = await db.query(
 //       "SELECT subscriptionPlan FROM chatbot_db.organizations WHERE orgId = ?",
 //       [companyId],
 //     );
@@ -33,7 +33,7 @@ import { getPermissions } from "../helpers/permissions.js";
 //       });
 //     }
 
-//     const [results] = connection.query(company);
+//     const [results] = db.query(company);
 //     const permissions = getPermissions(company.FEATURES);
 
 //     res.json({
@@ -49,9 +49,9 @@ import { getPermissions } from "../helpers/permissions.js";
 
 router.get("/", async (req, res) => {
   try {
-    const connection = await db();
+    // const connection = await db();
     const query = "SELECT * FROM chatbot_db.companies";
-    const [rows] = await connection.query(query);
+    const [rows] = await db.query(query);
     res.json(rows);
   } catch (error) {
     console.error(error);
@@ -62,10 +62,9 @@ router.get("/", async (req, res) => {
 // Get single company by orgId - Private
 router.get("/:orgId", async (req, res) => {
   try {
-    const connection = await db();
     const orgId = req.params.orgId;
 
-    const [rows] = await connection.query(
+    const [rows] = await db.query(
       "SELECT * FROM chatbot_db.companies WHERE orgId = ?",
       [orgId],
     );
@@ -92,8 +91,6 @@ router.get("/:orgId", async (req, res) => {
 // Create company
 router.post("/", async (req, res) => {
   try {
-    const connection = await db();
-
     let {
       orgId,
       companyName,
@@ -123,7 +120,7 @@ router.post("/", async (req, res) => {
     // Generate public ID
     const publicId = "cmp_" + crypto.randomBytes(4).toString("hex");
 
-    const [result] = await connection.query(
+    const [result] = await db.query(
       `INSERT INTO chatbot_db.companies 
       (orgId, publicId, companyName, companyEmail, companyWebsite, companyLink, companyDescription, agentName, agentSubtitle, brandName, brandLink, welcomeMessage, companyFaqs, companyColor, companyDirection, companyChatboxActive)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`,
@@ -175,7 +172,6 @@ router.post("/", async (req, res) => {
 // Update company
 router.put("/:orgId", async (req, res) => {
   try {
-    const connection = await db();
     const orgId = req.params.orgId;
     const updateData = { ...req.body };
 
@@ -194,7 +190,7 @@ router.put("/:orgId", async (req, res) => {
       return res.status(400).json({ error: "Company orgId missing" });
     }
 
-    const [result] = await connection.query(
+    const [result] = await db.query(
       "UPDATE chatbot_db.companies SET ? WHERE orgId = ?",
       [updateData, updatedOrgId],
     );
@@ -221,9 +217,8 @@ router.put("/:orgId", async (req, res) => {
 // Delete company
 router.delete("/:orgId", async (req, res) => {
   try {
-    const connection = await db();
     const orgId = req.params.orgId;
-    const [result] = await connection.query(
+    const [result] = await db.query(
       "DELETE FROM chatbot_db.companies WHERE orgId = ?",
       [orgId],
     );

@@ -20,12 +20,9 @@ importers:
       '@dotenvx/dotenvx':
         specifier: ^1.51.1
         version: 1.75.1
-<<<<<<< HEAD
-=======
       body-parser:
         specifier: ^2.3.0
         version: 2.3.0
->>>>>>> develop
       cors:
         specifier: ^2.8.5
         version: 2.8.6
@@ -47,12 +44,9 @@ importers:
       stripe:
         specifier: ^22.2.3
         version: 22.2.3(@types/node@26.0.0)
-<<<<<<< HEAD
-=======
       svix:
         specifier: ^1.99.1
         version: 1.99.1
->>>>>>> develop
       uuid:
         specifier: ^9.0.1
         version: 9.0.1
@@ -2085,13 +2079,10 @@ snapshots:
     dependencies:
       has-flag: 3.0.0
 
-<<<<<<< HEAD
-=======
   svix@1.99.1:
     dependencies:
       standardwebhooks: 1.0.0
 
->>>>>>> develop
   swr@2.3.4(react@19.2.7):
     dependencies:
       dequal: 2.0.3
